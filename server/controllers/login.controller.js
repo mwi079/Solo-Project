@@ -1,6 +1,8 @@
 const { loginValidation } = require('../validation');
 const {User} = require('../models/user.model');
 const bcrypt = require('bcrypt');
+const dotenv = require('dotenv');
+const jwt = require('jsonwebtoken');
 
 async function loginUser (ctx) {
 
@@ -13,7 +15,8 @@ async function loginUser (ctx) {
   }
 
   // Check if user is already in db
-  const user = await User.findOne({ email })
+  const user = await User.findOne({ email });
+
   if (!user) {
     ctx.status = 400;
     return ctx.body = 'Email or password is wrong';
@@ -27,7 +30,12 @@ async function loginUser (ctx) {
     ctx.body = 'Invalid password';
   }
 
-  ctx.body = 'You have successfully logged in!';
+  // Create and assign token
+  const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
+  ctx.set('auth-token', token) //setting the token to header
+  ctx.body = token;
+
+  // ctx.body = 'You have successfully logged in!';
 
 }
 
