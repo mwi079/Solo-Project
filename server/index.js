@@ -1,14 +1,17 @@
 const Koa = require('koa');
-const PORT = 3500;
+const dotenv = require('dotenv');
 const cors = require('@koa/cors');
 const bodyparser = require('koa-bodyparser');
-const router = require('./router');
 
+dotenv.config();
 const app = new Koa();
+const {authenticationRoute} = require('./routes/index');
+
+
 
 app
   .use(cors())
   .use(bodyparser())
-  .use(router.routes())
+  .use(authenticationRoute.routes())
 
-app.listen(PORT, () => console.log(`Listening to http://localhost:${PORT} 🤓🚀`));
+app.listen(process.env.PORT, () => console.log(`Listening to http://localhost:${process.env.PORT} 🤓🚀`));

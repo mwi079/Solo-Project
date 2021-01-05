@@ -9,10 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
     "@koa/cors": "^3.1.0",
     "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
-    "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
