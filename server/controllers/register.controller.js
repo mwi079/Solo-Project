@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 
 async function registerUser (ctx) {
 
-  const {name, email, password} = ctx.request.body
+  const {name, email, password} = ctx.request.body;
   const { error } = userValidation({ name, email, password });
   
   if (error) {

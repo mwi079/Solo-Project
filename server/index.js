@@ -5,13 +5,14 @@ const bodyparser = require('koa-bodyparser');
 
 dotenv.config();
 const app = new Koa();
-const {authenticationRoute} = require('./routes/index');
+const {router} = require('./routes/index');
 
 
 
 app
   .use(cors())
   .use(bodyparser())
-  .use(authenticationRoute.routes())
+  .use(router.routes())
+  // .use(loginRoute.routes())
 
 app.listen(process.env.PORT, () => console.log(`Listening to http://localhost:${process.env.PORT} 🤓🚀`));
