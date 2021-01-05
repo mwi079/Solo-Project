@@ -1,3 +1,4 @@
+import { Link } from '@reach/router';
 import React, {useState} from 'react';
 import './NavBar.css';
 
@@ -16,11 +17,13 @@ export default function NavBar () {
       </div>
 
       <div className="navigation">
-        <button 
-          className="login-btn"
-          onClick={e => handleClick(e)}
-          >LOGIN
-        </button>
+        <Link to="/user/login">
+          <button 
+            className="login-btn"
+            onClick={e => handleClick(e)}
+            >LOGIN
+          </button>
+        </Link>
         <button 
           className="register-btn"
           onClick={e => handleClick(e)}
