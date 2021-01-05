@@ -1,0 +1,28 @@
+.nav-wrapper {
+	display: flex;
+	padding: 15px;
+	box-shadow: 0 4px 2px -2px #3333;
+  margin: auto 20px;
+  justify-content: space-between;
+}
+
+.title {
+	justify-content: center;
+	display: flex;
+	flex-direction: column;
+}
+
+.login-btn,
+.register-btn {
+  margin: 0 10px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 2px solid #1F2232;
+}
+
+.login-btn:hover,
+.register-btn:hover {
+  background-color: #ADB6C4;
+  color: #fff;
+}
+
