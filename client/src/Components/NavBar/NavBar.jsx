@@ -4,11 +4,7 @@ import './NavBar.css';
 
 export default function NavBar () {
 
-  const [title, setTitle] = useState('');
 
-  function handleClick (e) {
-    setTitle(e.target.textContent);
-  }
 
   return (
     <div className="nav-wrapper">
@@ -20,15 +16,17 @@ export default function NavBar () {
         <Link to="/user/login">
           <button 
             className="login-btn"
-            onClick={e => handleClick(e)}
+
             >LOGIN
           </button>
         </Link>
-        <button 
-          className="register-btn"
-          onClick={e => handleClick(e)}
-          > SIGN UP
-        </button>
+        <Link to="/user/register">
+          <button 
+            className="register-btn"
+            > SIGN UP
+          </button>
+        </Link>
+        
       </div>
     </div>
   )

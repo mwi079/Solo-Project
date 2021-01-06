@@ -1,24 +1,32 @@
 import React, {useState} from 'react';
-import './Login.css';
+import './Signup.css'
 
-export default function Login ({getUserToken}) {
-
-  const [userDetails, setUserDetails] = useState({email: "", password: ""});
+export default function Signup({registerNewUser}) {
+  const [userDetails, setUserDetails] = useState({name: "", email: "", password: ""});
 
   const submitHandle = e => {
     e.preventDefault();
-    getUserToken(userDetails)
+    registerNewUser(userDetails)
   }
-  
+
   return (
     <form onSubmit={submitHandle}>
-        <div className="login-box">
+        <div className="signup-box">
           <div className="title-box">
-            <h1>Login</h1>
+            <h1>Sign Up</h1>
           </div>
+          
 
           <div className="input_fields">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="name">Name:</label>
+            <input 
+              type="text" 
+              id="name_field"
+              name="name"
+              autoComplete="off"
+              onChange={e => setUserDetails({...userDetails, name: e.target.value})}
+              />
+            <label htmlFor="email">Email:</label>
             <input 
               type="email" 
               id="email_field"
@@ -27,7 +35,7 @@ export default function Login ({getUserToken}) {
               onChange={e => setUserDetails({...userDetails, email: e.target.value})}
               />
 
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Password:</label>
             <input 
               type="password" 
               id="password_field"
@@ -37,7 +45,7 @@ export default function Login ({getUserToken}) {
 
           </div>
 
-          <input type="submit" value="LOGIN" id="login-btn"/>
+          <input type="submit" value="SIGN UP" id="signup-btn"/>
       </div>
     </form>
   )
