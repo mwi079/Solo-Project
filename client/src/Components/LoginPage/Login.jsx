@@ -1,18 +1,22 @@
 import { useForm } from 'react-hook-form';
 import React, {useState} from 'react';
 import './Login.css';
+import {AtSignIcon} from '@chakra-ui/icons';
 import {
+  Box,
   FormErrorMessage,
   FormLabel,
   FormControl,
   Input,
   Button,
   ThemeProvider,
-  VStack,
-  Box,
-  Heading
+  Heading,
+  Flex,
+  InputGroup,
+  InputLeftElement
 } from "@chakra-ui/react";
 import customTheme from '../../customTheme';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import {getToken} from '../../ApiClientService';
 
 async function setToken (userToken) {
@@ -21,68 +25,49 @@ async function setToken (userToken) {
 
 export default function Login () {
 
-  const { handleSubmit, errors, register, formState } = useForm();
+  const {errors, register, formState } = useForm();
   const [userDetails, setUserDetails] = useState({email: "", password: ""});
   const [error, setError] = useState('');
 
   async function loginUser (credentials) {
-  await getToken(credentials)
-    .then(res => res.data)
-    .catch(error => setError(error.response.data));
+    await getToken(credentials)
+      .then(res => res.data)
+      .catch(error => setError(error.response));
 }
 
   async function submitHandle(e) {
-    // e.preventDefault();
-    const userToken = await loginUser(userDetails);
-    setToken(userToken);
+      e.preventDefault();
+      const userToken = await loginUser(userDetails);
+      setToken(userToken);
+      setUserDetails({email: "", password:""})
   }
 
-  function validateName(value) {
-    if (!value) return "Field is required";
-  }
 
   return (
     <ThemeProvider theme={customTheme}>
-      <VStack m={20}>
-        <Heading size="lg">
-          Login
-        </Heading>
-        <Box padding={5} rounded="lg">
-          <form onSubmit={handleSubmit(submitHandle)}>
-            <FormControl isInvalid={errors.message}>
-              <FormLabel htmlFor="email">Email</FormLabel>
-                <Input 
-                  type="email" 
-                  id="email_field"
-                  name="email"
-                  placeholder="Email"
-                  autoComplete="off"
-                  ref={register({ validate: validateName })}
-                  onChange={e => setUserDetails({...userDetails, email: e.target.value})}
-                  />
-                  <FormErrorMessage>
-                   { (errors.name && errors.name.message) || error}
-                  </FormErrorMessage>
+      <Flex width="full" align="center" justifyContent="center" mt={10}>
+        <Box p={2}>
+          <Box textAlign="center">
+            <Heading size="lg">Login</Heading>
+          </Box>
 
-                <FormLabel htmlFor="password">Password </FormLabel>
-                <Input 
-                  type="password" 
-                  id="password_field"
-                  name="password"
-                  placeholder="Password"
-                  ref={register({ validate: validateName })}
-                  onChange={e => setUserDetails({...userDetails, password: e.target.value})}
-                  />
-                  <FormErrorMessage>
-                   { (errors.name && errors.name.message) || error}
-                  </FormErrorMessage>
+          <Box my={4} textAlign="left" p={8} maxWidth="500px" borderWidth={1} borderRadius={8} boxShadow="lg">
+          <form onSubmit={submitHandle}>
+            <FormControl isInvalid={errors.message} isRequired>
+              <FormLabel>Email</FormLabel>
+              <Input type="email" placeholder="Email" onChange={e => setUserDetails({...userDetails, email: e.target.value})}/>
             </FormControl>
-            <Button mt={4} isLoading={formState.isSubmitting} type="submit" size="md" variant="outline" width="100px" bgColor="primary.100">
-            Submit
+            <FormControl mt={6} isInvalid={errors.message} isRequired>
+              <FormLabel>Password</FormLabel>
+              <Input type="password" placeholder="*******" onChange={e => setUserDetails({...userDetails, password: e.target.value})}/>
+            </FormControl>
+            <Button width="full" mt={4} type="submit" variantcolor="teal" variant="outline" >
+              Sign In
             </Button>
-    </form>
+          </form>
         </Box>
-      </VStack>
+        </Box>
+      </Flex>
       
     </ThemeProvider>
     

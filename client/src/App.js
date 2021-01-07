@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Router} from '@reach/router';
-import {ChakraProvider, CSSReset, ThemeProvider} from '@chakra-ui/react';
+import {ChakraProvider, CSSReset, ThemeProvider, ColorModeProvider} from '@chakra-ui/react';
 import customTheme from './customTheme';
 import NavBar from './Components/NavBar/NavBar';
 import LandingPage from './Components/LandingPage/LandingPage';
@@ -16,19 +16,19 @@ function App() {
     <>
     <React.StrictMode>
       <ThemeProvider theme={customTheme}>
-        <ChakraProvider resetCSS="true">
+        <ChakraProvider>
           <CSSReset />
-          <div className="App">
-            <NavBar />
-            <Router>
-              <LandingPage path="/"/>
-              <Login path="user/login" />
-              <Signup path="user/register" />
-              <Dashboard path="application/dashboard"/>
-            </Router>
-          </div>
-
+            <div className="App">
+              <NavBar />
+              <Router>
+                <LandingPage path="/"/>
+                <Login path="user/login" />
+                <Signup path="user/register" />
+                <Dashboard path="application/dashboard"/>
+              </Router>
+            </div>
         </ChakraProvider>
+          
       </ThemeProvider>
       </React.StrictMode>
     </>

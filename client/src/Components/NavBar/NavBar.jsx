@@ -1,10 +1,11 @@
 import { Link } from '@reach/router';
-import React, {useState} from 'react';
+import { useColorMode, Box, IconButton } from '@chakra-ui/react';
+import React from 'react';
 import './NavBar.css';
 
 export default function NavBar () {
 
-
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <div className="nav-wrapper">
@@ -16,10 +17,10 @@ export default function NavBar () {
         <Link to="/user/login">
           <button 
             className="login-btn"
-
             >LOGIN
           </button>
         </Link>
+
         <Link to="/user/register">
           <button 
             className="register-btn"
@@ -27,6 +28,13 @@ export default function NavBar () {
           </button>
         </Link>
         
+      <Box textAlign="right" mr={3} ml={3}>
+        <IconButton
+          icon={colorMode === 'light' ? 'moon' : 'sun'}
+          onClick={toggleColorMode}
+          variant="ghost"
+        />
+      </Box>
       </div>
     </div>
   )
