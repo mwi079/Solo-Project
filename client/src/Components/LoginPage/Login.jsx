@@ -32,7 +32,7 @@ export default function Login () {
   async function loginUser (credentials) {
     await getToken(credentials)
       .then(res => res.data)
-      .catch(error => setError(error.response));
+      .catch(error => setError(error.response.data));
 }
 
   async function submitHandle(e) {
@@ -52,6 +52,7 @@ export default function Login () {
           </Box>
 
           <Box my={4} textAlign="left" p={8} maxWidth="500px" borderWidth={1} borderRadius={8} boxShadow="lg">
+          {error && <ErrorMessage message={error}/>}
           <form onSubmit={submitHandle}>
             <FormControl isInvalid={errors.message} isRequired>
               <FormLabel>Email</FormLabel>
