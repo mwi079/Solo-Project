@@ -18,4 +18,4 @@ const customTheme = {
   },
 }
 
-export default customTheme
+export default customTheme;

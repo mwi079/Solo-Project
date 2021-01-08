@@ -1,5 +1,9 @@
 import { Link } from '@reach/router';
 import { useColorMode, Box, IconButton } from '@chakra-ui/react';
+import {
+  MoonIcon,
+  SunIcon
+} from '@chakra-ui/icons';
 import React from 'react';
 import './NavBar.css';
 
@@ -14,7 +18,7 @@ export default function NavBar () {
       </div>
 
       <div className="navigation">
-        <Link to="/user/login">
+        <Link to="/user/register">
           <button 
             className="login-btn"
             >LOGIN
@@ -29,11 +33,10 @@ export default function NavBar () {
         </Link>
         
       <Box textAlign="right" mr={3} ml={3}>
-        <IconButton
-          icon={colorMode === 'light' ? 'moon' : 'sun'}
-          onClick={toggleColorMode}
-          variant="ghost"
-        />
+          {colorMode === 'light' 
+            ? <IconButton  icon={<SunIcon />} onClick={toggleColorMode}/>
+            : <IconButton icon={<MoonIcon />} onClick={toggleColorMode}/>
+          } 
       </Box>
       </div>
     </div>
