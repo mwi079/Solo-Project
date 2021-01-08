@@ -1,6 +1,6 @@
-import { AlertDescription, AlertIcon, Box } from '@chakra-ui/react';
-import React from 'react';
-import {Alert} from '@chakra-ui/react';
+import { AlertDescription, AlertIcon, Box } from "@chakra-ui/react";
+import React from "react";
+import { Alert } from "@chakra-ui/react";
 
 export default function ErrorMessage({ message }) {
   return (
