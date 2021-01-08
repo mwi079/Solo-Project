@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "format": "prettier \"src/**/*.{js,html,jsx}\"",
+    "format": "prettier \"src/**/*.{js,html,jsx}\" --write",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet"
   },
   "repository": {

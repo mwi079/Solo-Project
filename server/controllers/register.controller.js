@@ -1,22 +1,21 @@
-const { User } = require('../models/user.model');
-const { userValidation } = require('../validation');
-const bcrypt = require('bcrypt');
+const { User } = require("../models/user.model");
+const { userValidation } = require("../validation");
+const bcrypt = require("bcrypt");
 
-async function registerUser (ctx) {
-
-  const {name, email, password} = ctx.request.body;
+async function registerUser(ctx) {
+  const { name, email, password } = ctx.request.body;
   const { error } = userValidation({ name, email, password });
-  
+
   if (error) {
     ctx.status = 400;
-    return ctx.body = error.details[0].message
+    return (ctx.body = error.details[0].message);
   }
 
   // Check if user is already in db
-  const emailExists = await User.findOne({email: email})
+  const emailExists = await User.findOne({ email: email });
   if (emailExists) {
     ctx.status = 400;
-    return ctx.body = 'Email already exists';
+    return (ctx.body = "Email already exists");
   }
 
   // Hash password
@@ -24,7 +23,7 @@ async function registerUser (ctx) {
   const hashedPassword = await bcrypt.hash(password, salt);
 
   const user = new User({ name, email, password: hashedPassword });
-  
+
   try {
     const savedUser = await User.create(user);
     ctx.body = savedUser;
@@ -34,4 +33,4 @@ async function registerUser (ctx) {
   }
 }
 
-module.exports = {registerUser};
+module.exports = { registerUser };

@@ -49,7 +49,7 @@ export default function Signup() {
     <ThemeProvider theme={customTheme}>
       <Flex width="full" align="center" justifyContent="center" mt={10}>
         <Box>
-          {error ? <ErrorMessage message={error} /> : <SuccessMessage />}
+          {error && <ErrorMessage message={error} />}
           <form onSubmit={submitHandle}>
             <FormControl isInvalid={errors.message} isRequired>
               <FormLabel>Name</FormLabel>
