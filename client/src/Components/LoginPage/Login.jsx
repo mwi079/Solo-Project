@@ -6,14 +6,16 @@ import {
   FormLabel,
   FormControl,
   Input,
+  InputRightElement,
   Button,
   ThemeProvider,
   Flex,
+  InputGroup,
 } from "@chakra-ui/react";
 import customTheme from "../../customTheme";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import { getToken } from "../../services/ApiClientService";
-import { createHistory, Redirect } from "@reach/router";
+import { Redirect } from "@reach/router";
 
 function setToken(userToken) {
   localStorage.setItem("token", userToken);
@@ -26,6 +28,7 @@ export default function Login() {
   const [userDetails, setUserDetails] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
+  const [show, setShow] = useState(false);
 
   async function loginUser(credentials) {
     await getToken(credentials)
@@ -58,6 +61,7 @@ export default function Login() {
               <FormControl isInvalid={errors.message} isRequired>
                 <FormLabel>Email</FormLabel>
                 <Input
+                  textOverflow="ellipsis"
                   type="email"
                   placeholder="Email"
                   onChange={(e) =>
@@ -65,15 +69,30 @@ export default function Login() {
                   }
                 />
               </FormControl>
-              <FormControl isInvalid={errors.message} isRequired>
+              <FormControl isInvalid={errors.message} isRequired my={3}>
                 <FormLabel>Password</FormLabel>
-                <Input
-                  type="password"
-                  placeholder="*******"
-                  onChange={(e) =>
-                    setUserDetails({ ...userDetails, password: e.target.value })
-                  }
-                />
+                <InputGroup size="md">
+                  <Input
+                    textOverflow="ellipsis"
+                    type={show ? "text" : "password"}
+                    placeholder="*******"
+                    onChange={(e) =>
+                      setUserDetails({
+                        ...userDetails,
+                        password: e.target.value,
+                      })
+                    }
+                  />
+                  <InputRightElement width="4.5rem">
+                    <Button
+                      h="1.75rem"
+                      size="sm"
+                      onClick={() => setShow(!show)}
+                    >
+                      {show ? "Hide" : "Show"}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
               </FormControl>
               <Button
                 width="full"

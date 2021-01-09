@@ -6,6 +6,8 @@ import {
   FormLabel,
   FormControl,
   Input,
+  InputGroup,
+  InputRightElement,
   Button,
   ThemeProvider,
   Flex,
@@ -13,7 +15,7 @@ import {
 import customTheme from "../../customTheme";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import { useForm } from "react-hook-form";
-import SuccessMessage from "../SuccessMessage";
+// import SuccessMessage from "../SuccessMessage";
 
 export default function Signup() {
   async function registerNewUser({ name, email, password }) {
@@ -31,6 +33,7 @@ export default function Signup() {
     password: "",
   });
   const [error, setError] = useState("");
+  const [show, setShow] = useState(false);
 
   const submitHandle = (e) => {
     e.preventDefault();
@@ -73,13 +76,23 @@ export default function Signup() {
             </FormControl>
             <FormControl my={3} isInvalid={errors.message} isRequired>
               <FormLabel>Password</FormLabel>
-              <Input
-                type="password"
-                placeholder="*******"
-                onChange={(e) =>
-                  setUserDetails({ ...userDetails, password: e.target.value })
-                }
-              />
+              <InputGroup size="md">
+                <Input
+                  type={show ? "text" : "password"}
+                  placeholder="*******"
+                  onChange={(e) =>
+                    setUserDetails({
+                      ...userDetails,
+                      password: e.target.value,
+                    })
+                  }
+                />
+                <InputRightElement width="4.5rem">
+                  <Button h="1.75rem" size="sm" onClick={() => setShow(!show)}>
+                    {show ? "Hide" : "Show"}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
             </FormControl>
             <Button
               width="full"
