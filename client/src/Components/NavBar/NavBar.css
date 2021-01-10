@@ -1,7 +1,5 @@
 .nav-wrapper {
   display: flex;
-  padding: 15px;
-  box-shadow: 0 4px 2px -2px #3333;
   justify-content: space-between;
   height: 70px;
 }
@@ -23,8 +21,8 @@
   background: transparent;
 }
 
-.navigation {
-  display: flex;
+.css-k008qs {
+  margin-right: 20px;
 }
 
 .title {
@@ -42,7 +40,7 @@
   transform: translateY(-100%);
   background-color: rgba(0, 0, 0, 0);
   transition: transform 0s 0.2s, background-color 0.4s 0s;
-  z-index: 1000;
+  z-index: 1200;
 }
 
 .form-wrapper.show {
@@ -53,5 +51,5 @@
 
 button.scrolled {
   background-color: #edae49;
-  transition: background 1s ease-in;
+  transition: background-color 1s ease-in;
 }

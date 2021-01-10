@@ -6,6 +6,7 @@
   display: flex;
   margin: 30px 20px;
   position: relative;
+  justify-content: center;
 }
 
 .main-title {

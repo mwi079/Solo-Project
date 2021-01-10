@@ -15,6 +15,9 @@ const colors = extendTheme({
   button: {
     500: "#EDAE49",
   },
+  dark: {
+    500: "#FFBA08",
+  },
 });
 
 export default colors;
