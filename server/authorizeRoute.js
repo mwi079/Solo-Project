@@ -1,13 +1,13 @@
-const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
 
 // middleware function to be added to protected routes
-module.exports = function (ctx, next) {
-  const token = ctx.get('auth-token')
+function authorizeRoute(ctx, next) {
+  const token = ctx.get("auth-token");
 
   if (!token) {
-    ctx.status = 401 //access denied
-    return ctx.body = 'Access Denied';
+    ctx.status = 401; //access denied
+    return (ctx.body = "Access Denied");
   }
 
   try {
@@ -16,6 +16,8 @@ module.exports = function (ctx, next) {
     next();
   } catch (error) {
     ctx.status = 400;
-    ctx.body = 'Invalid Token';
+    ctx.body = "Invalid Token";
   }
 }
+
+module.exports = { authorizeRoute };

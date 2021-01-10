@@ -2,8 +2,25 @@
   display: flex;
   padding: 15px;
   box-shadow: 0 4px 2px -2px #3333;
-  margin: auto 20px;
   justify-content: space-between;
+  height: 70px;
+}
+
+.nav-wrapper.css-1hh93v9.scrolled {
+  background: rgb(173, 232, 244);
+  background: linear-gradient(
+    90deg,
+    rgba(173, 232, 244, 1) 16%,
+    rgba(0, 166, 200, 1) 100%
+  );
+  transition: background-color 1s ease-in;
+  z-index: 1050;
+}
+
+.nav-wrapper.css-1hh93v9 {
+  position: sticky;
+  top: 0;
+  background: transparent;
 }
 
 .navigation {
@@ -24,7 +41,7 @@
   height: 100vh;
   transform: translateY(-100%);
   background-color: rgba(0, 0, 0, 0);
-  transition: transform 0s 0.6s, background-color 0.6s 0s;
+  transition: transform 0s 0.2s, background-color 0.4s 0s;
   z-index: 1000;
 }
 
@@ -32,4 +49,9 @@
   transform: translateY(0);
   background-color: rgba(0, 0, 0, 0.7);
   transition: transform 0s, background-color 0.6s 0.1s;
+}
+
+button.scrolled {
+  background-color: #edae49;
+  transition: background 1s ease-in;
 }

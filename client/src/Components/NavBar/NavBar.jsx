@@ -8,15 +8,20 @@ import {
   Icon,
   Button,
   Heading,
+  Tooltip,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import React from "react";
+import React, { useState } from "react";
 import "./NavBar.css";
 import { Flex } from "@chakra-ui/react";
 import UserForm from "../UserForm/UserForm";
 
 export default function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const colorScheme = useColorModeValue("button", "yellow");
+  // const color = useColorModeValue("yellow", "red");
 
   const handleClick = (e) => {
     console.log(e.target.classList);
@@ -28,12 +33,24 @@ export default function NavBar() {
     }
   };
 
+  const changeBackground = () => {
+    let nav = document.querySelector(".nav-wrapper");
+    window.scrollY >= nav.clientHeight
+      ? setIsScrolled(true)
+      : setIsScrolled(false);
+  };
+
+  window.addEventListener("scroll", changeBackground);
+
   return (
     <>
-      <div className="form-wrapper" onClick={(e) => handleClick(e)}>
+      <div className="form-wrapper" onClick={handleClick}>
         <UserForm />
       </div>
-      <Flex p={3} className="nav-wrapper">
+      <Flex
+        p={3}
+        className={isScrolled ? "nav-wrapper scrolled" : "nav-wrapper"}
+      >
         <Flex flexDir="column" justifyContent="center">
           <Heading as="h2" size="md">
             Codagora
@@ -42,7 +59,13 @@ export default function NavBar() {
         <Flex>
           <Box>
             <Link to="/">
-              <Button p={3} boxShadow="lg" mx={2} colorScheme="primary">
+              <Button
+                p={3}
+                boxShadow="lg"
+                mx={2}
+                colorScheme={colorScheme}
+                className={isScrolled ? "scrolled" : "button"}
+              >
                 <Icon as={MdHome} />
               </Button>
             </Link>
@@ -55,17 +78,19 @@ export default function NavBar() {
             )}
           </Box>
 
-          <Button
-            p={3}
-            boxShadow="lg"
-            mx={2}
-            borderRadius="50%"
-            onClick={() =>
-              document.querySelector(".form-wrapper").classList.add("show")
-            }
-          >
-            <img src={UserIcon} alt="" />
-          </Button>
+          <Tooltip label="Register" arrowSize={3} hasArrow>
+            <Button
+              p={3}
+              boxShadow="lg"
+              mx={2}
+              borderRadius="50%"
+              onClick={() =>
+                document.querySelector(".form-wrapper").classList.add("show")
+              }
+            >
+              <img src={UserIcon} alt="" />
+            </Button>
+          </Tooltip>
         </Flex>
       </Flex>
     </>

@@ -40,6 +40,7 @@ export default function Login() {
     e.preventDefault();
     setIsLoading(true);
     try {
+      setUserDetails({ email: "", password: "" });
       loginUser(userDetails);
       setIsLoading(false);
       setLoggedIn(true);
@@ -66,12 +67,14 @@ export default function Login() {
                   onChange={(e) =>
                     setUserDetails({ ...userDetails, email: e.target.value })
                   }
+                  value={userDetails.email}
                 />
               </FormControl>
               <FormControl isInvalid={errors.message} isRequired my={3}>
                 <FormLabel>Password</FormLabel>
                 <InputGroup size="md">
                   <Input
+                    value={userDetails.password}
                     textOverflow="ellipsis"
                     type={show ? "text" : "password"}
                     placeholder="*******"
@@ -94,6 +97,7 @@ export default function Login() {
                 </InputGroup>
               </FormControl>
               <Button
+                onClick={submitHandle}
                 width="full"
                 mt={4}
                 type="submit"

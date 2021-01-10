@@ -33,18 +33,17 @@ export default function Signup() {
   const [error, setError] = useState("");
   const [show, setShow] = useState(false);
 
-  const submitHandle = (e) => {
+  function submitHandle(e) {
     e.preventDefault();
     try {
       registerNewUser(userDetails);
       setIsLoading(false);
-      // setUserDetails({name:"", email: "", password:""});
+      setUserDetails({ name: "", email: "", password: "" });
       setError("");
     } catch (error) {
       setIsLoading(false);
-      // setUserDetails({name:"", email: "", password:""});
     }
-  };
+  }
 
   return (
     <>
@@ -55,6 +54,7 @@ export default function Signup() {
             <FormControl isInvalid={errors.message} isRequired>
               <FormLabel>Name</FormLabel>
               <Input
+                value={userDetails.name}
                 type="text"
                 placeholder="Name"
                 onChange={(e) =>
@@ -65,6 +65,7 @@ export default function Signup() {
             <FormControl mt={3} isInvalid={errors.message} isRequired>
               <FormLabel>Email</FormLabel>
               <Input
+                value={userDetails.email}
                 type="email"
                 placeholder="Email"
                 onChange={(e) =>
@@ -76,6 +77,7 @@ export default function Signup() {
               <FormLabel>Password</FormLabel>
               <InputGroup size="md">
                 <Input
+                  value={userDetails.password}
                   type={show ? "text" : "password"}
                   placeholder="*******"
                   onChange={(e) =>

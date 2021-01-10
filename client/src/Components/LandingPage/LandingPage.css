@@ -1,3 +1,7 @@
+#root {
+  height: 200vh;
+}
+
 .main-wrapper {
   display: flex;
   margin: 30px 20px;
