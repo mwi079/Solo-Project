@@ -9,10 +9,8 @@ import {
   InputGroup,
   InputRightElement,
   Button,
-  ThemeProvider,
   Flex,
 } from "@chakra-ui/react";
-import customTheme from "../../customTheme";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import { useForm } from "react-hook-form";
 // import SuccessMessage from "../SuccessMessage";
@@ -49,7 +47,7 @@ export default function Signup() {
   };
 
   return (
-    <ThemeProvider theme={customTheme}>
+    <>
       <Flex width="full" align="center" justifyContent="center" mt={10}>
         <Box>
           {error && <ErrorMessage message={error} />}
@@ -113,6 +111,6 @@ export default function Signup() {
           </form>
         </Box>
       </Flex>
-    </ThemeProvider>
+    </>
   );
 }

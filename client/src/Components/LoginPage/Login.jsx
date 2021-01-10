@@ -8,12 +8,11 @@ import {
   Input,
   InputRightElement,
   Button,
-  ThemeProvider,
   Flex,
   InputGroup,
 } from "@chakra-ui/react";
-import customTheme from "../../customTheme";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import "./Login.css";
 import { getToken } from "../../services/ApiClientService";
 import { Redirect } from "@reach/router";
 
@@ -50,7 +49,7 @@ export default function Login() {
   }
 
   return (
-    <ThemeProvider theme={customTheme}>
+    <>
       {loggedIn ? (
         <Redirect from="/api/user/login" to="/home" noThrow />
       ) : (
@@ -114,6 +113,6 @@ export default function Login() {
           </Box>
         </Flex>
       )}
-    </ThemeProvider>
+    </>
   );
 }

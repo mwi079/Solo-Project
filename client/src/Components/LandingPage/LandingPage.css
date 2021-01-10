@@ -1,6 +1,7 @@
 .main-wrapper {
   display: flex;
   margin: 30px 20px;
+  position: relative;
 }
 
 .main-title {
