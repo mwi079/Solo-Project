@@ -1,10 +1,10 @@
 async function getProfile(ctx) {
-  console.log(ctx.request.user);
   try {
     // extract user info from the request
     const { _id, name, email } = ctx.user;
     const user = { _id, name, email };
     ctx.status = 200;
+    console.log(user, "user");
     ctx.body = user;
   } catch (error) {
     ctx.status = 401;

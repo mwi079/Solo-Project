@@ -12,8 +12,8 @@ export async function registerUser({ name, email, password }) {
 }
 
 export async function getProfile(accessToken) {
-  return axios.get("/api/user/profile", {
-    headers: { Authorization: `Bearer ${accessToken}` },
+  return axios.get(`${apiUrl}/api/user/profile`, {
+    headers: { Authorization: accessToken },
   });
 }
 
