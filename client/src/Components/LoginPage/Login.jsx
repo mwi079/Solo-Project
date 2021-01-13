@@ -13,7 +13,11 @@ import {
 } from "@chakra-ui/react";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import "./Login.css";
-import { login, completeAuthentication } from "../../services/ApiClientService";
+import {
+  login,
+  completeAuthentication,
+  getProfile,
+} from "../../services/ApiClientService";
 import { Redirect } from "@reach/router";
 import customTheme from "../../theme/";
 
@@ -26,9 +30,9 @@ export default function Login() {
 
   async function loginUser(credentials) {
     await login(credentials)
-      .then((res) => res.data)
-      .then((token) => completeAuthentication(token))
-      .catch((error) => setError(error.response.data));
+      .then((token) => getProfile(token.data))
+      .then((token) => completeAuthentication(token.data))
+      .catch((error) => setError(error));
   }
 
   function submitHandle(e) {

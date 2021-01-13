@@ -1,6 +1,10 @@
 const { User } = require("../models/user.model");
 const { userValidation } = require("../validation/user_validation");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 async function registerUser(ctx) {
   const { name, email, password } = ctx.request.body;
@@ -26,8 +30,11 @@ async function registerUser(ctx) {
   const user = new User({ name, email, password: hashedPassword });
 
   try {
-    await user.save();
-    ctx.body = savedUser;
+    const { _id } = await user.save();
+    const accessToken = jwt.sign({ _id }, process.env.TOKEN_SECRET);
+
+    ctx.status = 200;
+    ctx.body = accessToken;
   } catch (error) {
     ctx.status = 400;
     ctx.body = error;
