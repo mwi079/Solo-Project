@@ -26,7 +26,7 @@ export async function isAuthenticated() {
 }
 
 export async function logOut() {
-  localStorage.removeItem("token");
+  localStorage.clear();
 }
 
 // topics api

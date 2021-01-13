@@ -12,7 +12,7 @@ async function registerUser(ctx) {
   }
 
   // Check if user is already in db
-  const emailExists = await User.findOne({ email: email });
+  const emailExists = await User.findOne({ email });
 
   if (emailExists) {
     ctx.status = 400;

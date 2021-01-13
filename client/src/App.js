@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Router } from "@reach/router";
 import { CSSReset, ThemeProvider } from "@chakra-ui/react";
 import customTheme from "./theme/";
