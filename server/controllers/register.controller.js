@@ -32,7 +32,6 @@ async function registerUser(ctx) {
   try {
     const { _id } = await user.save();
     const accessToken = jwt.sign({ _id }, process.env.TOKEN_SECRET);
-
     ctx.status = 200;
     ctx.body = accessToken;
   } catch (error) {

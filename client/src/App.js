@@ -15,8 +15,6 @@ function App() {
     window.localStorage.getItem("token") ? true : false
   );
 
-  console.log(window.localStorage.getItem("token"));
-
   return (
     <>
       <React.StrictMode>

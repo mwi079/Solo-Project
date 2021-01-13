@@ -18,7 +18,6 @@ import {
   completeAuthentication,
   getProfile,
 } from "../../services/ApiClientService";
-// import { Redirect } from "@reach/router";'
 import customTheme from "../../theme/";
 
 export default function Login({ isAuth, setUser, setIsAuth }) {
@@ -28,34 +27,43 @@ export default function Login({ isAuth, setUser, setIsAuth }) {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    isAuth && document.querySelector(".form-wrapper").classList.remove("show");
+    isAuth &&
+      !error &&
+      document.querySelector(".form-wrapper").classList.remove("show");
   }, [isAuth, setIsAuth]);
 
-  async function loginUser(credentials) {
-    await login(credentials)
+  function loginUser(credentials) {
+    return login(credentials)
       .then((token) => {
         getProfile(token.data).then((user) => setUser(user.data));
         completeAuthentication(token.data);
+        return { error: null };
       })
-      .catch((error) => setError(error.response.data));
+      .catch((error) => ({ error: error.response.data }));
   }
 
-  function submitHandle(e) {
+  async function submitHandle(e) {
     e.preventDefault();
     setIsLoading(true);
     try {
-      loginUser(userDetails);
-      setIsLoading(false);
-      if (!error) {
-        setIsAuth(true);
-        // document.querySelector(".form-wrapper").classList.remove("show");
-      }
       setError("");
+      const result = await loginUser(userDetails);
+      setIsLoading(false);
+      if (!result.error) {
+        setIsAuth(true);
+      } else {
+        setError(result.error);
+      }
       setUserDetails({ email: "", password: "" });
     } catch (error) {
+      setError(error);
       setIsLoading(false);
     }
   }
+
+  const validateForm = () => {
+    return !userDetails.email || !userDetails.password;
+  };
 
   return (
     <>
@@ -105,6 +113,7 @@ export default function Login({ isAuth, setUser, setIsAuth }) {
                 </InputGroup>
               </FormControl>
               <Button
+                disabled={validateForm()}
                 onClick={submitHandle}
                 width="full"
                 mt={4}

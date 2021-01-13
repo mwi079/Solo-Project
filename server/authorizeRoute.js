@@ -7,7 +7,6 @@ dotenv.config();
 // middleware function to be added to protected routes
 async function authorizeRoute(ctx, next) {
   const authHeaders = ctx.request.headers["authorization"];
-  console.log(authHeaders);
 
   if (!authHeaders) {
     ctx.status = 403; //access denied
@@ -21,7 +20,6 @@ async function authorizeRoute(ctx, next) {
 
     // and try to find the user
     const user = await User.findOne({ _id });
-    console.log("user", user);
 
     ctx.user = user;
     next();

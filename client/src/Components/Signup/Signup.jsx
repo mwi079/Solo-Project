@@ -18,7 +18,6 @@ import {
 } from "@chakra-ui/react";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import customTheme from "../../theme/";
-// import { Redirect } from "@reach/router";
 
 export default function Signup({ isAuth, setUser, setIsAuth }) {
   async function registerNewUser({ name, email, password }) {
@@ -58,6 +57,10 @@ export default function Signup({ isAuth, setUser, setIsAuth }) {
       setIsLoading(false);
     }
   }
+
+  const validateForm = () => {
+    return !userDetails.email || !userDetails.password || !userDetails.name;
+  };
 
   return (
     <>
@@ -123,6 +126,7 @@ export default function Signup({ isAuth, setUser, setIsAuth }) {
                 colorScheme="primary"
                 variant="outline"
                 boxShadow="sm"
+                disabled={validateForm()}
                 _hover={{ boxShadow: "md" }}
                 _active={{ boxShadow: "lg" }}
               >

@@ -27,11 +27,10 @@ async function loginUser(ctx) {
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, {
       expiresIn: "24h",
     });
-
     ctx.body = token;
   } catch (error) {
     ctx.status = 400;
-    return (ctx.body = error);
+    ctx.body = error;
   }
 
   // ctx.set("token", token);
