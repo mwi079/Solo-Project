@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Router } from "@reach/router";
 import { CSSReset, ThemeProvider } from "@chakra-ui/react";
 import customTheme from "./theme/";
@@ -10,6 +10,13 @@ import { postTopic } from "./services/ApiClientService";
 import { ScrollDirectionProvider } from "@hermanwikner/react-scroll-direction";
 
 function App() {
+  const [user, setUser] = useState(null);
+  const [isAuth, setIsAuth] = useState(
+    window.localStorage.getItem("token") ? true : false
+  );
+
+  console.log(window.localStorage.getItem("token"));
+
   return (
     <>
       <React.StrictMode>
@@ -17,7 +24,12 @@ function App() {
           <Fonts />
           <CSSReset />
           <ScrollDirectionProvider>
-            <NavBar />
+            <NavBar
+              setIsAuth={setIsAuth}
+              user={user}
+              setUser={setUser}
+              isAuth={isAuth}
+            />
             <Router>
               <LandingPage path="/" postTopic={postTopic} />
               <Home path="/home" />

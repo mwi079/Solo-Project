@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   CircularProgress,
@@ -18,21 +18,26 @@ import {
   completeAuthentication,
   getProfile,
 } from "../../services/ApiClientService";
-import { Redirect } from "@reach/router";
+// import { Redirect } from "@reach/router";'
 import customTheme from "../../theme/";
 
-export default function Login() {
+export default function Login({ isAuth, setUser, setIsAuth }) {
   const [isLoading, setIsLoading] = useState(false);
   const [userDetails, setUserDetails] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
   const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    isAuth && document.querySelector(".form-wrapper").classList.remove("show");
+  }, [isAuth, setIsAuth]);
 
   async function loginUser(credentials) {
     await login(credentials)
-      .then((token) => getProfile(token.data))
-      .then((token) => completeAuthentication(token.data))
-      .catch((error) => setError(error));
+      .then((token) => {
+        getProfile(token.data).then((user) => setUser(user.data));
+        completeAuthentication(token.data);
+      })
+      .catch((error) => setError(error.response.data));
   }
 
   function submitHandle(e) {
@@ -41,88 +46,85 @@ export default function Login() {
     try {
       loginUser(userDetails);
       setIsLoading(false);
-      setLoggedIn(true);
+      if (!error) {
+        setIsAuth(true);
+        // document.querySelector(".form-wrapper").classList.remove("show");
+      }
+      setError("");
       setUserDetails({ email: "", password: "" });
     } catch (error) {
       setIsLoading(false);
-      setError("");
     }
   }
 
   return (
     <>
-      {loggedIn ? (
-        <Redirect from="/api/user/login" to="/home" noThrow />
-      ) : (
-        <ThemeProvider theme={customTheme}>
-          <Flex width="full" align="center" justifyContent="center" mt={10}>
-            <Box p={2}>
-              {error && <ErrorMessage message={error} />}
-              <form onSubmit={submitHandle}>
-                <FormControl isRequired>
-                  <FormLabel>Email</FormLabel>
+      <ThemeProvider theme={customTheme}>
+        <Flex width="full" align="center" justifyContent="center" mt={10}>
+          <Box p={2}>
+            {error && <ErrorMessage message={error} />}
+            <form onSubmit={submitHandle}>
+              <FormControl isRequired>
+                <FormLabel>Email</FormLabel>
+                <Input
+                  autoFocus={false}
+                  textOverflow="ellipsis"
+                  type="email"
+                  placeholder="Email"
+                  onChange={(e) =>
+                    setUserDetails({ ...userDetails, email: e.target.value })
+                  }
+                  value={userDetails.email}
+                />
+              </FormControl>
+              <FormControl isRequired my={3}>
+                <FormLabel>Password</FormLabel>
+                <InputGroup size="md">
                   <Input
+                    autoFocus={false}
+                    value={userDetails.password}
                     textOverflow="ellipsis"
-                    type="email"
-                    placeholder="Email"
+                    type={show ? "text" : "password"}
+                    placeholder="*******"
                     onChange={(e) =>
-                      setUserDetails({ ...userDetails, email: e.target.value })
+                      setUserDetails({
+                        ...userDetails,
+                        password: e.target.value,
+                      })
                     }
-                    value={userDetails.email}
                   />
-                </FormControl>
-                <FormControl isRequired my={3}>
-                  <FormLabel>Password</FormLabel>
-                  <InputGroup size="md">
-                    <Input
-                      value={userDetails.password}
-                      textOverflow="ellipsis"
-                      type={show ? "text" : "password"}
-                      placeholder="*******"
-                      onChange={(e) =>
-                        setUserDetails({
-                          ...userDetails,
-                          password: e.target.value,
-                        })
-                      }
-                    />
-                    <InputRightElement width="4.5rem">
-                      <Button
-                        h="1.75rem"
-                        size="sm"
-                        onClick={() => setShow(!show)}
-                      >
-                        {show ? "Hide" : "Show"}
-                      </Button>
-                    </InputRightElement>
-                  </InputGroup>
-                </FormControl>
-                <Button
-                  onClick={submitHandle}
-                  width="full"
-                  mt={4}
-                  type="submit"
-                  colorScheme="primary"
-                  variant="outline"
-                  boxShadow="sm"
-                  _hover={{ boxShadow: "md" }}
-                  _active={{ boxShadow: "lg" }}
-                >
-                  {isLoading ? (
-                    <CircularProgress
-                      isIndeterminate
-                      size="24px"
-                      color="teal"
-                    />
-                  ) : (
-                    "Sign In"
-                  )}
-                </Button>
-              </form>
-            </Box>
-          </Flex>
-        </ThemeProvider>
-      )}
+                  <InputRightElement width="4.5rem">
+                    <Button
+                      h="1.75rem"
+                      size="sm"
+                      onClick={() => setShow(!show)}
+                    >
+                      {show ? "Hide" : "Show"}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
+              <Button
+                onClick={submitHandle}
+                width="full"
+                mt={4}
+                type="submit"
+                colorScheme="primary"
+                variant="outline"
+                boxShadow="sm"
+                _hover={{ boxShadow: "md" }}
+                _active={{ boxShadow: "lg" }}
+              >
+                {isLoading ? (
+                  <CircularProgress isIndeterminate size="24px" color="teal" />
+                ) : (
+                  "Sign In"
+                )}
+              </Button>
+            </form>
+          </Box>
+        </Flex>
+      </ThemeProvider>
     </>
   );
 }

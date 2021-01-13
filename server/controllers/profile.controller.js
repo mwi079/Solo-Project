@@ -4,7 +4,6 @@ async function getProfile(ctx) {
     const { _id, name, email } = ctx.user;
     const user = { _id, name, email };
     ctx.status = 200;
-    console.log(user, "user");
     ctx.body = user;
   } catch (error) {
     ctx.status = 401;

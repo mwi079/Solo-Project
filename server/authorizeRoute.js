@@ -7,6 +7,7 @@ dotenv.config();
 // middleware function to be added to protected routes
 async function authorizeRoute(ctx, next) {
   const authHeaders = ctx.request.headers["authorization"];
+  console.log(authHeaders);
 
   if (!authHeaders) {
     ctx.status = 403; //access denied

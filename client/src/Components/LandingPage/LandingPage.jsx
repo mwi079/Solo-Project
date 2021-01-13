@@ -1,8 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import "./LandingPage.css";
 import Philo from "../../assets/philo_icons.svg";
 import { Button, Container, FormLabel, Input } from "@chakra-ui/react";
-// import { UserContext } from "../context/UserContext";
 
 export default function LandingPage({ postTopic }) {
   const [topicDetails, setTopicDetails] = useState({
