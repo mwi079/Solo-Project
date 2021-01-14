@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Box,
   CircularProgress,
@@ -19,23 +19,27 @@ import {
   getProfile,
 } from "../../services/ApiUserClientService";
 import customTheme from "../../theme/";
+import { StateContext } from "../../global.context/globalStore.reducer";
 
-export default function Login({ isAuth, setUser, setIsAuth }) {
+export default function Login() {
+  const { state, dispatch } = useContext(StateContext);
   const [isLoading, setIsLoading] = useState(false);
   const [userDetails, setUserDetails] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    isAuth &&
+    state.isAuth &&
       !error &&
       document.querySelector(".form-wrapper").classList.remove("show");
-  }, [isAuth, setIsAuth]);
+  }, [state.isAuth]);
 
   function loginUser(credentials) {
     return login(credentials)
       .then((token) => {
-        getProfile(token.data).then((user) => setUser(user.data));
+        getProfile(token.data).then((user) =>
+          dispatch({ type: "user", payload: user.data })
+        );
         completeAuthentication(token.data);
         return { error: null };
       })
@@ -50,7 +54,7 @@ export default function Login({ isAuth, setUser, setIsAuth }) {
       const result = await loginUser(userDetails);
       setIsLoading(false);
       if (!result.error) {
-        setIsAuth(true);
+        dispatch({ type: "isAuth", payload: true });
       } else {
         setError(result.error);
       }

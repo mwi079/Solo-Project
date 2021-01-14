@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   registerUser,
   completeAuthentication,
@@ -18,14 +18,15 @@ import {
 } from "@chakra-ui/react";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import customTheme from "../../theme/";
+import { StateContext } from "../../global.context/globalStore.reducer";
 
-export default function Signup({ isAuth, setUser, setIsAuth }) {
+export default function Signup() {
   async function registerNewUser({ name, email, password }) {
     registerUser({ name, email, password })
       .then((res) => {
         completeAuthentication(res.data);
         getProfile(res.data)
-          .then((res) => setUser(res.data))
+          .then((res) => dispatch({ type: "user", payload: res.data }))
           .catch((error) => setError(error.response.data));
       })
       .catch((error) => setError(error.response.data));
@@ -39,10 +40,12 @@ export default function Signup({ isAuth, setUser, setIsAuth }) {
   });
   const [error, setError] = useState("");
   const [show, setShow] = useState(false);
+  const { state, dispatch } = useContext(StateContext);
 
   useEffect(() => {
-    isAuth && document.querySelector(".form-wrapper").classList.remove("show");
-  }, [isAuth, setIsAuth]);
+    state.isAuth &&
+      document.querySelector(".form-wrapper").classList.remove("show");
+  }, [state.isAuth]);
 
   function submitHandle(e) {
     e.preventDefault();
@@ -50,7 +53,7 @@ export default function Signup({ isAuth, setUser, setIsAuth }) {
       registerNewUser(userDetails);
       setIsLoading(false);
       if (!error) {
-        setIsAuth(true);
+        dispatch({ type: "isAuth", payload: true });
       }
       setUserDetails({ name: "", email: "", password: "" });
     } catch (error) {

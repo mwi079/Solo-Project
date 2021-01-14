@@ -2,6 +2,7 @@ import React from "react";
 import "./LandingPage.css";
 import Philo from "../../assets/philo_icons.svg";
 import { Flex } from "@chakra-ui/react";
+import Dashboard from "../Dashboard/Dashboard";
 
 export default function LandingPage() {
   return (
@@ -23,6 +24,7 @@ export default function LandingPage() {
           <img src={Philo} alt="Philo" />
         </div>
       </Flex>
+      <Dashboard />
     </>
   );
 }

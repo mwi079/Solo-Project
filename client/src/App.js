@@ -1,18 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { Router } from "@reach/router";
 import { CSSReset, ThemeProvider } from "@chakra-ui/react";
 import customTheme from "./theme/";
 import NavBar from "./Components/NavBar/NavBar";
 import LandingPage from "./Components/LandingPage/LandingPage";
-import Dashboard from "./Components/Dashboard/Dashboard";
 import { Fonts } from "./theme/Fonts";
 import { ScrollDirectionProvider } from "@hermanwikner/react-scroll-direction";
+import AddTopic from "./Components/AddTopic/AddTopic";
+import { Store, StateContext } from "./global.context/globalStore.reducer";
 
 function App() {
-  const [user, setUser] = useState(null);
-  const [isAuth, setIsAuth] = useState(
-    window.localStorage.getItem("token") ? true : false
-  );
+  const [state, dispatch] = Store();
 
   return (
     <>
@@ -21,15 +19,13 @@ function App() {
           <Fonts />
           <CSSReset />
           <ScrollDirectionProvider>
-            <NavBar
-              setIsAuth={setIsAuth}
-              user={user}
-              setUser={setUser}
-              isAuth={isAuth}
-            />
-            <LandingPage />
-            <Dashboard />
-            <Router></Router>
+            <StateContext.Provider value={{ state, dispatch }}>
+              <NavBar />
+              <Router>
+                <LandingPage path="/" />
+                <AddTopic path="/add_topic" />
+              </Router>
+            </StateContext.Provider>
           </ScrollDirectionProvider>
         </ThemeProvider>
       </React.StrictMode>
@@ -37,4 +33,4 @@ function App() {
   );
 }
 
-export default App;
+export { StateContext, App };

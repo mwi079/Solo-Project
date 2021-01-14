@@ -14,15 +14,17 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import React from "react";
+import React, { useContext } from "react";
 import "./NavBar.css";
 import { Flex } from "@chakra-ui/react";
 import UserForm from "../UserForm/UserForm";
 import { useScrollDirection } from "@hermanwikner/react-scroll-direction";
+import { StateContext } from "../../global.context/globalStore.reducer";
 
 export default function NavBar({ user, setUser, setIsAuth, isAuth }) {
   const { colorMode, toggleColorMode } = useColorMode();
   const colorScheme = useColorModeValue("button", "yellow");
+  const { state, dispatch } = useContext(StateContext);
 
   const handleClick = (e) => {
     if (
@@ -49,13 +51,14 @@ export default function NavBar({ user, setUser, setIsAuth, isAuth }) {
 
   const handleLogOut = () => {
     logOut();
-    setIsAuth(false);
+    dispatch({ type: "isAuth", payload: false });
+    dispatch({ type: "user", payload: null });
   };
 
   return (
     <>
       <div className="form-wrapper" onClick={handleClick}>
-        <UserForm setUser={setUser} setIsAuth={setIsAuth} isAuth={isAuth} />
+        <UserForm />
       </div>
       <Flex
         p={3}
@@ -72,17 +75,30 @@ export default function NavBar({ user, setUser, setIsAuth, isAuth }) {
           </Heading>
         </Flex>
         <Spacer />
-        {isAuth ? (
-          <Button onClick={handleLogOut}>Logout</Button>
+        {state.isAuth ? (
+          <>
+            {window.location.pathname !== "/" && (
+              <Box>
+                <Link to="/">
+                  <Button p={3} boxShadow="lg" mx={2} colorScheme={colorScheme}>
+                    <Icon as={MdHome} />
+                  </Button>
+                </Link>
+              </Box>
+            )}
+            <Button onClick={handleLogOut}>Logout</Button>
+          </>
         ) : (
           <Flex>
-            <Box>
-              <Link to="/">
-                <Button p={3} boxShadow="lg" mx={2} colorScheme={colorScheme}>
-                  <Icon as={MdHome} />
-                </Button>
-              </Link>
-            </Box>
+            {window.location.pathname !== "/" && (
+              <Box>
+                <Link to="/">
+                  <Button p={3} boxShadow="lg" mx={2} colorScheme={colorScheme}>
+                    <Icon as={MdHome} />
+                  </Button>
+                </Link>
+              </Box>
+            )}
             <Box textAlign="right" mr={3} ml={3}>
               {colorMode === "light" ? (
                 <IconButton icon={<SunIcon />} onClick={toggleColorMode} />

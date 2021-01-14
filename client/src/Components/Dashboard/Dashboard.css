@@ -1,14 +1,20 @@
-.css-1tdbtjs {
-  position: relative;
+.icons-list figure {
+  display: inline-block;
+  height: 3rem;
+  width: 3rem;
+  background-position: center center;
+  background-size: contain;
+  margin-right: 30px;
 }
 
-.css-1tdbtjs::before {
-  content: "";
-  display: block;
-  position: absolute;
-  width: 2px;
-  height: 100%;
-  background-color: red;
+ul {
   top: 0;
-  left: 33%;
+  position: sticky;
+}
+
+li {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 15px;
 }
