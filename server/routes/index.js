@@ -1,7 +1,7 @@
 const Router = require("koa-router");
 const router = new Router();
 const { authorizeUser } = require("../middleware/authorizeUser");
-const { authorizeTopic } = require("../middleware/authorizeTopic");
+const { authorizeTopic } = require("../middleware/authorizeTopics");
 
 const { registerUser } = require("../controllers/register.controller");
 const { loginUser } = require("../controllers/login.controller");

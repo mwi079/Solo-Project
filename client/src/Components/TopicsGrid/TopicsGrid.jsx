@@ -38,7 +38,13 @@ export default function TopisCGrid({ topics }) {
                     {moment(topic.date).format("MMMM Do YYYY")}
                   </Box>
                 </Flex>
-                <Box>{topic.content}</Box>
+                <Flex>
+                  {topic.tags.map((tag) => (
+                    <Box border="1px solid black" p="5px" mx="10px">
+                      {tag}
+                    </Box>
+                  ))}
+                </Flex>
               </Flex>
               <Flex flexDir="column-reverse">
                 {state.isAuth && (

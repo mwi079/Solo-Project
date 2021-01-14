@@ -34,9 +34,7 @@ export default function Dashboard() {
         mx="50px"
         pb="20px"
         boxShadow="0 0 5px #3333"
-        pt="30px"
         px="20px"
-        mb="50px"
         pos="relative"
         _before={{
           content: `""`,
@@ -54,6 +52,8 @@ export default function Dashboard() {
           flex="2"
           position="sticky"
           alignSelf="flex-start"
+          top="40px"
+          py="40px"
         >
           <Flex pt="20px" pb="30px">
             <Heading>Categories</Heading>
@@ -73,8 +73,19 @@ export default function Dashboard() {
         </Flex>
 
         <Flex flex="4" flexDir="column">
-          <Flex w="100%" ml="10px" px="30px" py="20px" flexDir="column">
-            <Flex ml="10px" flexDir="column">
+          <Flex
+            w="100%"
+            ml="10px"
+            px="30px"
+            py="60px"
+            flexDir="column"
+            pos="sticky"
+            top="40px"
+            zIndex="1"
+            bg="white"
+            className="order_by"
+          >
+            <Flex ml="10px">
               <Heading>Order By</Heading>
             </Flex>
             <Flex justify="space-between">

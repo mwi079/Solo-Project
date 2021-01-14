@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import {
+  Box,
   Button,
+  Checkbox,
+  CheckboxGroup,
+  Text,
   Flex,
   FormLabel,
   Heading,
+  HStack,
   Input,
   Textarea,
 } from "@chakra-ui/react";
@@ -15,28 +20,46 @@ export default function AddTopic() {
     title: "",
     author: "",
     content: "",
+    tags: [],
   });
 
+  const [isChecked, setChecked] = useState(false);
+
   function postOneTopic(topic) {
-    const { title, author, content } = topic;
-    postTopic({ title, author, content })
+    const { title, author, content, tags } = topic;
+    postTopic({ title, author, content, tags })
       .then((res) => res.data)
       .catch((error) => console.error(error));
   }
 
   function handleSubmit(e) {
+    setChecked(false);
     e.preventDefault();
     try {
-      postTopic(topicDetails);
+      postOneTopic(topicDetails);
       setTopicDetails({
         title: "",
         author: "",
         content: "",
+        tags: [],
       });
     } catch (error) {
       console.error(error);
     }
   }
+
+  function handleAddTag(e) {
+    const tagsArray = topicDetails.tags;
+    !tagsArray.includes(e.target.value) && tagsArray.push(e.target.value);
+    setTopicDetails({ ...topicDetails, tags: tagsArray });
+  }
+
+  function handleRemoveTag(e) {
+    const tagsArray = topicDetails.tags;
+    const filteredArray = tagsArray.filter((el) => el !== e.target.value);
+    setTopicDetails({ ...topicDetails, tags: filteredArray });
+  }
+
   return (
     <>
       <Flex mt="40px" alignItems="center" py="20px" flexDir="column">
@@ -74,19 +97,73 @@ export default function AddTopic() {
               setTopicDetails({ ...topicDetails, content: e.target.value })
             }
           ></Textarea>
-          <Flex justifyContent="center">
-            <Button
-              mt={4}
-              type="submit"
-              colorScheme="teal"
-              variant="outline"
-              boxShadow="sm"
-              _hover={{ boxShadow: "md" }}
-              _active={{ boxShadow: "lg" }}
-            >
-              Submit
-            </Button>
+          <Flex justifyContent="center"></Flex>
+          <Flex flexDir="column" justifyContent="center" mt="40px">
+            <Text fontWeight="500" textAlign="center">
+              You can add some categories to your question:
+            </Text>
+            <Box mt="20px">
+              <CheckboxGroup colorScheme="green">
+                <HStack spacing={5}>
+                  <Checkbox
+                    isChecked={isChecked}
+                    value="JavaScript"
+                    onChange={(e) =>
+                      e.target.checked ? handleAddTag(e) : handleRemoveTag(e)
+                    }
+                  >
+                    JavaScript
+                  </Checkbox>
+                  <Checkbox
+                    value="CSS"
+                    onChange={(e) =>
+                      e.target.checked ? handleAddTag(e) : handleRemoveTag(e)
+                    }
+                  >
+                    CSS
+                  </Checkbox>
+                  <Checkbox
+                    isChecked={isChecked}
+                    value="NodeJS"
+                    onChange={(e) =>
+                      e.target.checked ? handleAddTag(e) : handleRemoveTag(e)
+                    }
+                  >
+                    NodeJS
+                  </Checkbox>
+                  <Checkbox
+                    isChecked={isChecked}
+                    value="Python"
+                    onChange={(e) =>
+                      e.target.checked ? handleAddTag(e) : handleRemoveTag(e)
+                    }
+                  >
+                    Python
+                  </Checkbox>
+                  <Checkbox
+                    isChecked={isChecked}
+                    value="TypeScript"
+                    onChange={(e) =>
+                      e.target.checked ? handleAddTag(e) : handleRemoveTag(e)
+                    }
+                  >
+                    TypeScript
+                  </Checkbox>
+                </HStack>
+              </CheckboxGroup>
+            </Box>
           </Flex>
+          <Button
+            mt={10}
+            type="submit"
+            colorScheme="teal"
+            variant="outline"
+            boxShadow="sm"
+            _hover={{ boxShadow: "md" }}
+            _active={{ boxShadow: "lg" }}
+          >
+            Submit
+          </Button>
         </form>
       </Flex>
     </>

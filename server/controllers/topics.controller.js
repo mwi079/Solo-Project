@@ -25,11 +25,11 @@ async function getTopicByTitle(ctx) {
 
 async function postOneTopic(ctx) {
   try {
-    const { title, author, content } = ctx.request.body;
-    const topicToPost = new Topic({ title, author, content });
-    await topicToPost.save();
+    const { title, author, content, tags } = ctx.request.body;
+    const topicToPost = new Topic({ title, author, content, tags });
     ctx.status = 200;
     ctx.body = topicToPost;
+    await topicToPost.save();
   } catch (error) {
     ctx.status = 400;
     console.error(error);
@@ -39,7 +39,7 @@ async function postOneTopic(ctx) {
 async function deleteOneTopic(ctx) {
   try {
     const { title } = ctx.request.body;
-    const topicToDelete = await Topic.findOneAndRemove({ title });
+    await Topic.findOneAndRemove({ title });
     ctx.status = 200;
     ctx.body = "Topic successfully deleted";
   } catch (error) {

@@ -5,7 +5,6 @@ import customTheme from "./theme/";
 import NavBar from "./Components/NavBar/NavBar";
 import LandingPage from "./Components/LandingPage/LandingPage";
 import { Fonts } from "./theme/Fonts";
-import { ScrollDirectionProvider } from "@hermanwikner/react-scroll-direction";
 import AddTopic from "./Components/AddTopic/AddTopic";
 import { Store, StateContext } from "./global.context/globalStore.reducer";
 
@@ -18,15 +17,13 @@ function App() {
         <ThemeProvider theme={customTheme}>
           <Fonts />
           <CSSReset />
-          <ScrollDirectionProvider>
-            <StateContext.Provider value={{ state, dispatch }}>
-              <NavBar />
-              <Router>
-                <LandingPage path="/" />
-                <AddTopic path="/add_topic" />
-              </Router>
-            </StateContext.Provider>
-          </ScrollDirectionProvider>
+          <StateContext.Provider value={{ state, dispatch }}>
+            <NavBar />
+            <Router>
+              <LandingPage path="/" />
+              <AddTopic path="/add_topic" />
+            </Router>
+          </StateContext.Provider>
         </ThemeProvider>
       </React.StrictMode>
     </>

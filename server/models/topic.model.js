@@ -24,7 +24,7 @@ const topicSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  categories: {
+  tags: {
     type: [String],
   },
   date: {

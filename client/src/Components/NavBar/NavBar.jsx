@@ -18,10 +18,10 @@ import React, { useContext } from "react";
 import "./NavBar.css";
 import { Flex } from "@chakra-ui/react";
 import UserForm from "../UserForm/UserForm";
-import { useScrollDirection } from "@hermanwikner/react-scroll-direction";
+
 import { StateContext } from "../../global.context/globalStore.reducer";
 
-export default function NavBar({ user, setUser, setIsAuth, isAuth }) {
+export default function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode();
   const colorScheme = useColorModeValue("button", "yellow");
   const { state, dispatch } = useContext(StateContext);
@@ -35,15 +35,10 @@ export default function NavBar({ user, setUser, setIsAuth, isAuth }) {
     }
   };
 
-  const direction = useScrollDirection();
-
   window.addEventListener("scroll", function () {
     let navbar = document.querySelector(".nav-wrapper");
     if (window.scrollY > navbar.clientHeight) {
       navbar.classList.add("scrolled");
-      direction === "DOWN" && window.scrollY > navbar.clientHeight
-        ? navbar.classList.add("down")
-        : navbar.classList.remove("down");
     } else {
       navbar.classList.remove("scrolled");
     }
@@ -66,7 +61,7 @@ export default function NavBar({ user, setUser, setIsAuth, isAuth }) {
         px="30px"
         top="0"
         pos="sticky"
-        background="transparent"
+        // background="transparent"
         h="70px"
       >
         <Flex flexDir="column" justifyContent="center">

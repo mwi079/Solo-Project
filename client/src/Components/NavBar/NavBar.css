@@ -1,18 +1,16 @@
 .nav-wrapper {
-  transition: all 0.25s;
+  transition: background-color 0.4s ease;
   z-index: 1050;
 }
 
 .nav-wrapper.scrolled {
-  transform: translateY(0);
   background-color: red;
 }
 
 .nav-wrapper.scrolled.down {
   transform: translateY(-100%);
 }
-
-.css-k008qs {
+*/ .css-k008qs {
   margin-right: 20px;
 }
 
