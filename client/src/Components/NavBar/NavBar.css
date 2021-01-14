@@ -1,11 +1,6 @@
 .nav-wrapper {
-  display: flex;
-  justify-content: space-between;
-  height: 70px;
-  position: sticky;
-  top: 0;
-  background: transparent;
   transition: all 0.25s;
+  z-index: 1050;
 }
 
 .nav-wrapper.scrolled {
@@ -15,7 +10,6 @@
 
 .nav-wrapper.scrolled.down {
   transform: translateY(-100%);
-  z-index: 1050;
 }
 
 .css-k008qs {

@@ -1,5 +1,5 @@
 import { Link } from "@reach/router";
-import { logOut } from "../../services/ApiClientService";
+import { logOut } from "../../services/ApiUserClientService";
 import { MdHome } from "react-icons/md";
 import UserIcon from "../../assets/user.svg";
 import {
@@ -11,6 +11,7 @@ import {
   Heading,
   Tooltip,
   useColorModeValue,
+  Spacer,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import React from "react";
@@ -56,12 +57,21 @@ export default function NavBar({ user, setUser, setIsAuth, isAuth }) {
       <div className="form-wrapper" onClick={handleClick}>
         <UserForm setUser={setUser} setIsAuth={setIsAuth} isAuth={isAuth} />
       </div>
-      <Flex p={3} className="nav-wrapper">
+      <Flex
+        p={3}
+        className="nav-wrapper"
+        px="30px"
+        top="0"
+        pos="sticky"
+        background="transparent"
+        h="70px"
+      >
         <Flex flexDir="column" justifyContent="center">
           <Heading as="h2" size="md">
             Codagora
           </Heading>
         </Flex>
+        <Spacer />
         {isAuth ? (
           <Button onClick={handleLogOut}>Logout</Button>
         ) : (

@@ -1,0 +1,14 @@
+.css-1tdbtjs {
+  position: relative;
+}
+
+.css-1tdbtjs::before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  background-color: red;
+  top: 0;
+  left: 33%;
+}

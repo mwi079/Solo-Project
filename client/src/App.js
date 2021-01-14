@@ -4,9 +4,8 @@ import { CSSReset, ThemeProvider } from "@chakra-ui/react";
 import customTheme from "./theme/";
 import NavBar from "./Components/NavBar/NavBar";
 import LandingPage from "./Components/LandingPage/LandingPage";
-import Home from "./Components/Home";
+import Dashboard from "./Components/Dashboard/Dashboard";
 import { Fonts } from "./theme/Fonts";
-import { postTopic } from "./services/ApiClientService";
 import { ScrollDirectionProvider } from "@hermanwikner/react-scroll-direction";
 
 function App() {
@@ -28,10 +27,9 @@ function App() {
               setUser={setUser}
               isAuth={isAuth}
             />
-            <Router>
-              <LandingPage path="/" postTopic={postTopic} />
-              <Home path="/home" />
-            </Router>
+            <LandingPage />
+            <Dashboard />
+            <Router></Router>
           </ScrollDirectionProvider>
         </ThemeProvider>
       </React.StrictMode>

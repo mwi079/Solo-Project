@@ -3,7 +3,7 @@ import {
   registerUser,
   completeAuthentication,
   getProfile,
-} from "../../services/ApiClientService";
+} from "../../services/ApiUserClientService";
 import {
   Box,
   CircularProgress,

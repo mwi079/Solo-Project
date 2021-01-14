@@ -17,7 +17,7 @@ import {
   login,
   completeAuthentication,
   getProfile,
-} from "../../services/ApiClientService";
+} from "../../services/ApiUserClientService";
 import customTheme from "../../theme/";
 
 export default function Login({ isAuth, setUser, setIsAuth }) {

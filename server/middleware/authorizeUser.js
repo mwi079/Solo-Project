@@ -1,11 +1,11 @@
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
-const { User } = require("./models/user.model");
+const { User } = require("../models/user.model");
 
 dotenv.config();
 
 // middleware function to be added to protected routes
-async function authorizeRoute(ctx, next) {
+async function authorizeUser(ctx, next) {
   const authHeaders = ctx.request.headers["authorization"];
 
   if (!authHeaders) {
@@ -15,13 +15,12 @@ async function authorizeRoute(ctx, next) {
 
   try {
     // attempt to decode id from token payload
-
     const { _id } = jwt.verify(authHeaders, process.env.TOKEN_SECRET);
-
     // and try to find the user
     const user = await User.findOne({ _id });
 
     ctx.user = user;
+    ctx.body = ctx.request.body;
     next();
   } catch (error) {
     ctx.status = 401;
@@ -29,4 +28,4 @@ async function authorizeRoute(ctx, next) {
   }
 }
 
-module.exports = authorizeRoute;
+module.exports = { authorizeUser };
