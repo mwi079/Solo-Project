@@ -39,12 +39,15 @@ export default function NavBar() {
   window.addEventListener("scroll", function () {
     let navbar = document.querySelector(".nav-wrapper");
     let title = document.querySelector(".app_title");
+    let user = document.querySelector(".profile-name");
     if (window.scrollY > navbar.clientHeight) {
       navbar.classList.add("scrolled");
       title.classList.add("scrolled_title");
+      user.classList.add("scrolled_profile");
     } else {
       navbar.classList.remove("scrolled");
       title.classList.remove("scrolled_title");
+      user.classList.remove("scrolled_profile");
     }
   });
 
@@ -84,7 +87,13 @@ export default function NavBar() {
                 </Link>
               </Box>
               <Button onClick={handleLogOut}>Logout</Button>
-              <Tooltip
+              <Link to="/profile" className="profile-name">
+                <Flex flexDir="column" justifyContent="center">
+                  <Box fontWeight="bold">{state.user && state.user.name}</Box>
+                </Flex>
+              </Link>
+
+              {/* <Tooltip
                 label={state.user ? state.user.name : "Profile"}
                 arrowSize={3}
                 hasArrow
@@ -94,7 +103,7 @@ export default function NavBar() {
                     <img src={UserIcon} alt="" />
                   </Button>
                 </Link>
-              </Tooltip>
+              </Tooltip> */}
             </ButtonGroup>
           </>
         ) : (

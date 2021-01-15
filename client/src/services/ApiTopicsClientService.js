@@ -23,10 +23,3 @@ export async function getUserPosts() {
     headers: { Authorization: token },
   });
 }
-
-export async function getUserById() {
-  const token = localStorage.getItem("token");
-  return axios.get(`${apiUrl}/forum/user_topics`, {
-    headers: { Authorization: token },
-  });
-}

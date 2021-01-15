@@ -7,6 +7,20 @@
   background-color: #0b2545;
 }
 
+.nav-wrapper.scrolled a {
+  color: white;
+}
+
+.profile-name {
+  display: flex;
+  transition: color 0.5s ease;
+}
+
+.profile-name.scrolled {
+  display: flex;
+  color: white;
+}
+
 .app_title {
   color: black;
   transition: color 0.5s ease;

@@ -28,7 +28,7 @@ router.get("/forum/allTopics", getAllTopics);
 router.get("/forum/topic", authorizeTopic, getTopicByTitle);
 router.get("/forum/user_topics", authorizeTopic, getUserPosts);
 router.post("/forum/post_topic", authorizeTopic, postOneTopic);
-router.delete("/forum/posts", authorizeTopic, deleteOneTopic);
+router.delete("/forum/delete", authorizeTopic, deleteOneTopic);
 router.put("/forum/posts", authorizeTopic, modifyTopicTitle);
 
 module.exports = { router };
