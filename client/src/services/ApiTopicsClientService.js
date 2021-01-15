@@ -2,11 +2,11 @@ import axios from "axios";
 const apiUrl = "http://localhost:3500";
 
 // topics api
-export async function postTopic({ title, author, content, tags }) {
+export async function postTopic({ title, content, tags }) {
   const token = localStorage.getItem("token");
   return axios.post(
     `${apiUrl}/forum/post_topic`,
-    { title, author, content, tags },
+    { title, content, tags },
     {
       headers: { Authorization: token },
     }

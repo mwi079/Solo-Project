@@ -21,13 +21,12 @@ const {
 router.post("/api/user/register", registerUser);
 router.post("/api/user/login", loginUser);
 router.get("/api/user/profile", authorizeUser, getProfile);
-// router.get("api/user/")
 
 // Forum topics routes
 router.get("/forum/allTopics", getAllTopics);
 router.get("/forum/topic", authorizeTopic, getTopicByTitle);
 router.get("/forum/user_topics", authorizeTopic, getUserPosts);
-router.post("/forum/post_topic/:id", authorizeTopic, postOneTopic);
+router.post("/forum/post_topic", authorizeTopic, postOneTopic);
 router.delete("/forum/posts", authorizeTopic, deleteOneTopic);
 router.put("/forum/posts", authorizeTopic, modifyTopicTitle);
 

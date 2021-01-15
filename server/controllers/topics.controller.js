@@ -27,14 +27,16 @@ async function getTopicByTitle(ctx) {
 async function postOneTopic(ctx) {
   try {
     const { title, content, tags } = ctx.request.body;
-    const { id } = ctx.request.params;
-    console.log(id);
-    const topicToPost = new Topic({ title, author: id, content, tags });
-    const user = await User.findOne({ _id: id });
+    const { _id } = ctx.user;
+
+    const user = await User.findOne({ _id });
+
+    const topicToPost = new Topic({ title, author: _id, content, tags });
+
     user.posts.push(topicToPost._id);
 
-    await user.save();
     await topicToPost.save();
+    await user.save();
     ctx.status = 200;
     ctx.body = topicToPost;
   } catch (error) {

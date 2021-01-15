@@ -19,19 +19,34 @@ async function getProfile(ctx) {
   }
 }
 
+// async function getUserPosts(ctx) {
+//   const { _id } = ctx.user;
+//   // console.log("user Id", _id);
+
+//   const res = new Promise((resolve, reject) => {
+//     User.findOne({ _id })
+//       .populate("posts")
+//       .exec((err, user) => {
+//         err && reject(err);
+//         console.log("user", user);
+//         resolve(user.posts);
+//       });
+//   });
+//   ctx.body = res;
+//   // console.log("posts", posts);
+//   // ctx.body = posts;
+// }
+
 async function getUserPosts(ctx) {
-  const { name } = ctx.request.body;
+  const _id = ctx.user;
+  // const { name } = ctx.request.body;
 
-  const user = await new Promise((resolve, reject) => {
-    User.findOne({ name })
-      .populate("posts")
-      .exec((err, user) => {
-        err && reject(err);
-        resolve(user.posts);
-      });
-  });
-
-  ctx.body = user;
+  try {
+    const user = await User.findOne({ _id }).populate("posts");
+    ctx.body = user;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 module.exports = { getProfile, getUserPosts };

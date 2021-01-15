@@ -18,7 +18,6 @@ import { postTopic } from "../../services/ApiTopicsClientService";
 export default function AddTopic() {
   const [topicDetails, setTopicDetails] = useState({
     title: "",
-    author: "",
     content: "",
     tags: [],
   });
@@ -39,7 +38,6 @@ export default function AddTopic() {
       postOneTopic(topicDetails);
       setTopicDetails({
         title: "",
-        author: "",
         content: "",
         tags: [],
       });
@@ -73,16 +71,6 @@ export default function AddTopic() {
             placeholder="Title"
             onChange={(e) =>
               setTopicDetails({ ...topicDetails, title: e.target.value })
-            }
-          ></Input>
-          <FormLabel>Author</FormLabel>
-          <Input
-            w="50%"
-            value={topicDetails.author}
-            type="text"
-            placeholder="Author"
-            onChange={(e) =>
-              setTopicDetails({ ...topicDetails, author: e.target.value })
             }
           ></Input>
           <FormLabel>Content</FormLabel>
