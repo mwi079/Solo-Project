@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Router } from "@reach/router";
 import { CSSReset, ThemeProvider } from "@chakra-ui/react";
 import customTheme from "./theme/";
@@ -8,9 +8,24 @@ import { Fonts } from "./theme/Fonts";
 import AddTopic from "./Components/AddTopic/AddTopic";
 import { Store, StateContext } from "./global.context/globalStore.reducer";
 import Profile from "./Components/Profile/Profile";
+import { getProfile } from "./services/ApiUserClientService";
 
 function App() {
   const [state, dispatch] = Store();
+
+  function getUserProfile(token) {
+    return getProfile(token)
+      .then((res) => res.data)
+      .catch((error) => console.error(error));
+  }
+
+  useEffect(() => {
+    const token = window.localStorage.getItem("token");
+    token &&
+      getUserProfile(token).then((user) => {
+        dispatch({ type: "user", payload: user });
+      });
+  }, []);
 
   return (
     <>

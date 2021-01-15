@@ -3,7 +3,7 @@ const { User } = require("../models/user.model");
 
 async function getAllTopics(ctx) {
   try {
-    const allTopics = await Topic.find({});
+    const allTopics = await Topic.find({}).populate("author");
     ctx.status = 200;
     ctx.body = allTopics;
   } catch (error) {
@@ -27,7 +27,7 @@ async function getTopicByTitle(ctx) {
 async function postOneTopic(ctx) {
   try {
     const { title, content, tags } = ctx.request.body;
-    const { _id } = ctx.user;
+    const _id = ctx.user;
 
     const user = await User.findOne({ _id });
 

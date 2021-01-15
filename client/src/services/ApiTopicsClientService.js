@@ -16,3 +16,17 @@ export async function postTopic({ title, content, tags }) {
 export async function getAllTopics() {
   return axios.get(`${apiUrl}/forum/allTopics`);
 }
+
+export async function getUserPosts() {
+  const token = localStorage.getItem("token");
+  return axios.get(`${apiUrl}/forum/user_topics`, {
+    headers: { Authorization: token },
+  });
+}
+
+export async function getUserById() {
+  const token = localStorage.getItem("token");
+  return axios.get(`${apiUrl}/forum/user_topics`, {
+    headers: { Authorization: token },
+  });
+}

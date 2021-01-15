@@ -1,25 +1,9 @@
-import { useReducer, createContext, useState } from "react";
-import { getProfile } from "../services/ApiUserClientService";
+import { useReducer, createContext } from "react";
 
 const token = window.localStorage.getItem("token");
 
-function getUserProfile(token) {
-  return getProfile(token)
-    .then((res) => res.data)
-    .catch((error) => console.error(error));
-}
-
-// async function setUser(token) {
-//   const result = await getUserProfile(token);
-//   return result;
-// }
-
-const initialUser = token
-  ? getUserProfile(token).then((user) => user.data)
-  : null;
-
 const initialState = {
-  user: initialUser,
+  user: null,
   isAuth: token ? true : false,
 };
 

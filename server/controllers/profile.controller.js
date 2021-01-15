@@ -19,28 +19,8 @@ async function getProfile(ctx) {
   }
 }
 
-// async function getUserPosts(ctx) {
-//   const { _id } = ctx.user;
-//   // console.log("user Id", _id);
-
-//   const res = new Promise((resolve, reject) => {
-//     User.findOne({ _id })
-//       .populate("posts")
-//       .exec((err, user) => {
-//         err && reject(err);
-//         console.log("user", user);
-//         resolve(user.posts);
-//       });
-//   });
-//   ctx.body = res;
-//   // console.log("posts", posts);
-//   // ctx.body = posts;
-// }
-
 async function getUserPosts(ctx) {
   const _id = ctx.user;
-  // const { name } = ctx.request.body;
-
   try {
     const user = await User.findOne({ _id }).populate("posts");
     ctx.body = user;
@@ -49,4 +29,19 @@ async function getUserPosts(ctx) {
   }
 }
 
-module.exports = { getProfile, getUserPosts };
+async function getUserById(ctx) {
+  try {
+    const { _id } = ctx.request.body;
+    const user = User.findOne({ _id });
+    ctx.status = 200;
+    ctx.body = user;
+  } catch (error) {
+    ctx.status = 401;
+    ctx.body = {
+      error,
+      message: "Resource not found",
+    };
+  }
+}
+
+module.exports = { getProfile, getUserPosts, getUserById };

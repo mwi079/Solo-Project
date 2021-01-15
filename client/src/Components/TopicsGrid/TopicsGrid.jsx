@@ -32,7 +32,7 @@ export default function TopisCGrid({ topics }) {
                 </Box>
                 <Flex my={3}>
                   <Box pr={3}>
-                    <code>{topic.author}</code>
+                    <code>{topic.author.name}</code>
                   </Box>
                   <Box pl={2} fontStyle="italic">
                     {moment(topic.date).format("MMMM Do YYYY")}

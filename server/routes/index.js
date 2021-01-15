@@ -8,6 +8,7 @@ const { loginUser } = require("../controllers/login.controller");
 const {
   getProfile,
   getUserPosts,
+  getUserById,
 } = require("../controllers/profile.controller");
 const {
   getAllTopics,
