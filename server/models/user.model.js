@@ -1,31 +1,36 @@
-const {mongoose} = require('./');
+const { mongoose } = require("./");
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
     min: 6,
-    max: 255
+    max: 255,
   },
   email: {
     type: String,
     required: true,
     min: 6,
-    max: 255
+    max: 255,
   },
   password: {
     type: String,
     required: true,
     min: 6,
-    max: 1024
+    max: 1024,
   },
   date: {
     type: Date,
-    default: Date.now()
-  }
+    default: Date.now(),
+  },
+  posts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Topic",
+    },
+  ],
 });
 
-const User = mongoose.model('users', userSchema);
-
+const User = mongoose.model("User", userSchema);
 
 module.exports = { User };

@@ -1,10 +1,19 @@
 .nav-wrapper {
-  transition: background-color 0.4s ease;
+  transition: background-color 0.4s ease, color0.4s ease;
   z-index: 1050;
 }
 
 .nav-wrapper.scrolled {
-  background-color: red;
+  background-color: #0b2545;
+}
+
+.app_title {
+  color: black;
+  transition: color 0.5s ease;
+}
+
+.app_title.scrolled_title {
+  color: white;
 }
 
 .nav-wrapper.scrolled.down {

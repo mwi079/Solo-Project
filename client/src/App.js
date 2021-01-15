@@ -7,6 +7,7 @@ import LandingPage from "./Components/LandingPage/LandingPage";
 import { Fonts } from "./theme/Fonts";
 import AddTopic from "./Components/AddTopic/AddTopic";
 import { Store, StateContext } from "./global.context/globalStore.reducer";
+import Profile from "./Components/Profile/Profile";
 
 function App() {
   const [state, dispatch] = Store();
@@ -22,6 +23,7 @@ function App() {
             <Router>
               <LandingPage path="/" />
               <AddTopic path="/add_topic" />
+              <Profile path="/profile" />
             </Router>
           </StateContext.Provider>
         </ThemeProvider>

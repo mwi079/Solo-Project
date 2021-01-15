@@ -1,28 +1,44 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./LandingPage.css";
 import Philo from "../../assets/philo_icons.svg";
 import { Flex } from "@chakra-ui/react";
 import Dashboard from "../Dashboard/Dashboard";
+import { useDencrypt } from "use-dencrypt-effect";
+import Subtitle from "../Subtitle";
+
+const title = "Codagora,";
 
 export default function LandingPage() {
+  const { result, dencrypt } = useDencrypt();
+
+  useEffect(() => {
+    const action = setInterval(() => {
+      dencrypt(title);
+    }, 200);
+
+    return () => {
+      clearInterval(action);
+    };
+  }, [dencrypt]);
+
   return (
     <>
       <Flex
         my="70px"
         mx="50px"
         pos="relative"
-        justify="space-around"
-        border="1px solid black"
-        py="50px"
+        justify="flex-end"
+        p="50px"
         borderRadius="10px"
+        className="banner"
       >
-        <div className="titles">
-          <div className="main-title">Codagora,</div>
-          <div className="subtitle">where code is debated.</div>
-        </div>
-        <div className="icons">
-          <img src={Philo} alt="Philo" />
-        </div>
+        <Flex className="titles" flexDir="column" ml="100px">
+          <div className="main-title">{result}</div>
+          <Subtitle />
+        </Flex>
+        <Flex w="350px" mr="50px">
+          <img src={Philo} alt="Philo" style={{ width: "100%" }} />
+        </Flex>
       </Flex>
       <Dashboard />
     </>

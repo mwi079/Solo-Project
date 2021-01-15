@@ -1,8 +1,26 @@
 import { useReducer, createContext } from "react";
+import { getProfile } from "../services/ApiUserClientService";
+
+const token = window.localStorage.getItem("token");
+
+function getUserProfile(token) {
+  return getProfile(token)
+    .then((res) => res.data)
+    .catch((error) => console.error(error));
+}
+
+// async function setUser(token) {
+//   const result = await getUserProfile(token);
+//   return result;
+// }
+
+const initialUser = token
+  ? getUserProfile(token).then((user) => user.data)
+  : null;
 
 const initialState = {
-  user: null,
-  isAuth: window.localStorage.getItem("token") ? true : false,
+  user: initialUser,
+  isAuth: token ? true : false,
 };
 
 function reducer(state, action) {

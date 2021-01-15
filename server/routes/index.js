@@ -5,7 +5,10 @@ const { authorizeTopic } = require("../middleware/authorizeTopics");
 
 const { registerUser } = require("../controllers/register.controller");
 const { loginUser } = require("../controllers/login.controller");
-const { getProfile } = require("../controllers/profile.controller");
+const {
+  getProfile,
+  getUserPosts,
+} = require("../controllers/profile.controller");
 const {
   getAllTopics,
   getTopicByTitle,
@@ -18,11 +21,13 @@ const {
 router.post("/api/user/register", registerUser);
 router.post("/api/user/login", loginUser);
 router.get("/api/user/profile", authorizeUser, getProfile);
+// router.get("api/user/")
 
 // Forum topics routes
 router.get("/forum/allTopics", getAllTopics);
 router.get("/forum/topic", authorizeTopic, getTopicByTitle);
-router.post("/forum/post_topic", authorizeTopic, postOneTopic);
+router.get("/forum/user_topics", authorizeTopic, getUserPosts);
+router.post("/forum/post_topic/:id", authorizeTopic, postOneTopic);
 router.delete("/forum/posts", authorizeTopic, deleteOneTopic);
 router.put("/forum/posts", authorizeTopic, modifyTopicTitle);
 

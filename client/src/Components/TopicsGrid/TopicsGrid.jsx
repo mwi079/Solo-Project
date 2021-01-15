@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Button, Flex, Box, Grid, Heading } from "@chakra-ui/react";
+import { Button, Flex, Box, Grid, Heading, Text } from "@chakra-ui/react";
 import moment from "moment";
 import { StateContext } from "../../global.context/globalStore.reducer";
 
@@ -16,7 +16,7 @@ export default function TopisCGrid({ topics }) {
         px="30px"
         justifyContent="center"
       >
-        {topics &&
+        {topics ? (
           topics.map((topic) => (
             <Flex
               w="40vw"
@@ -54,7 +54,21 @@ export default function TopisCGrid({ topics }) {
                 )}
               </Flex>
             </Flex>
-          ))}
+          ))
+        ) : (
+          <Flex
+            w="40vw"
+            boxShadow="0 0 10px #3333"
+            py="40px"
+            px="20px"
+            borderRadius="lg"
+          >
+            <Text fontWeight="500" fontSize="20px">
+              Sorry, there are no quesitons yet. Hurry, and be the first one to
+              begin the conversation! 🗣️
+            </Text>
+          </Flex>
+        )}
       </Grid>
     </>
   );

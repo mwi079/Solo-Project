@@ -1,14 +1,10 @@
 const { mongoose } = require("./");
-const { User } = require("./user.model");
 
 const topicSchema = new mongoose.Schema({
   title: {
     type: String,
     min: 10,
     required: true,
-  },
-  author: {
-    type: String,
   },
   content: {
     type: String,
@@ -31,8 +27,12 @@ const topicSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
-const Topic = mongoose.model("forum_topics", topicSchema);
+const Topic = mongoose.model("Topic", topicSchema);
 
 module.exports = { Topic };

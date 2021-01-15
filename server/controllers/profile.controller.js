@@ -1,3 +1,8 @@
+const { User } = require("../models/user.model");
+const dotenv = require("dotenv");
+
+dotenv.config();
+
 async function getProfile(ctx) {
   try {
     // extract user info from the request
@@ -14,4 +19,19 @@ async function getProfile(ctx) {
   }
 }
 
-module.exports = { getProfile };
+async function getUserPosts(ctx) {
+  const { name } = ctx.request.body;
+
+  const user = await new Promise((resolve, reject) => {
+    User.findOne({ name })
+      .populate("posts")
+      .exec((err, user) => {
+        err && reject(err);
+        resolve(user.posts);
+      });
+  });
+
+  ctx.body = user;
+}
+
+module.exports = { getProfile, getUserPosts };

@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import { Heading } from "@chakra-ui/react";
+import React from "react";
 
 export default function Profile() {
-  const [name, setName] = useState({ name: "" });
-
-  return <div></div>;
+  return (
+    <>
+      <Heading>Hello there!</Heading>
+    </>
+  );
 }

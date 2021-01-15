@@ -12,6 +12,7 @@ import {
   Tooltip,
   useColorModeValue,
   Spacer,
+  ButtonGroup,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import React, { useContext } from "react";
@@ -37,10 +38,13 @@ export default function NavBar() {
 
   window.addEventListener("scroll", function () {
     let navbar = document.querySelector(".nav-wrapper");
+    let title = document.querySelector(".app_title");
     if (window.scrollY > navbar.clientHeight) {
       navbar.classList.add("scrolled");
+      title.classList.add("scrolled_title");
     } else {
       navbar.classList.remove("scrolled");
+      title.classList.remove("scrolled_title");
     }
   });
 
@@ -61,10 +65,9 @@ export default function NavBar() {
         px="30px"
         top="0"
         pos="sticky"
-        // background="transparent"
         h="70px"
       >
-        <Flex flexDir="column" justifyContent="center">
+        <Flex flexDir="column" justifyContent="center" className="app_title">
           <Heading as="h2" size="md">
             Codagora
           </Heading>
@@ -72,7 +75,7 @@ export default function NavBar() {
         <Spacer />
         {state.isAuth ? (
           <>
-            {window.location.pathname !== "/" && (
+            <ButtonGroup spacing="4">
               <Box>
                 <Link to="/">
                   <Button p={3} boxShadow="lg" mx={2} colorScheme={colorScheme}>
@@ -80,20 +83,22 @@ export default function NavBar() {
                   </Button>
                 </Link>
               </Box>
-            )}
-            <Button onClick={handleLogOut}>Logout</Button>
+              <Button onClick={handleLogOut}>Logout</Button>
+              <Tooltip
+                label={state.user ? state.user.name : "Profile"}
+                arrowSize={3}
+                hasArrow
+              >
+                <Link to="/profile">
+                  <Button p={3} boxShadow="lg" mx={2} borderRadius="50%">
+                    <img src={UserIcon} alt="" />
+                  </Button>
+                </Link>
+              </Tooltip>
+            </ButtonGroup>
           </>
         ) : (
           <Flex>
-            {window.location.pathname !== "/" && (
-              <Box>
-                <Link to="/">
-                  <Button p={3} boxShadow="lg" mx={2} colorScheme={colorScheme}>
-                    <Icon as={MdHome} />
-                  </Button>
-                </Link>
-              </Box>
-            )}
             <Box textAlign="right" mr={3} ml={3}>
               {colorMode === "light" ? (
                 <IconButton icon={<SunIcon />} onClick={toggleColorMode} />
