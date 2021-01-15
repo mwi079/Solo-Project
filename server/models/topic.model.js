@@ -21,7 +21,10 @@ const topicSchema = new mongoose.Schema({
     default: 0,
   },
   tags: {
-    type: [String],
+    type: {
+      language: { type: String },
+      color: { type: String },
+    },
   },
   date: {
     type: Date,

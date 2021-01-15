@@ -2,9 +2,23 @@ import React, { useContext } from "react";
 import { Button, Flex, Box, Heading, Text } from "@chakra-ui/react";
 import moment from "moment";
 import { StateContext } from "../../global.context/globalStore.reducer";
+import { deleteTopic } from "../../services/ApiTopicsClientService";
 
-export default function TopicCard({ topic }) {
+export default function TopicCard({ topic, setPosts, posts }) {
   const { state } = useContext(StateContext);
+
+  function handleClick(e) {
+    const title = e.target.parentElement.parentElement.parentElement.firstChild.innerText.split(
+      "\n"
+    )[0];
+
+    deleteTopic({ title })
+      .then((res) => res.data)
+      .catch((error) => console.error(error));
+
+    const filteredPosts = posts.filter((post) => post.title !== title);
+    setPosts(filteredPosts);
+  }
 
   return (
     <>
@@ -28,29 +42,23 @@ export default function TopicCard({ topic }) {
                 {moment(topic.date).format("MMMM Do YYYY")}
               </Box>
             </Flex>
-            <Flex>
+            {/* <Flex>
               {topic.tags.map((tag) => (
-                <Box
-                  px="5px"
-                  py="8px"
-                  mx="10px"
-                  boxShadow="0 0 10px #3333"
-                  // backgroundColor="#00008B"
-                  bg={tag.color}
-                  color="white"
-                  opacity="0.8"
-                  fontWeight="bold"
-                  borderRadius="lg"
-                >
-                  {tag.language}
+                <Box border="1px solid black" p="5px" mx="10px">
+                  {tag}
                 </Box>
               ))}
-            </Flex>
+            </Flex> */}
           </Flex>
           <Flex flexDir="column-reverse">
             {state.isAuth && (
-              <Button colorScheme="primary" size="sm" w="100px">
-                Reply
+              <Button
+                colorScheme="primary"
+                size="sm"
+                w="100px"
+                onClick={(e) => handleClick(e)}
+              >
+                Delete
               </Button>
             )}
           </Flex>
@@ -64,8 +72,7 @@ export default function TopicCard({ topic }) {
           borderRadius="lg"
         >
           <Text fontWeight="500" fontSize="20px">
-            Sorry, there are no quesitons yet. Hurry, and be the first one to
-            begin the conversation! 🗣️
+            You have no topics yet...
           </Text>
         </Flex>
       )}

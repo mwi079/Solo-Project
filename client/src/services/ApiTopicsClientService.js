@@ -23,3 +23,19 @@ export async function getUserPosts() {
     headers: { Authorization: token },
   });
 }
+
+export async function deleteTopic({ title }) {
+  const token = localStorage.getItem("token");
+  const config = {
+    data: { title },
+    headers: { Authorization: token },
+  };
+  return axios.delete(
+    `${apiUrl}/forum/delete`,
+    config
+    // { data: { title }},
+    // {
+    //   headers: { Authorization: token },
+    // }
+  );
+}

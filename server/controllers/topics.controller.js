@@ -28,11 +28,8 @@ async function postOneTopic(ctx) {
   try {
     const { title, content, tags } = ctx.request.body;
     const _id = ctx.user;
-
     const user = await User.findOne({ _id });
-
     const topicToPost = new Topic({ title, author: _id, content, tags });
-
     user.posts.push(topicToPost._id);
 
     await topicToPost.save();
@@ -48,7 +45,9 @@ async function postOneTopic(ctx) {
 async function deleteOneTopic(ctx) {
   try {
     const { title } = ctx.request.body;
-    await Topic.findOneAndRemove({ title });
+    console.log(ctx.request.body);
+    const deletedTopic = await Topic.findOneAndDelete({ title });
+    console.log(deletedTopic);
     ctx.status = 200;
     ctx.body = "Topic successfully deleted";
   } catch (error) {

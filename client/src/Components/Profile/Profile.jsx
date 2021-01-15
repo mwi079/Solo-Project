@@ -1,7 +1,7 @@
-import { Heading, Flex } from "@chakra-ui/react";
+import { Heading, Flex, Grid } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { getUserPosts } from "../../services/ApiTopicsClientService";
-import TopicCard from "../TopicCard/TopicCard";
+import TopicCardProfile from "../TopicCard/TopicCardProfile";
 
 export default function Profile() {
   const [posts, setPosts] = useState(null);
@@ -16,7 +16,23 @@ export default function Profile() {
     <>
       <Flex flexDir="column" alignItems="center">
         <Heading>Your topics:</Heading>
-        <ul>{posts && posts.map((post) => <TopicCard topic={post} />)}</ul>
+        <Grid
+          templateRows="repeat(5, 1fr)"
+          gap={6}
+          mt="20px"
+          mx="30px"
+          px="30px"
+          justifyContent="center"
+        >
+          {posts &&
+            posts.map((post) => (
+              <TopicCardProfile
+                topic={post}
+                setPosts={setPosts}
+                posts={posts}
+              />
+            ))}
+        </Grid>
       </Flex>
     </>
   );

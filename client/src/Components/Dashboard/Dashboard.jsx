@@ -13,11 +13,11 @@ import { StateContext } from "../../global.context/globalStore.reducer";
 
 export default function Dashboard() {
   const iconArray = [
-    { lang: Js, name: "JavaScript" },
-    { lang: Node, name: "NodeJS" },
-    { lang: Python, name: "Python" },
-    { lang: TypeScript, name: "TypeScript" },
-    { lang: Css, name: "CSS" },
+    { lang: Js, name: "JavaScript", JS_color: "yellow" },
+    { lang: Node, name: "NodeJS", Node_color: "green" },
+    { lang: Python, name: "Python", color: "teal" },
+    { lang: TypeScript, name: "TypeScript", color: "blue" },
+    { lang: Css, name: "CSS", color: "purple" },
   ];
   const { state } = useContext(StateContext);
   const [topics, setTopics] = useState(null);

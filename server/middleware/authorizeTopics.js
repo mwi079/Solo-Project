@@ -13,7 +13,6 @@ async function authorizeTopic(ctx, next) {
   }
   try {
     const { _id } = jwt.verify(authHeaders, process.env.TOKEN_SECRET);
-
     ctx.user = _id;
     await next();
   } catch (error) {

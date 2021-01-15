@@ -22,6 +22,14 @@ export default function AddTopic() {
     tags: [],
   });
 
+  const langs = [
+    { name: "JavaScript", color: "#FFD700" },
+    { name: "NodeJS", color: "#228B22" },
+    { name: "Python", color: "#008080" },
+    { name: "TypeScript", color: "#00008B" },
+    { name: "CSS", color: "#6A5ACD" },
+  ];
+
   const [isChecked, setChecked] = useState(false);
 
   function postOneTopic(topic) {
@@ -48,14 +56,21 @@ export default function AddTopic() {
 
   function handleAddTag(e) {
     const tagsArray = topicDetails.tags;
-    !tagsArray.includes(e.target.value) && tagsArray.push(e.target.value);
+    const { color } = langs.find((lang) => lang.name === e.target.value);
+    const newTag = { color, language: e.target.value };
+    !tagsArray.some((tag) => tag.language === e.target.value) &&
+      tagsArray.push(newTag);
     setTopicDetails({ ...topicDetails, tags: tagsArray });
+    console.log(tagsArray);
   }
 
   function handleRemoveTag(e) {
     const tagsArray = topicDetails.tags;
-    const filteredArray = tagsArray.filter((el) => el !== e.target.value);
+    const filteredArray = tagsArray.filter(
+      (el) => el.language !== e.target.value
+    );
     setTopicDetails({ ...topicDetails, tags: filteredArray });
+    console.log(tagsArray);
   }
 
   return (
