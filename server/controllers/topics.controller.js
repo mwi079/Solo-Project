@@ -1,5 +1,6 @@
 const { Topic } = require("../models/topic.model");
 const { User } = require("../models/user.model");
+const { Comment } = require("../models/comment.model");
 
 async function getAllTopics(ctx) {
   try {
@@ -56,18 +57,35 @@ async function deleteOneTopic(ctx) {
   }
 }
 
-async function modifyTopicTitle(ctx) {
+async function addComment(ctx) {
   try {
-    const { title, newTitle } = ctx.request.body;
-    const modifiedTopic = await Topic.findOneAndUpdate(
-      { title },
-      { title: newTitle },
-      {
-        new: true,
-      }
-    );
+    const { id } = ctx.request.params;
+    const _id = ctx.user;
+    const { comment } = ctx.request.body;
+    const newComment = new Comment({ comment, count: 1, author: _id });
+
+    // const user = await User.findOne({ _id });
+    const topic = await Topic.findOne({ _id: id });
+    topic.comments = [...topic.comments, newComment._id];
+    await topic.save();
+    await newComment.save();
     ctx.status = 200;
-    ctx.body = modifiedTopic;
+    // ctx.body = user;
+    ctx.body = topic;
+  } catch (error) {
+    ctx.status = 400;
+    console.error(error);
+  }
+}
+
+async function getTopicComments(ctx) {
+  try {
+    const { id } = ctx.request.params;
+    const topic = await Topic.findOne({ _id: id }).populate("comments");
+    // console.log("comments", comments);
+
+    ctx.status = 200;
+    ctx.body = topic;
   } catch (error) {
     ctx.status = 400;
     console.error(error);
@@ -79,5 +97,6 @@ module.exports = {
   getTopicById,
   postOneTopic,
   deleteOneTopic,
-  modifyTopicTitle,
+  addComment,
+  getTopicComments,
 };

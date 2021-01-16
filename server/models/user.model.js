@@ -29,6 +29,12 @@ const userSchema = new mongoose.Schema({
       ref: "Topic",
     },
   ],
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment",
+    },
+  ],
 });
 
 const User = mongoose.model("User", userSchema);

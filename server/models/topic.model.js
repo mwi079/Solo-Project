@@ -12,10 +12,12 @@ const topicSchema = new mongoose.Schema({
     max: 1050,
     required: true,
   },
-  replies: {
-    type: Number,
-    default: 0,
-  },
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment",
+    },
+  ],
   likes: {
     type: Number,
     default: 0,
