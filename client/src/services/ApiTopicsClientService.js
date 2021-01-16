@@ -32,3 +32,14 @@ export async function deleteTopic(_id) {
   };
   return axios.delete(`${apiUrl}/forum/delete`, config);
 }
+
+export async function getSingleTopic(id) {
+  const token = localStorage.getItem("token");
+  // const config = {
+  //   data: { topicId: id },
+  //   headers: { Authorization: token },
+  // };
+  return axios.get(`${apiUrl}/forum/topic/${id}`, {
+    headers: { Authorization: token },
+  });
+}

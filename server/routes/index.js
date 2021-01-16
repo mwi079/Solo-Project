@@ -8,11 +8,10 @@ const { loginUser } = require("../controllers/login.controller");
 const {
   getProfile,
   getUserPosts,
-  getUserById,
 } = require("../controllers/profile.controller");
 const {
   getAllTopics,
-  getTopicByTitle,
+  getTopicById,
   postOneTopic,
   deleteOneTopic,
   modifyTopicTitle,
@@ -25,7 +24,7 @@ router.get("/api/user/profile", authorizeUser, getProfile);
 
 // Forum topics routes
 router.get("/forum/allTopics", getAllTopics);
-router.get("/forum/topic", authorizeTopic, getTopicByTitle);
+router.get("/forum/topic/:id", authorizeTopic, getTopicById);
 router.get("/forum/user_topics", authorizeTopic, getUserPosts);
 router.post("/forum/post_topic", authorizeTopic, postOneTopic);
 router.delete("/forum/delete", authorizeTopic, deleteOneTopic);

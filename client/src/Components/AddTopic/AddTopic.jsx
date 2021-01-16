@@ -18,7 +18,6 @@ import {
 import "./AddTopic.css";
 import { postTopic } from "../../services/ApiTopicsClientService";
 import { StateContext } from "../../global.context/globalStore.reducer";
-import { Redirect } from "@reach/router";
 
 export default function AddTopic() {
   const { isOpen, onToggle, onOpen, onClose } = useDisclosure();
@@ -212,7 +211,7 @@ export default function AddTopic() {
           </form>
         </Flex>
       ) : (
-        <Redirect to="/" />
+        <Heading>Not auth</Heading>
       )}
     </>
   );

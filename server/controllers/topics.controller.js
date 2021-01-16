@@ -12,10 +12,12 @@ async function getAllTopics(ctx) {
   }
 }
 
-async function getTopicByTitle(ctx) {
+async function getTopicById(ctx) {
   try {
-    const { title } = ctx.request.body;
-    const foundTopic = await Topic.findOne({ title });
+    const { id } = ctx.request.params;
+    console.log(id);
+    const foundTopic = await Topic.findOne({ _id: id });
+    console.log(foundTopic);
     ctx.status = 200;
     ctx.body = foundTopic;
   } catch (error) {
@@ -76,7 +78,7 @@ async function modifyTopicTitle(ctx) {
 
 module.exports = {
   getAllTopics,
-  getTopicByTitle,
+  getTopicById,
   postOneTopic,
   deleteOneTopic,
   modifyTopicTitle,

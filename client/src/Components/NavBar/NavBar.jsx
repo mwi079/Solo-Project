@@ -1,4 +1,4 @@
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 import { logOut } from "../../services/ApiUserClientService";
 import { MdHome } from "react-icons/md";
 import UserIcon from "../../assets/user.svg";
@@ -55,6 +55,7 @@ export default function NavBar() {
     logOut();
     dispatch({ type: "isAuth", payload: false });
     dispatch({ type: "user", payload: null });
+    navigate(`/`);
   };
 
   return (
@@ -100,6 +101,13 @@ export default function NavBar() {
           </>
         ) : (
           <Flex>
+            <Box>
+              <Link to="/">
+                <Button p={3} boxShadow="lg" mx={2} colorScheme={colorScheme}>
+                  <Icon as={MdHome} />
+                </Button>
+              </Link>
+            </Box>
             <Box textAlign="right" mr={3} ml={3}>
               {colorMode === "light" ? (
                 <IconButton icon={<SunIcon />} onClick={toggleColorMode} />
