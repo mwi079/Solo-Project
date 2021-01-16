@@ -70,7 +70,6 @@ export default function AddTopic() {
       (el) => el.language !== e.target.value
     );
     setTopicDetails({ ...topicDetails, tags: filteredArray });
-    console.log(tagsArray);
   }
 
   return (

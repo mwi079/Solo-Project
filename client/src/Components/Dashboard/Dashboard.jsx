@@ -25,7 +25,15 @@ export default function Dashboard() {
 
   useEffect(() => {
     getAllTopics()
-      .then((res) => setTopics(res.data))
+      .then((res) => {
+        setTopics(
+          res.data
+            .slice()
+            .sort(
+              (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+            )
+        );
+      })
       .catch((error) => console.error(error));
   }, []);
 
@@ -44,6 +52,16 @@ export default function Dashboard() {
         })
         .catch((error) => console.error(error));
     }
+  }
+
+  function filterByDate() {
+    getAllTopics()
+      .then((res) => {
+        setTopics(
+          res.data.slice().sort((a, b) => new Date(b.date) - new Date(a.date))
+        );
+      })
+      .catch((error) => console.error(error));
   }
 
   return (
@@ -111,7 +129,13 @@ export default function Dashboard() {
             </Flex>
             <Flex justify="space-between">
               <Flex my="20px">
-                <Button mx="10px" variant="solid" bg="#03045e" color="white">
+                <Button
+                  mx="10px"
+                  variant="solid"
+                  bg="#03045e"
+                  color="white"
+                  onClick={() => filterByDate()}
+                >
                   Latest
                 </Button>
                 <Button mx="10px" variant="outline" colorScheme="primary">
