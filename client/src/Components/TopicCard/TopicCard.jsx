@@ -28,14 +28,13 @@ export default function TopicCard({ topic }) {
                 {moment(topic.date).format("MMMM Do YYYY")}
               </Box>
             </Flex>
-            <Flex>
+            <Flex mt="10px">
               {topic.tags.map((tag) => (
                 <Box
-                  px="5px"
-                  py="8px"
+                  px="12px"
+                  py="4px"
                   mx="10px"
-                  boxShadow="0 0 10px #3333"
-                  // backgroundColor="#00008B"
+                  fontSize="12px"
                   bg={tag.color}
                   color="white"
                   opacity="0.8"

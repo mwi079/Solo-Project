@@ -4,14 +4,60 @@
   width: 2rem;
   background-position: center center;
   background-size: contain;
-  margin-right: 30px;
+  margin-right: 10px;
+  position: relative;
 }
 
-li {
+.icons-list figure::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 42px;
+  height: 2px;
+  width: 8px;
+  transform-origin: 0 0;
+  transform: scaleX(0);
+  transition: transform 0.35s;
+  z-index: 2;
+  background-color: black;
+}
+
+.icons-list button:hover figure::before {
+  transform: scaleX(1);
+}
+
+.icons-list {
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.icons-list button {
   margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px 10px 10px;
+  background-color: white;
+  transition: background-color 0.5s ease;
+  border-radius: 10px;
+}
+
+.icons-list button p {
+  display: inline-block;
+  transition: transform 0.35s;
+}
+
+.icons-list button:hover p {
+  transform: translateX(10px);
+}
+
+.icons-list button:hover {
+  background-color: #eee;
+}
+
+#all-categories {
+  background-color: #edae49;
 }
 
 .order_by::before {

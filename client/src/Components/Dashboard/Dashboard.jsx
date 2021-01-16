@@ -19,6 +19,7 @@ export default function Dashboard() {
     { lang: TypeScript, name: "TypeScript", color: "blue" },
     { lang: Css, name: "CSS", color: "purple" },
   ];
+
   const { state } = useContext(StateContext);
   const [topics, setTopics] = useState(null);
 
@@ -27,6 +28,23 @@ export default function Dashboard() {
       .then((res) => setTopics(res.data))
       .catch((error) => console.error(error));
   }, []);
+
+  function filterByCategory(e) {
+    if (e.target.innerText.includes("All")) {
+      getAllTopics()
+        .then((res) => setTopics(res.data))
+        .catch((error) => console.error(error));
+    } else {
+      getAllTopics()
+        .then((res) => {
+          const filteredTopics = res.data.filter((topic) =>
+            topic.tags.some((tag) => tag.language === e.target.innerText)
+          );
+          setTopics(filteredTopics);
+        })
+        .catch((error) => console.error(error));
+    }
+  }
 
   return (
     <>
@@ -48,14 +66,7 @@ export default function Dashboard() {
           left: "33%",
         }}
       >
-        <Flex
-          flexDir="column"
-          flex="2"
-          position="sticky"
-          alignSelf="flex-start"
-          top="40px"
-          py="40px"
-        >
+        <Flex flexDir="column" flex="2" position="sticky" top="40px" py="40px">
           <Flex pt="20px" pb="30px">
             <Heading>Categories</Heading>
           </Flex>
@@ -64,12 +75,21 @@ export default function Dashboard() {
             {iconArray &&
               iconArray.map((icon) => (
                 <li key={icon.name}>
-                  <figure
-                    style={{ backgroundImage: `url(${icon.lang})` }}
-                  ></figure>
-                  <Text fontSize="md">{icon.name}</Text>
+                  <button onClick={(e) => filterByCategory(e)}>
+                    <figure
+                      style={{ backgroundImage: `url(${icon.lang})` }}
+                    ></figure>
+                    <Text fontSize="md" fontWeight="500">
+                      {icon.name}
+                    </Text>
+                  </button>
                 </li>
               ))}
+            <Button id="all-categories" onClick={(e) => filterByCategory(e)}>
+              <Text fontSize="md" fontWeight="500">
+                All categories
+              </Text>
+            </Button>
           </ul>
         </Flex>
 
