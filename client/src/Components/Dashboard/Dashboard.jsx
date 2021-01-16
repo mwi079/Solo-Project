@@ -27,11 +27,7 @@ export default function Dashboard() {
     getAllTopics()
       .then((res) => {
         setTopics(
-          res.data
-            .slice()
-            .sort(
-              (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-            )
+          res.data.slice().sort((a, b) => new Date(b.date) - new Date(a.date))
         );
       })
       .catch((error) => console.error(error));
@@ -85,7 +81,7 @@ export default function Dashboard() {
         }}
       >
         <Flex flexDir="column" flex="2" position="sticky" top="40px" py="40px">
-          <Flex pt="20px" pb="30px">
+          <Flex pt="20px" pb="30px" alignSelf="flex-start">
             <Heading>Categories</Heading>
           </Flex>
 

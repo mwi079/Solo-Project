@@ -31,6 +31,7 @@ export default function TopicCard({ topic }) {
             <Flex mt="10px">
               {topic.tags.map((tag) => (
                 <Box
+                  key={tag.name}
                   px="12px"
                   py="4px"
                   mx="10px"

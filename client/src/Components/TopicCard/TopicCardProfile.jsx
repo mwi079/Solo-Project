@@ -8,15 +8,12 @@ export default function TopicCard({ topic, setPosts, posts }) {
   const { state } = useContext(StateContext);
 
   function handleClick(e) {
-    const title = e.target.parentElement.parentElement.parentElement.firstChild.innerText.split(
-      "\n"
-    )[0];
-
-    deleteTopic({ title })
+    const id = topic._id;
+    deleteTopic(id)
       .then((res) => res.data)
       .catch((error) => console.error(error));
 
-    const filteredPosts = posts.filter((post) => post.title !== title);
+    const filteredPosts = posts.filter((post) => post._id !== id);
     setPosts(filteredPosts);
   }
 
@@ -29,6 +26,7 @@ export default function TopicCard({ topic, setPosts, posts }) {
           py="40px"
           px="20px"
           borderRadius="lg"
+          key={topic._id}
         >
           <Flex flex="6" flexDir="column" key={topic._id}>
             <Box>
@@ -42,13 +40,6 @@ export default function TopicCard({ topic, setPosts, posts }) {
                 {moment(topic.date).format("MMMM Do YYYY")}
               </Box>
             </Flex>
-            {/* <Flex>
-              {topic.tags.map((tag) => (
-                <Box border="1px solid black" p="5px" mx="10px">
-                  {tag}
-                </Box>
-              ))}
-            </Flex> */}
           </Flex>
           <Flex flexDir="column-reverse">
             {state.isAuth && (

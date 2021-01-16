@@ -9,6 +9,7 @@ import AddTopic from "./Components/AddTopic/AddTopic";
 import { Store, StateContext } from "./global.context/globalStore.reducer";
 import Profile from "./Components/Profile/Profile";
 import { getProfile } from "./services/ApiUserClientService";
+import PageNotFound from "./Components/UI_Aids/PageNotFound";
 
 function App() {
   const [state, dispatch] = Store();
@@ -39,6 +40,7 @@ function App() {
               <LandingPage path="/" />
               <AddTopic path="/add_topic" />
               <Profile path="/profile" />
+              <PageNotFound default />
             </Router>
           </StateContext.Provider>
         </ThemeProvider>

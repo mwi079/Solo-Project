@@ -44,9 +44,9 @@ async function postOneTopic(ctx) {
 
 async function deleteOneTopic(ctx) {
   try {
-    const { title } = ctx.request.body;
     console.log(ctx.request.body);
-    const deletedTopic = await Topic.findOneAndDelete({ title });
+    const { _id } = ctx.request.body;
+    const deletedTopic = await Topic.findByIdAndDelete({ _id });
     console.log(deletedTopic);
     ctx.status = 200;
     ctx.body = "Topic successfully deleted";

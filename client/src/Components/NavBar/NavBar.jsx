@@ -13,13 +13,13 @@ import {
   useColorModeValue,
   Spacer,
   ButtonGroup,
+  Avatar,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import React, { useContext } from "react";
 import "./NavBar.css";
 import { Flex } from "@chakra-ui/react";
 import UserForm from "../UserForm/UserForm";
-
 import { StateContext } from "../../global.context/globalStore.reducer";
 
 export default function NavBar() {
@@ -43,11 +43,11 @@ export default function NavBar() {
     if (window.scrollY > navbar.clientHeight) {
       navbar.classList.add("scrolled");
       title.classList.add("scrolled_title");
-      user.classList.add("scrolled_profile");
+      user && user.classList.add("scrolled_profile");
     } else {
       navbar.classList.remove("scrolled");
       title.classList.remove("scrolled_title");
-      user.classList.remove("scrolled_profile");
+      user && user.classList.remove("scrolled_profile");
     }
   });
 
@@ -88,22 +88,14 @@ export default function NavBar() {
               </Box>
               <Button onClick={handleLogOut}>Logout</Button>
               <Link to="/profile" className="profile-name">
-                <Flex flexDir="column" justifyContent="center">
+                <Flex alignItems="center">
                   <Box fontWeight="bold">{state.user && state.user.name}</Box>
+                  <Avatar
+                    ml="10px"
+                    name={state.user && state.user.name}
+                  ></Avatar>
                 </Flex>
               </Link>
-
-              {/* <Tooltip
-                label={state.user ? state.user.name : "Profile"}
-                arrowSize={3}
-                hasArrow
-              >
-                <Link to="/profile">
-                  <Button p={3} boxShadow="lg" mx={2} borderRadius="50%">
-                    <img src={UserIcon} alt="" />
-                  </Button>
-                </Link>
-              </Tooltip> */}
             </ButtonGroup>
           </>
         ) : (

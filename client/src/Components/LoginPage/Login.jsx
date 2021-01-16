@@ -11,7 +11,7 @@ import {
   InputGroup,
   ThemeProvider,
 } from "@chakra-ui/react";
-import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import ErrorMessage from "../UI_Aids/ErrorMessage/ErrorMessage";
 import "./Login.css";
 import {
   login,
@@ -32,7 +32,7 @@ export default function Login() {
     state.isAuth &&
       !error &&
       document.querySelector(".form-wrapper").classList.remove("show");
-  }, [state.isAuth]);
+  }, [state.isAuth, dispatch, error]);
 
   function loginUser(credentials) {
     return login(credentials)

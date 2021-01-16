@@ -16,7 +16,7 @@ import {
   Flex,
   ThemeProvider,
 } from "@chakra-ui/react";
-import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import ErrorMessage from "../UI_Aids/ErrorMessage/ErrorMessage";
 import customTheme from "../../theme/";
 import { StateContext } from "../../global.context/globalStore.reducer";
 

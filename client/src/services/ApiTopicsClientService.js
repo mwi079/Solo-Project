@@ -24,18 +24,11 @@ export async function getUserPosts() {
   });
 }
 
-export async function deleteTopic({ title }) {
+export async function deleteTopic(_id) {
   const token = localStorage.getItem("token");
   const config = {
-    data: { title },
+    data: { _id },
     headers: { Authorization: token },
   };
-  return axios.delete(
-    `${apiUrl}/forum/delete`,
-    config
-    // { data: { title }},
-    // {
-    //   headers: { Authorization: token },
-    // }
-  );
+  return axios.delete(`${apiUrl}/forum/delete`, config);
 }
