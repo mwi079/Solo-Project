@@ -15,7 +15,7 @@ const {
   postOneTopic,
   deleteOneTopic,
   addComment,
-  getTopicComments,
+  getTopicDetails,
 } = require("../controllers/topics.controller");
 
 // User login/register routes
@@ -30,6 +30,6 @@ router.get("/forum/user_topics", authorizeTopic, getUserPosts);
 router.post("/forum/post_topic", authorizeTopic, postOneTopic);
 router.delete("/forum/delete", authorizeTopic, deleteOneTopic);
 router.put("/forum/comment/:id", authorizeTopic, addComment);
-router.get("/forum/topic_comments/:id", authorizeTopic, getTopicComments);
+router.get("/forum/topic_comments/:id", authorizeTopic, getTopicDetails);
 
 module.exports = { router };

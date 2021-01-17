@@ -82,17 +82,19 @@ async function addComment(ctx) {
   }
 }
 
-async function getTopicComments(ctx) {
+async function getTopicDetails(ctx) {
   try {
     const { id } = ctx.request.params;
-    const { comments } = await Topic.findOne({ _id: id }).populate({
+    const comments = await Topic.findOne({ _id: id }).populate({
       path: "comments",
       populate: {
         path: "author",
       },
     });
+    const { author } = await Topic.findOne({ _id: id }).populate("author");
+
     ctx.status = 200;
-    ctx.body = comments;
+    ctx.body = { comments, author };
   } catch (error) {
     ctx.status = 400;
     console.error(error);
@@ -105,5 +107,5 @@ module.exports = {
   postOneTopic,
   deleteOneTopic,
   addComment,
-  getTopicComments,
+  getTopicDetails,
 };
