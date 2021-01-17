@@ -6,8 +6,8 @@ dotenv.config();
 async function getProfile(ctx) {
   try {
     // extract user info from the request
-    const { _id, name, email } = ctx.user;
-    const user = { _id, name, email };
+    const { _id, name, surname, email } = ctx.user;
+    const user = { _id, name, surname, email };
     ctx.status = 200;
     ctx.body = user;
   } catch (error) {

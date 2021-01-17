@@ -68,7 +68,7 @@ export default function Dashboard() {
         boxShadow="0 0 5px #3333"
         px="20px"
         pos="relative"
-        mb="30px"
+        mb="60px"
         _before={{
           content: `""`,
           display: "block",

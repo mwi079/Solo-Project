@@ -6,14 +6,7 @@ export default function TopisCGrid({ topics }) {
   return (
     <>
       {topics ? (
-        <Grid
-          templateRows="repeat(5, 1fr)"
-          gap={6}
-          mt="20px"
-          mx="30px"
-          px="30px"
-          justifyContent="center"
-        >
+        <Grid gap={6} mt="20px" mx="30px" px="30px" justifyContent="center">
           {topics.map((topic) => (
             <TopicCard topic={topic} />
           ))}

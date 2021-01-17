@@ -20,7 +20,7 @@ import { postTopic } from "../../services/ApiTopicsClientService";
 import { StateContext } from "../../global.context/globalStore.reducer";
 
 export default function AddTopic() {
-  const { isOpen, onToggle, onOpen, onClose } = useDisclosure();
+  const { isOpen, onToggle } = useDisclosure();
   const { state } = useContext(StateContext);
 
   const [topicDetails, setTopicDetails] = useState({

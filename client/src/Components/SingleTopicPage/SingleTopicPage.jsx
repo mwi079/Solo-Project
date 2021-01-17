@@ -10,25 +10,36 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { getSingleTopic } from "../../services/ApiTopicsClientService";
+import {
+  getSingleTopic,
+  postComment,
+} from "../../services/ApiTopicsClientService";
 import moment from "moment";
 import { FcLike } from "react-icons/fc";
 
 export default function SingleTopicPage(props) {
   const [topic, setTopic] = useState(null);
+  const [author, setAuthor] = useState(null);
   const { isOpen, onToggle } = useDisclosure();
-
   const [comment, setComment] = useState("");
 
   useEffect(() => {
     getSingleTopic(props.id)
-      .then((res) => setTopic(res.data))
+      .then((res) => {
+        const { author, topic } = res.data;
+        setTopic(topic);
+        setAuthor(author);
+      })
       .catch((error) => console.error(error));
   }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(comment);
+    try {
+      postComment(props.id, comment);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -64,7 +75,7 @@ export default function SingleTopicPage(props) {
                   <Text fontWeight="bold" mr="5px" textAlign="center">
                     Author:
                   </Text>{" "}
-                  {topic.author.name}
+                  {author && author.name}
                 </Box>
                 <Box alignSelf="center" mx="5px">
                   <Text fontWeight="bold" mr="5px" textAlign="center">

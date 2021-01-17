@@ -1,16 +1,27 @@
-import React, { useContext } from "react";
-import { Button, Flex, Box, Heading, Text } from "@chakra-ui/react";
+import React, { useContext, useState } from "react";
+import {
+  Button,
+  Flex,
+  Box,
+  Heading,
+  Text,
+  Collapse,
+  useDisclosure,
+} from "@chakra-ui/react";
 import moment from "moment";
 import { StateContext } from "../../global.context/globalStore.reducer";
 import { Link } from "@reach/router";
+import Comments from "../Comments/Comments";
+import "./TopicCard.css";
 
 export default function TopicCard({ topic }) {
   const { state } = useContext(StateContext);
+  const { isOpen, onToggle } = useDisclosure();
 
   return (
     <>
       {topic ? (
-        <Link to={`single_topic/${topic._id}`}>
+        <>
           <Flex
             w="40vw"
             boxShadow="0 0 10px #3333"
@@ -49,15 +60,32 @@ export default function TopicCard({ topic }) {
                 ))}
               </Flex>
             </Flex>
-            <Flex flexDir="column-reverse">
+            <Flex flexDir="row-reverse" alignItems="flex-end">
               {state.isAuth && (
-                <Button colorScheme="primary" size="sm" w="100px">
-                  Reply
-                </Button>
+                <Link to={`single_topic/${topic._id}`}>
+                  <Button colorScheme="primary" size="sm" w="100px">
+                    Reply
+                  </Button>
+                </Link>
               )}
+              <Button
+                colorScheme="button"
+                size="sm"
+                w="100px"
+                onClick={onToggle}
+                mr="10px"
+                mt="10px"
+              >
+                Comments
+              </Button>
             </Flex>
           </Flex>
-        </Link>
+          <Collapse className="comment_area" in={isOpen} animateOpacity>
+            <Flex my="20px" maxH="200px" w="40vw" px="10px" flexDir="column">
+              <Comments topic={topic} />
+            </Flex>
+          </Collapse>
+        </>
       ) : (
         <Flex
           w="40vw"

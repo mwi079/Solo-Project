@@ -4,7 +4,12 @@ const { Comment } = require("../models/comment.model");
 
 async function getAllTopics(ctx) {
   try {
-    const allTopics = await Topic.find({}).populate("author");
+    const allTopics = await Topic.find({}).populate({
+      path: "comments",
+      populate: {
+        path: "author",
+      },
+    });
     ctx.status = 200;
     ctx.body = allTopics;
   } catch (error) {
@@ -74,7 +79,6 @@ async function addComment(ctx) {
     await newComment.save();
     await user.save();
     ctx.status = 200;
-    // ctx.body = user;
     ctx.body = topic;
   } catch (error) {
     ctx.status = 400;
@@ -85,7 +89,7 @@ async function addComment(ctx) {
 async function getTopicDetails(ctx) {
   try {
     const { id } = ctx.request.params;
-    const comments = await Topic.findOne({ _id: id }).populate({
+    const topic = await Topic.findOne({ _id: id }).populate({
       path: "comments",
       populate: {
         path: "author",
@@ -94,7 +98,7 @@ async function getTopicDetails(ctx) {
     const { author } = await Topic.findOne({ _id: id }).populate("author");
 
     ctx.status = 200;
-    ctx.body = { comments, author };
+    ctx.body = { topic, author };
   } catch (error) {
     ctx.status = 400;
     console.error(error);
