@@ -93,7 +93,9 @@ export default function NavBar() {
                   <Box fontWeight="bold">{state.user && state.user.name}</Box>
                   <Avatar
                     ml="10px"
-                    name={state.user && state.user.name}
+                    name={
+                      state.user && `${state.user.name} ${state.user.surname}`
+                    }
                   ></Avatar>
                 </Flex>
               </Link>

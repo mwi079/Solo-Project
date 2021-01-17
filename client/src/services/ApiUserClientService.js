@@ -6,8 +6,13 @@ export async function login({ email, password }) {
   return axios.post(`${apiUrl}/api/user/login`, { email, password });
 }
 
-export async function registerUser({ name, email, password }) {
-  return axios.post(`${apiUrl}/api/user/register`, { name, email, password });
+export async function registerUser({ name, surname, email, password }) {
+  return axios.post(`${apiUrl}/api/user/register`, {
+    name,
+    surname,
+    email,
+    password,
+  });
 }
 
 export async function getProfile(accessToken) {

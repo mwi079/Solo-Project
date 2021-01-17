@@ -7,8 +7,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 async function registerUser(ctx) {
-  const { name, email, password } = ctx.request.body;
-  const { error } = userValidation({ name, email, password });
+  const { name, surname, email, password } = ctx.request.body;
+  const { error } = userValidation({ name, surname, email, password });
 
   if (error) {
     ctx.status = 400;
@@ -27,7 +27,7 @@ async function registerUser(ctx) {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
 
-  const user = new User({ name, email, password: hashedPassword });
+  const user = new User({ name, email, surname, password: hashedPassword });
 
   try {
     const { _id } = await user.save();

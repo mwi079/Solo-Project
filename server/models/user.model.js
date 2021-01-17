@@ -4,7 +4,11 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    min: 6,
+    max: 255,
+  },
+  surname: {
+    type: String,
+    required: true,
     max: 255,
   },
   email: {
@@ -18,10 +22,6 @@ const userSchema = new mongoose.Schema({
     required: true,
     min: 6,
     max: 1024,
-  },
-  date: {
-    type: Date,
-    default: Date.now(),
   },
   posts: [
     {

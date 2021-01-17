@@ -21,8 +21,8 @@ import customTheme from "../../theme/";
 import { StateContext } from "../../global.context/globalStore.reducer";
 
 export default function Signup() {
-  async function registerNewUser({ name, email, password }) {
-    registerUser({ name, email, password })
+  async function registerNewUser({ name, surname, email, password }) {
+    registerUser({ name, surname, email, password })
       .then((res) => {
         completeAuthentication(res.data);
         getProfile(res.data)
@@ -35,6 +35,7 @@ export default function Signup() {
   const [isLoading, setIsLoading] = useState(false);
   const [userDetails, setUserDetails] = useState({
     name: "",
+    surname: "",
     email: "",
     password: "",
   });
@@ -55,14 +56,19 @@ export default function Signup() {
       if (!error) {
         dispatch({ type: "isAuth", payload: true });
       }
-      setUserDetails({ name: "", email: "", password: "" });
+      setUserDetails({ name: "", email: "", surname: "", password: "" });
     } catch (error) {
       setIsLoading(false);
     }
   }
 
   const validateForm = () => {
-    return !userDetails.email || !userDetails.password || !userDetails.name;
+    return (
+      !userDetails.email ||
+      !userDetails.password ||
+      !userDetails.name ||
+      !userDetails.surname
+    );
   };
 
   return (
@@ -81,6 +87,18 @@ export default function Signup() {
                   placeholder="Name"
                   onChange={(e) =>
                     setUserDetails({ ...userDetails, name: e.target.value })
+                  }
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Surname</FormLabel>
+                <Input
+                  autoFocus={false}
+                  value={userDetails.surname}
+                  type="text"
+                  placeholder="Name"
+                  onChange={(e) =>
+                    setUserDetails({ ...userDetails, surname: e.target.value })
                   }
                 />
               </FormControl>

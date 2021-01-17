@@ -39,3 +39,10 @@ export async function getSingleTopic(id) {
     headers: { Authorization: token },
   });
 }
+
+export async function getTopicComments(id) {
+  const token = localStorage.getItem("token");
+  return axios.get(`${apiUrl}/forum/topic_comments/${id}`, {
+    headers: { Authorization: token },
+  });
+}

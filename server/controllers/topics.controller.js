@@ -61,14 +61,18 @@ async function addComment(ctx) {
   try {
     const { id } = ctx.request.params;
     const _id = ctx.user;
+
     const { comment } = ctx.request.body;
+
     const newComment = new Comment({ comment, count: 1, author: _id });
 
-    // const user = await User.findOne({ _id });
+    const user = await User.findOne({ _id });
+
     const topic = await Topic.findOne({ _id: id });
     topic.comments = [...topic.comments, newComment._id];
     await topic.save();
     await newComment.save();
+    await user.save();
     ctx.status = 200;
     // ctx.body = user;
     ctx.body = topic;
@@ -81,11 +85,14 @@ async function addComment(ctx) {
 async function getTopicComments(ctx) {
   try {
     const { id } = ctx.request.params;
-    const topic = await Topic.findOne({ _id: id }).populate("comments");
-    // console.log("comments", comments);
-
+    const { comments } = await Topic.findOne({ _id: id }).populate({
+      path: "comments",
+      populate: {
+        path: "author",
+      },
+    });
     ctx.status = 200;
-    ctx.body = topic;
+    ctx.body = comments;
   } catch (error) {
     ctx.status = 400;
     console.error(error);

@@ -13,6 +13,7 @@ import React, { useEffect, useState } from "react";
 import { getSingleTopic } from "../../services/ApiTopicsClientService";
 import moment from "moment";
 import { FcLike } from "react-icons/fc";
+import { getTopicComments } from "../../services/ApiTopicsClientService";
 
 export default function SingleTopicPage(props) {
   const [topic, setTopic] = useState(null);
