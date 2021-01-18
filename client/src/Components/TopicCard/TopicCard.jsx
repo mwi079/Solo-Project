@@ -17,20 +17,20 @@ import Comments from "../Comments/Comments";
 import { likePost, dislikePost } from "../../services/ApiTopicsClientService";
 import "./TopicCard.css";
 
-export default function TopicCard({ topic }) {
+export default function TopicCard(props) {
   const { state } = useContext(StateContext);
   const { isOpen, onToggle } = useDisclosure();
   const [liked, setLiked] = useState(false);
-  const [topicOne, setTopic] = useState(topic);
+  const [topic, setTopic] = useState(props.topic);
 
   function clickedLike() {
     if (!liked) {
       likePost(topic._id)
-        .then(() => setTopic({ ...topicOne, likes: topicOne.likes + 1 }))
+        .then((res) => setTopic(res.data))
         .catch((error) => console.error(error));
     } else {
       dislikePost(topic._id)
-        .then(() => setTopic({ ...topicOne, likes: topicOne.likes - 1 }))
+        .then((res) => setTopic(res.data))
         .catch((error) => console.error(error));
     }
     setLiked(!liked);
