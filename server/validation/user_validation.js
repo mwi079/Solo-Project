@@ -3,7 +3,7 @@ const Joi = require("@hapi/joi");
 const userValidation = (user) => {
   const schema = Joi.object({
     name: Joi.string().required(),
-    surname: Joi.string().required(),
+    surname: Joi.string(),
     email: Joi.string().min(6).required().email(),
     password: Joi.string().min(6).required(),
   });

@@ -3,6 +3,38 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
+async function getGithubProfile(ctx) {
+  try {
+    // extract user info from the request
+    const {
+      name,
+      surname,
+      email,
+      avatar_url,
+      gists_url,
+      html_url,
+      location,
+    } = ctx.user;
+    const user = {
+      name,
+      surname,
+      email,
+      avatar_url,
+      gists_url,
+      html_url,
+      location,
+    };
+    ctx.status = 200;
+    ctx.body = user;
+  } catch (error) {
+    ctx.status = 401;
+    ctx.body = {
+      error,
+      message: "Resource not found",
+    };
+  }
+}
+
 async function getProfile(ctx) {
   try {
     // extract user info from the request
@@ -44,4 +76,4 @@ async function getUserById(ctx) {
   }
 }
 
-module.exports = { getProfile, getUserPosts, getUserById };
+module.exports = { getProfile, getUserPosts, getUserById, getGithubProfile };

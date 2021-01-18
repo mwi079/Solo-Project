@@ -3,6 +3,7 @@ const { userValidation } = require("../validation/user_validation");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const axios = require("axios");
 
 dotenv.config();
 
@@ -40,4 +41,95 @@ async function registerUser(ctx) {
   }
 }
 
-module.exports = { registerUser };
+async function registerUserGithub(ctx) {
+  const {
+    name,
+    surname,
+    email,
+    avatar_url,
+    gists_url,
+    html_url,
+    location,
+  } = ctx.request.body;
+
+  // Check if user is already in db
+  if (/\s/g.test(name)) {
+    let [firstName, surname] = name.split(" ");
+    //eslint-disable-next-line
+    const user = new User({
+      name: firstName,
+      surname,
+      email,
+      avatar_url,
+      gists_url,
+      html_url,
+      location,
+    });
+  }
+
+  const user = new User({
+    name,
+    surname,
+    email,
+    avatar_url,
+    gists_url,
+    html_url,
+    location,
+  });
+
+  try {
+    const { _id } = await user.save();
+    const accessToken = jwt.sign({ _id }, process.env.TOKEN_SECRET);
+    ctx.status = 200;
+    ctx.body = accessToken;
+  } catch (error) {
+    ctx.status = 400;
+    ctx.body = error;
+  }
+}
+
+// github auth
+async function authGithub(ctx, next) {
+  try {
+    const { code } = ctx.request.body;
+
+    const tokenResponse = await axios
+      .post(
+        `https://github.com/login/oauth/access_token?client_id=${process.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}&code=${code}`
+      )
+      .then((res) => res.data)
+      .catch((error) => console.error(error));
+
+    const token = tokenResponse.slice(13, 53);
+    ctx.status = 200;
+    ctx.token = token;
+    await next();
+  } catch (error) {
+    ctx.status = 400;
+    ctx.body = error;
+  }
+}
+
+async function getGitHubCredentials(ctx) {
+  try {
+    const token = ctx.token;
+    const user = await axios
+      .get(`https://api.github.com/user`, {
+        headers: { Authorization: `token ${token}` },
+      })
+      .then((res) => res.data)
+      .catch((error) => console.error(error));
+    ctx.status = 200;
+    ctx.body = user;
+  } catch (error) {
+    ctx.status = 400;
+    console.error(error);
+  }
+}
+
+module.exports = {
+  registerUser,
+  authGithub,
+  getGitHubCredentials,
+  registerUserGithub,
+};
