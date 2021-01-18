@@ -16,6 +16,8 @@ const {
   deleteOneTopic,
   addComment,
   getTopicDetails,
+  likeTopic,
+  dislikeTopic,
 } = require("../controllers/topics.controller");
 
 // User login/register routes
@@ -28,6 +30,8 @@ router.get("/forum/allTopics", getAllTopics);
 router.get("/forum/topic/:id", getTopicById);
 router.get("/forum/user_topics", authorizeTopic, getUserPosts);
 router.post("/forum/post_topic", authorizeTopic, postOneTopic);
+router.post("/forum/like_topic", authorizeTopic, likeTopic);
+router.post("/forum/dislike_topic", authorizeTopic, dislikeTopic);
 router.delete("/forum/delete", authorizeTopic, deleteOneTopic);
 router.put("/forum/comment/:id", authorizeTopic, addComment);
 router.get("/forum/topic_comments/:id", authorizeTopic, getTopicDetails);

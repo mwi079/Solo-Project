@@ -19,6 +19,7 @@ import {
 import ErrorMessage from "../UI_Aids/ErrorMessage/ErrorMessage";
 import customTheme from "../../theme/";
 import { StateContext } from "../../global.context/globalStore.reducer";
+import ImageUploader from "react-images-upload";
 
 export default function Signup() {
   async function registerNewUser({ name, surname, email, password }) {
@@ -41,6 +42,7 @@ export default function Signup() {
   });
   const [error, setError] = useState("");
   const [show, setShow] = useState(false);
+  const [image, setImage] = useState({ pictures: [] });
   const { state, dispatch } = useContext(StateContext);
 
   useEffect(() => {
@@ -70,6 +72,8 @@ export default function Signup() {
       !userDetails.surname
     );
   };
+
+  function onDrop(picture) {}
 
   return (
     <>
@@ -140,6 +144,13 @@ export default function Signup() {
                   </InputRightElement>
                 </InputGroup>
               </FormControl>
+              <ImageUploader
+                withIcon={true}
+                buttonText="Choose images"
+                onChange={onDrop}
+                imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+                maxFileSize={5242880}
+              />
               <Button
                 width="full"
                 mt={4}

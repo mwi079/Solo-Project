@@ -50,3 +50,25 @@ export async function postComment(id, comment) {
     }
   );
 }
+
+export async function likePost(id) {
+  const token = localStorage.getItem("token");
+  return axios.post(
+    `${apiUrl}/forum/like_topic`,
+    { id },
+    {
+      headers: { Authorization: token },
+    }
+  );
+}
+
+export async function dislikePost(id) {
+  const token = localStorage.getItem("token");
+  return axios.post(
+    `${apiUrl}/forum/dislike_topic`,
+    { id },
+    {
+      headers: { Authorization: token },
+    }
+  );
+}

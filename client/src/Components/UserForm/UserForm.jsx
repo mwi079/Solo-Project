@@ -25,7 +25,7 @@ export default function UserForm({ isAuth, setUser, setIsAuth }) {
           p={6}
           boxShadow="lg"
           rounded="lg"
-          w="350px"
+          w="400px"
         >
           <Tabs variant="enclosed-colored" align="center" isFitted>
             <TabList>

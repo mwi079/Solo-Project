@@ -7,16 +7,34 @@ import {
   Text,
   Collapse,
   useDisclosure,
+  IconButton,
 } from "@chakra-ui/react";
 import moment from "moment";
 import { StateContext } from "../../global.context/globalStore.reducer";
 import { Link } from "@reach/router";
+import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 import Comments from "../Comments/Comments";
+import { likePost, dislikePost } from "../../services/ApiTopicsClientService";
 import "./TopicCard.css";
 
 export default function TopicCard({ topic }) {
   const { state } = useContext(StateContext);
   const { isOpen, onToggle } = useDisclosure();
+  const [liked, setLiked] = useState(false);
+  const [topicOne, setTopic] = useState(topic);
+
+  function clickedLike() {
+    if (!liked) {
+      likePost(topic._id)
+        .then(() => setTopic({ ...topicOne, likes: topicOne.likes + 1 }))
+        .catch((error) => console.error(error));
+    } else {
+      dislikePost(topic._id)
+        .then(() => setTopic({ ...topicOne, likes: topicOne.likes - 1 }))
+        .catch((error) => console.error(error));
+    }
+    setLiked(!liked);
+  }
 
   return (
     <>
@@ -74,10 +92,33 @@ export default function TopicCard({ topic }) {
                 w="100px"
                 onClick={onToggle}
                 mr="10px"
-                mt="10px"
               >
                 Comments
               </Button>
+              <Flex h="2rem" mr="20px" alignItems="center">
+                {topic.likes}
+              </Flex>
+              <Box mr="5px" h="2rem">
+                {!liked ? (
+                  <IconButton
+                    icon={<FcLikePlaceholder />}
+                    ml="3px"
+                    className="like_btn"
+                    size="sm"
+                    isRound
+                    onClick={clickedLike}
+                  />
+                ) : (
+                  <IconButton
+                    icon={<FcLike />}
+                    ml="3px"
+                    className="like_btn"
+                    size="sm"
+                    isRound
+                    onClick={clickedLike}
+                  />
+                )}
+              </Box>
             </Flex>
           </Flex>
           <Collapse className="comment_area" in={isOpen} animateOpacity>

@@ -107,7 +107,7 @@ export default function Dashboard() {
           </ul>
         </Flex>
 
-        <Flex flex="4" flexDir="column">
+        <Flex flex="4" flexDir="column" alignItems="center">
           <Flex
             w="100%"
             ml="10px"

@@ -14,7 +14,7 @@ async function getAllTopics(ctx) {
     ctx.body = allTopics;
   } catch (error) {
     ctx.status = 400;
-    console.error(error);
+    ctx.body = error;
   }
 }
 
@@ -26,7 +26,7 @@ async function getTopicById(ctx) {
     ctx.body = foundTopic;
   } catch (error) {
     ctx.status = 400;
-    console.error(error);
+    ctx.body = error;
   }
 }
 
@@ -44,7 +44,7 @@ async function postOneTopic(ctx) {
     ctx.body = topicToPost;
   } catch (error) {
     ctx.status = 400;
-    console.error(error);
+    ctx.body = error;
   }
 }
 
@@ -58,7 +58,7 @@ async function deleteOneTopic(ctx) {
     ctx.body = "Topic successfully deleted";
   } catch (error) {
     ctx.status = 400;
-    console.error(error);
+    ctx.body = error;
   }
 }
 
@@ -82,7 +82,7 @@ async function addComment(ctx) {
     ctx.body = topic;
   } catch (error) {
     ctx.status = 400;
-    console.error(error);
+    ctx.body = error;
   }
 }
 
@@ -101,7 +101,35 @@ async function getTopicDetails(ctx) {
     ctx.body = { topic, author };
   } catch (error) {
     ctx.status = 400;
-    console.error(error);
+    ctx.body = error;
+  }
+}
+
+async function likeTopic(ctx) {
+  try {
+    const { id } = ctx.request.body;
+    const topicToLike = await Topic.findOne({ _id: id });
+    topicToLike.likes += 1;
+    await topicToLike.save();
+    ctx.status = 200;
+    ctx.body = topicToLike;
+  } catch (error) {
+    ctx.status = 400;
+    ctx.body = error;
+  }
+}
+
+async function dislikeTopic(ctx) {
+  try {
+    const { id } = ctx.request.body;
+    const topicToLike = await Topic.findOne({ _id: id });
+    topicToLike.likes -= 1;
+    await topicToLike.save();
+    ctx.status = 200;
+    ctx.body = topicToLike;
+  } catch (error) {
+    ctx.status = 400;
+    ctx.body = error;
   }
 }
 
@@ -112,4 +140,6 @@ module.exports = {
   deleteOneTopic,
   addComment,
   getTopicDetails,
+  likeTopic,
+  dislikeTopic,
 };
