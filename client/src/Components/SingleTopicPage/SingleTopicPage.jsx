@@ -45,7 +45,7 @@ export default function SingleTopicPage(props) {
   return (
     <>
       {topic ? (
-        <Flex flexDir="column" alignItems="center" mt="50px">
+        <Flex flexDir="column" alignItems="center" mt="50px" className="page">
           <Heading textDecor="underline">{topic.title}</Heading>
           <Box
             mt="30px"

@@ -7,6 +7,8 @@ const onSuccess = async (
   completeAuthentication,
   getGithubProfile
 ) => {
+  console.log("response.code", response.code);
+
   try {
     const {
       avatar_url,

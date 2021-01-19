@@ -23,7 +23,9 @@ import {
   Flex,
   ThemeProvider,
   Text,
+  Icon,
 } from "@chakra-ui/react";
+import { SiGithub } from "react-icons/si";
 import ErrorMessage from "../UI_Aids/ErrorMessage/ErrorMessage";
 import customTheme from "../../theme/";
 // import ImageUploader from "react-images-upload";
@@ -43,9 +45,9 @@ export default function Signup() {
   const { state, dispatch } = useContext(StateContext);
 
   useEffect(() => {
-    state.isAuth &&
+    (state.isAuth || state.isAuthWithGithub) &&
       document.querySelector(".form-wrapper").classList.remove("show");
-  }, [state.isAuth]);
+  }, [state.isAuth, state.isAuthWithGithub]);
 
   async function submitHandle(e) {
     e.preventDefault();
@@ -187,23 +189,27 @@ export default function Signup() {
                 </Text>
               </Flex>
             </form>
-            <GitHubLogin
-              redirectUri="http://localhost:3000/"
-              clientId="1ccd653c63ee11bfbc36"
-              className="github_btn"
-              onSuccess={(response) =>
-                onSuccess(
-                  response,
-                  dispatch,
-                  githubSignIn,
-                  setError,
-                  registerUserGithub,
-                  completeAuthentication,
-                  getGithubProfile
-                )
-              }
-              onFailure={(error) => console.error(error)}
-            />
+            <Flex pr="20px" alignItems="center" justify="center">
+              <Icon as={SiGithub} />
+              <GitHubLogin
+                redirectUri="http://localhost:3000/"
+                clientId="1ccd653c63ee11bfbc36"
+                className="github_btn"
+                scope="user:email:gist"
+                onSuccess={(response) =>
+                  onSuccess(
+                    response,
+                    dispatch,
+                    githubSignIn,
+                    setError,
+                    registerUserGithub,
+                    completeAuthentication,
+                    getGithubProfile
+                  )
+                }
+                onFailure={(error) => console.error(error)}
+              />
+            </Flex>
           </Box>
         </Flex>
       </ThemeProvider>

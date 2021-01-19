@@ -4,6 +4,7 @@ import { FcLike } from "react-icons/fc";
 import moment from "moment";
 import { StateContext } from "../../global.context/globalStore.reducer";
 import { deleteTopic } from "../../services/ApiTopicsClientService";
+import "./TopicCardProfile.css";
 
 export default function TopicCard({ topic, setPosts, posts }) {
   const { state } = useContext(StateContext);
@@ -23,10 +24,12 @@ export default function TopicCard({ topic, setPosts, posts }) {
       {topic ? (
         <Flex
           w="40vw"
-          boxShadow="0 0 10px #3333"
+          boxShadow="0 0 10px #caf0f8"
           py="40px"
           px="20px"
           borderRadius="lg"
+          mt="30px"
+          className="topic_card"
           key={topic._id}
         >
           <Flex flex="6" flexDir="column" key={topic._id}>

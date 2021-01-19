@@ -4,7 +4,7 @@ import {} from "@chakra-ui/react";
 
 export default function PageNotFound() {
   return (
-    <Container>
+    <Container className="page">
       <Heading>404: Page Not Found</Heading>
     </Container>
   );

@@ -26,7 +26,9 @@ import {
   InputGroup,
   ThemeProvider,
   Text,
+  Icon,
 } from "@chakra-ui/react";
+import { SiGithub } from "react-icons/si";
 import ErrorMessage from "../UI_Aids/ErrorMessage/ErrorMessage";
 import "./Login.css";
 import customTheme from "../../theme/";
@@ -40,10 +42,10 @@ export default function Login() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    state.isAuth &&
+    (state.isAuth || state.isAuthWithGithub) &&
       !error &&
       document.querySelector(".form-wrapper").classList.remove("show");
-  }, [state.isAuth, dispatch, error]);
+  }, [state.isAuth, dispatch, error, state.isAuthWithGithub]);
 
   function loginUser(credentials) {
     return login(credentials)
@@ -152,7 +154,7 @@ export default function Login() {
                       color="teal"
                     />
                   ) : (
-                    "Register"
+                    "Login"
                   )}
                 </Button>
                 <Text mb="10px" fontWeight="bold">
@@ -160,23 +162,27 @@ export default function Login() {
                 </Text>
               </Flex>
             </form>
-            <GitHubLogin
-              redirectUri="http://localhost:3000/"
-              clientId="1ccd653c63ee11bfbc36"
-              className="github_btn"
-              onSuccess={(response) =>
-                onSuccess(
-                  response,
-                  dispatch,
-                  githubSignIn,
-                  setError,
-                  registerUserGithub,
-                  completeAuthentication,
-                  getGithubProfile
-                )
-              }
-              onFailure={(error) => console.error(error)}
-            />
+            <Flex pr="20px" alignItems="center" justify="center">
+              <Icon as={SiGithub} />
+              <GitHubLogin
+                redirectUri="http://localhost:3000/"
+                clientId="1ccd653c63ee11bfbc36"
+                className="github_btn"
+                scope="user:email:gist"
+                onSuccess={(response) =>
+                  onSuccess(
+                    response,
+                    dispatch,
+                    githubSignIn,
+                    setError,
+                    registerUserGithub,
+                    completeAuthentication,
+                    getGithubProfile
+                  )
+                }
+                onFailure={(error) => console.error(error)}
+              />
+            </Flex>
           </Box>
         </Flex>
       </ThemeProvider>

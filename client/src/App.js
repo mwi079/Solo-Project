@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { Router } from "@reach/router";
 import { CSSReset, ThemeProvider } from "@chakra-ui/react";
 import customTheme from "./theme/";
 import NavBar from "./Components/NavBar/NavBar";
@@ -11,9 +10,20 @@ import Profile from "./Components/Profile/Profile";
 import { getProfile, getGithubProfile } from "./services/ApiUserClientService";
 import PageNotFound from "./Components/UI_Aids/PageNotFound";
 import SingleTopicPage from "./Components/SingleTopicPage/SingleTopicPage";
+import TransitionRouter from "./Components/Router/Router";
+import Footer from "./Components/Footer/Footer";
 
 function App() {
   const [state, dispatch] = Store();
+
+  useEffect(() => {
+    window.scroll(0, 0);
+    const token = window.localStorage.getItem("token");
+    token &&
+      getUserProfile(token).then((user) => {
+        dispatch({ type: "user", payload: user });
+      });
+  }, []);
 
   function getUserProfile(token) {
     if (state.isAuthWithGithub) {
@@ -27,14 +37,6 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    const token = window.localStorage.getItem("token");
-    token &&
-      getUserProfile(token).then((user) => {
-        dispatch({ type: "user", payload: user });
-      });
-  }, []);
-
   return (
     <>
       <React.StrictMode>
@@ -43,13 +45,14 @@ function App() {
           <CSSReset />
           <StateContext.Provider value={{ state, dispatch }}>
             <NavBar />
-            <Router>
+            <TransitionRouter>
               <LandingPage path="/" />
               <AddTopic path="/add_topic" />
               <Profile path="/profile" />
               <SingleTopicPage path="single_topic/:id" />
               <PageNotFound default />
-            </Router>
+            </TransitionRouter>
+            <Footer />
           </StateContext.Provider>
         </ThemeProvider>
       </React.StrictMode>

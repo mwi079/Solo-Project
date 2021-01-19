@@ -26,6 +26,31 @@
   transition: color 0.5s ease;
 }
 
+.app_title figure {
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+  background-position: center center;
+  background-size: contain;
+  margin-right: 10px;
+  position: relative;
+}
+
+.app_title figure::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 42px;
+  height: 2px;
+  width: 8px;
+  transform-origin: 0 0;
+  transform: scaleX(0);
+  transition: transform 0.35s;
+  z-index: 2;
+  background-color: black;
+}
+
 .app_title.scrolled_title {
   color: white;
 }

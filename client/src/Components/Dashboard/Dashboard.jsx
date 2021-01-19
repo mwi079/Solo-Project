@@ -68,7 +68,7 @@ export default function Dashboard() {
         boxShadow="0 0 5px #3333"
         px="20px"
         pos="relative"
-        mb="60px"
+        mb="40px"
         _before={{
           content: `""`,
           display: "block",
@@ -80,7 +80,14 @@ export default function Dashboard() {
           left: "33%",
         }}
       >
-        <Flex flexDir="column" flex="2" position="sticky" top="40px" py="40px">
+        <Flex
+          flexDir="column"
+          flex="2"
+          position="sticky"
+          top="0"
+          py="40px"
+          alignSelf="flex-start"
+        >
           <Flex pt="20px" pb="30px" alignSelf="flex-start">
             <Heading>Categories</Heading>
           </Flex>
@@ -115,7 +122,7 @@ export default function Dashboard() {
             py="60px"
             flexDir="column"
             pos="sticky"
-            top="40px"
+            top="0"
             zIndex="1"
             bg="white"
             className="order_by"

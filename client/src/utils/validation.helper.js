@@ -8,4 +8,8 @@ const validateLoginForm = (email, password) => {
   return !email || !password;
 };
 
-module.exports = { validateSignupForm, validateLoginForm };
+const validateForm = (title, content) => {
+  return !title || !content;
+};
+
+module.exports = { validateSignupForm, validateLoginForm, validateForm };

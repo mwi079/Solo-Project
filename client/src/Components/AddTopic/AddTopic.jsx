@@ -16,13 +16,15 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import "./AddTopic.css";
+
 import { postTopic } from "../../services/ApiTopicsClientService";
+import { validateForm } from "../../utils/validation.helper";
 import { StateContext } from "../../global.context/globalStore.reducer";
 
 export default function AddTopic() {
-  const { isOpen, onToggle, onClose } = useDisclosure();
+  const { isOpen, onToggle } = useDisclosure();
   const { state } = useContext(StateContext);
-
+  const [isTagChecked, setChecked] = useState(false);
   const [topicDetails, setTopicDetails] = useState({
     title: "",
     content: "",
@@ -37,8 +39,6 @@ export default function AddTopic() {
     { name: "CSS", color: "#6A5ACD" },
   ];
 
-  const [isChecked, setChecked] = useState(false);
-
   function postOneTopic(topic) {
     const { title, author, content, tags } = topic;
     postTopic({ title, author, content, tags })
@@ -47,17 +47,16 @@ export default function AddTopic() {
   }
 
   async function handleSubmit(e) {
-    setChecked(false);
     e.preventDefault();
     try {
       await postOneTopic(topicDetails);
+      setChecked(false);
       onToggle();
       setTopicDetails({
         title: "",
         content: "",
         tags: [],
       });
-      onClose();
     } catch (error) {
       console.error(error);
     }
@@ -80,26 +79,27 @@ export default function AddTopic() {
     setTopicDetails({ ...topicDetails, tags: filteredArray });
   }
 
-  const validateForm = () => {
-    return !topicDetails.title || !topicDetails.content;
-  };
-
   return (
     <>
-      {state.isAuth ? (
-        <Flex mt="40px" alignItems="center" py="20px" flexDir="column">
+      {state.isAuth || state.isAuthWithGithub ? (
+        <Flex
+          my="40px"
+          alignItems="center"
+          pt="20px"
+          flexDir="column"
+          className="page"
+        >
           <Heading>Submit your answer</Heading>
           <form onSubmit={handleSubmit} className="add-topic-form">
             <FormControl
-              isRequired
-              mb="20px"
+              // isRequired
+              my="20px"
               display="flex"
               flexDir="column"
               alignItems="center"
             >
               <FormLabel>Title</FormLabel>
               <Input
-                autoFocus="false"
                 w="50%"
                 value={topicDetails.title}
                 type="text"
@@ -108,15 +108,9 @@ export default function AddTopic() {
                   setTopicDetails({ ...topicDetails, title: e.target.value })
                 }
               ></Input>
-            </FormControl>
-            <FormControl
-              isRequired
-              display="flex"
-              flexDir="column"
-              alignItems="center"
-            >
-              <FormLabel>Content</FormLabel>
+              <FormLabel htmlFor="code">Content</FormLabel>
               <Textarea
+                id="textArea"
                 h="20vh"
                 textAlign="center"
                 value={topicDetails.content}
@@ -128,16 +122,16 @@ export default function AddTopic() {
                 }
               ></Textarea>
             </FormControl>
-            <Flex justifyContent="center"></Flex>
-            <Flex flexDir="column" justifyContent="center" mt="40px">
+
+            <Flex flexDir="column" justifyContent="center" mt="80px">
               <Text fontWeight="500" textAlign="center">
                 You can add some categories to your question:
               </Text>
               <Box mt="20px">
-                <CheckboxGroup colorScheme="green">
+                <CheckboxGroup colorScheme="green" isChecked={isTagChecked}>
                   <HStack spacing={5}>
                     <Checkbox
-                      isChecked={isChecked}
+                      isChecked={isTagChecked}
                       value="JavaScript"
                       onChange={(e) =>
                         e.target.checked ? handleAddTag(e) : handleRemoveTag(e)
@@ -154,7 +148,7 @@ export default function AddTopic() {
                       CSS
                     </Checkbox>
                     <Checkbox
-                      isChecked={isChecked}
+                      isChecked={isTagChecked}
                       value="NodeJS"
                       onChange={(e) =>
                         e.target.checked ? handleAddTag(e) : handleRemoveTag(e)
@@ -163,7 +157,7 @@ export default function AddTopic() {
                       NodeJS
                     </Checkbox>
                     <Checkbox
-                      isChecked={isChecked}
+                      isChecked={isTagChecked}
                       value="Python"
                       onChange={(e) =>
                         e.target.checked ? handleAddTag(e) : handleRemoveTag(e)
@@ -172,7 +166,7 @@ export default function AddTopic() {
                       Python
                     </Checkbox>
                     <Checkbox
-                      isChecked={isChecked}
+                      isChecked={isTagChecked}
                       value="TypeScript"
                       onChange={(e) =>
                         e.target.checked ? handleAddTag(e) : handleRemoveTag(e)
@@ -185,9 +179,8 @@ export default function AddTopic() {
               </Box>
             </Flex>
             <Button
-              disabled={validateForm()}
+              disabled={validateForm(topicDetails.title, topicDetails.content)}
               mt={10}
-              onClick={onToggle}
               type="submit"
               colorScheme="teal"
               variant="outline"

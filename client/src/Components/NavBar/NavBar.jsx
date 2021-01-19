@@ -16,6 +16,8 @@ import {
   Avatar,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import Owl from "../../assets/Icons/owl.svg";
+
 import React, { useContext } from "react";
 import "./NavBar.css";
 import { Flex } from "@chakra-ui/react";
@@ -56,7 +58,7 @@ export default function NavBar() {
     dispatch({ type: "isAuth", payload: false });
     dispatch({ type: "isAuthWithGithub", payload: false });
     dispatch({ type: "user", payload: null });
-    navigate(`/`);
+    navigate("/");
   };
 
   return (
@@ -71,8 +73,10 @@ export default function NavBar() {
         top="0"
         pos="sticky"
         h="70px"
+        alignSelf="flex-start"
       >
-        <Flex flexDir="column" justifyContent="center" className="app_title">
+        <Flex justifyContent="center" className="app_title" alignItems="center">
+          <figure style={{ backgroundImage: `url(${Owl})` }}></figure>
           <Heading as="h2" size="md">
             Codagora
           </Heading>

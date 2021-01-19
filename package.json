@@ -21,5 +21,8 @@
     "eslint": "^7.17.0",
     "eslint-config-prettier": "^7.1.0",
     "prettier": "^2.2.1"
+  },
+  "dependencies": {
+    "react-transition-group": "^4.4.1"
   }
 }

@@ -101,7 +101,6 @@ async function authGithub(ctx, next) {
       .catch((error) => console.error(error));
 
     const token = tokenResponse.slice(13, 53);
-    console.log("token", token);
 
     ctx.status = 200;
     ctx.token = token;
