@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   Button,
   Flex,
@@ -18,6 +18,8 @@ import { likePost, dislikePost } from "../../services/ApiTopicsClientService";
 import "./TopicCard.css";
 
 export default function TopicCard(props) {
+  // useEffect(() => {}, [props.topics, props.setTopics]);
+
   const { state } = useContext(StateContext);
   const { isOpen, onToggle } = useDisclosure();
   const [liked, setLiked] = useState(false);
@@ -53,7 +55,7 @@ export default function TopicCard(props) {
             px="20px"
             borderRadius="lg"
           >
-            <Flex flex="6" flexDir="column" key={topic._id}>
+            <Flex flex="6" flexDir="column">
               <Box>
                 <Heading size="md">{topic.title}</Heading>
               </Box>
@@ -129,7 +131,7 @@ export default function TopicCard(props) {
           </Flex>
           <Collapse className="comment_area" in={isOpen} animateOpacity>
             <Flex my="20px" maxH="200px" w="40vw" px="10px" flexDir="column">
-              <Comments topic={props.topic} />
+              <Comments topic={topic} />
             </Flex>
           </Collapse>
         </>

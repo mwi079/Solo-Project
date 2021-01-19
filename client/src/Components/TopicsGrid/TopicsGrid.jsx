@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid, Flex, Text } from "@chakra-ui/react";
 import TopicCard from "../TopicCard/TopicCard";
 
-export default function TopisCGrid({ topics }) {
+export default function TopisCGrid({ topics, setTopics }) {
+  useEffect(() => {}, [topics, setTopics]);
   return (
     <>
       {topics ? (
@@ -10,12 +11,13 @@ export default function TopisCGrid({ topics }) {
           gap={6}
           mt="20px"
           mx="30px"
-          px="30px"
+          pt="30px"
           justifyContent="center"
           alignItems="center"
+          pb="120px"
         >
           {topics.map((topic) => (
-            <TopicCard topic={topic} />
+            <TopicCard topic={topic} setTopics={setTopics} key={topic._id} />
           ))}
         </Grid>
       ) : (

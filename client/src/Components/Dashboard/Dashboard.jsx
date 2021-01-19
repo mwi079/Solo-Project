@@ -26,9 +26,7 @@ export default function Dashboard() {
   useEffect(() => {
     getAllTopics()
       .then((res) => {
-        setTopics(
-          res.data.slice().sort((a, b) => new Date(b.date) - new Date(a.date))
-        );
+        setTopics(res.data);
       })
       .catch((error) => console.error(error));
   }, []);
@@ -50,7 +48,7 @@ export default function Dashboard() {
     }
   }
 
-  function filterByDate() {
+  async function filterByDate() {
     getAllTopics()
       .then((res) => {
         setTopics(
@@ -58,6 +56,11 @@ export default function Dashboard() {
         );
       })
       .catch((error) => console.error(error));
+  }
+
+  async function filterByRelevance() {
+    const filteredArray = topics.slice().sort((a, b) => b.likes - a.likes);
+    setTopics(filteredArray);
   }
 
   return (
@@ -68,7 +71,7 @@ export default function Dashboard() {
         boxShadow="0 0 5px #3333"
         px="20px"
         pos="relative"
-        mb="40px"
+        mb="60px"
         _before={{
           content: `""`,
           display: "block",
@@ -84,11 +87,11 @@ export default function Dashboard() {
           flexDir="column"
           flex="2"
           position="sticky"
-          top="0"
+          top="60px"
           py="40px"
           alignSelf="flex-start"
         >
-          <Flex pt="20px" pb="30px" alignSelf="flex-start">
+          <Flex pb="30px" alignSelf="flex-start">
             <Heading>Categories</Heading>
           </Flex>
 
@@ -119,10 +122,10 @@ export default function Dashboard() {
             w="100%"
             ml="10px"
             px="30px"
-            py="60px"
+            py="40px"
             flexDir="column"
             pos="sticky"
-            top="0"
+            top="60px"
             zIndex="1"
             bg="white"
             className="order_by"
@@ -134,14 +137,18 @@ export default function Dashboard() {
               <Flex my="20px">
                 <Button
                   mx="10px"
-                  variant="solid"
                   bg="#03045e"
                   color="white"
-                  onClick={() => filterByDate()}
+                  onClick={filterByDate}
                 >
                   Latest
                 </Button>
-                <Button mx="10px" variant="outline" colorScheme="primary">
+                <Button
+                  mx="10px"
+                  variant="outline"
+                  colorScheme="primary"
+                  onClick={() => filterByRelevance()}
+                >
                   Relevant
                 </Button>
                 <Button mx="10px" variant="outline" colorScheme="primary">
@@ -157,7 +164,7 @@ export default function Dashboard() {
               </Flex>
             </Flex>
           </Flex>
-          <TopicsGrid topics={topics} />
+          <TopicsGrid topics={topics} setTopics={setTopics} />
         </Flex>
       </Flex>
     </>

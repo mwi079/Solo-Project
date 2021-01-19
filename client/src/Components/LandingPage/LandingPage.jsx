@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./LandingPage.css";
 import Philo from "../../assets/philo_icons.svg";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import Dashboard from "../Dashboard/Dashboard";
 import { useDencrypt } from "use-dencrypt-effect";
 import Subtitle from "../Subtitle";
@@ -38,13 +38,17 @@ export default function LandingPage() {
           <Flex className="titles" flexDir="column" ml="100px">
             <div className="main-title">{result}</div>
             <Subtitle />
+            <Flex mt="20px">
+              <Text fontSize="2xl" fontWeight="500">
+                Find out what developers are discussing about!
+              </Text>
+            </Flex>
           </Flex>
           <Flex w="350px" mr="50px">
             <img src={Philo} alt="Philo" style={{ width: "100%" }} />
           </Flex>
         </Flex>
         <Dashboard />
-        <Footer />
       </div>
     </>
   );

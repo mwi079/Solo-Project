@@ -69,7 +69,7 @@ export default function NavBar() {
       <Flex
         p={3}
         className="nav-wrapper"
-        px="30px"
+        px="40px"
         top="0"
         pos="sticky"
         h="70px"
