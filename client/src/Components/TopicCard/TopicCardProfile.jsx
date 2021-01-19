@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import { Button, Flex, Box, Heading, Text } from "@chakra-ui/react";
+import { Button, Flex, Box, Heading, Text, Icon } from "@chakra-ui/react";
+import { FcLike } from "react-icons/fc";
 import moment from "moment";
 import { StateContext } from "../../global.context/globalStore.reducer";
 import { deleteTopic } from "../../services/ApiTopicsClientService";
@@ -32,17 +33,23 @@ export default function TopicCard({ topic, setPosts, posts }) {
             <Box>
               <Heading size="md">{topic.title}</Heading>
             </Box>
-            <Flex my={3}>
+            <Flex mt={5}>
               <Box pr={3}>
                 <code>{topic.author.name}</code>
               </Box>
-              <Box pl={2} fontStyle="italic">
+              <Flex mr="5px" h="2rem" alignItems="center">
+                <Icon as={FcLike} ml="3px" size="sm" isRound mr="5px" />
+                <Text display="inline" alignSelf="center">
+                  {topic.likes}
+                </Text>
+              </Flex>
+              <Flex pl={2} fontStyle="italic" alignItems="center">
                 {moment(topic.date).format("MMMM Do YYYY")}
-              </Box>
+              </Flex>
             </Flex>
           </Flex>
           <Flex flexDir="column-reverse">
-            {state.isAuth && (
+            {(state.isAuth || state.isAuthWithGithub) && (
               <Button
                 colorScheme="primary"
                 size="sm"

@@ -5,13 +5,10 @@
 .like_btn {
   transition: all 0.2s;
   background-color: transparent !important;
-  /* filter: grayscale(100%); */
 }
 
 .like_btn:hover {
   transform: scale(1.1);
-  /* opacity: 0.3; */
-  /* filter: grayscale(0); */
   border: 1px solid red;
   background-color: rgb(236, 143, 143) !important;
 }

@@ -5,6 +5,8 @@ const token = window.localStorage.getItem("token");
 const initialState = {
   user: null,
   isAuth: token ? true : false,
+  isAuthWithGithub: token ? true : false,
+  liked: false,
 };
 
 function reducer(state, action) {
@@ -18,6 +20,11 @@ function reducer(state, action) {
       return {
         ...state,
         isAuth: action.payload,
+      };
+    case "isAuthWithGithub":
+      return {
+        ...state,
+        isAuthWithGithub: action.payload,
       };
     default:
       throw new Error();

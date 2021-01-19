@@ -20,8 +20,10 @@ export default function Comments({ topic }) {
                 py="30px"
                 wrap="wrap"
               >
-                <Text>Author: {comment.author.name}</Text>
-                <Heading size="md">{comment.comment}</Heading>
+                <Text>Author: {comment.author && comment.author.name}</Text>
+                <Heading size="md">
+                  {comment.comment && comment.comment}
+                </Heading>
               </Flex>
             </Flex>
           </>

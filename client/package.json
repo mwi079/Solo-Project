@@ -18,6 +18,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-dropzone": "^11.2.4",
+    "react-github-login": "^1.0.3",
     "react-hook-form": "^6.14.0",
     "react-icons": "^4.1.0",
     "react-images-upload": "^1.2.8",

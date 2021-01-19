@@ -1,7 +1,20 @@
-import { Heading, Flex, Grid } from "@chakra-ui/react";
+import {
+  Button,
+  Heading,
+  Flex,
+  Grid,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuGroup,
+  MenuItem,
+  MenuDivider,
+  Icon,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { getUserPosts } from "../../services/ApiTopicsClientService";
 import TopicCardProfile from "../TopicCard/TopicCardProfile";
+import { AiOutlineMenu } from "react-icons/ai";
 
 export default function Profile() {
   const [posts, setPosts] = useState(null);
@@ -14,7 +27,20 @@ export default function Profile() {
 
   return (
     <>
-      <Flex flexDir="column" alignItems="center">
+      <Flex ml="30px">
+        <Menu>
+          <MenuButton as={Button} colorScheme="pink">
+            <Icon as={AiOutlineMenu}></Icon>
+          </MenuButton>
+          <MenuList>
+            <MenuGroup title="Profile">
+              <MenuItem>My Topics</MenuItem>
+              <MenuItem>My gists</MenuItem>
+            </MenuGroup>
+          </MenuList>
+        </Menu>
+      </Flex>
+      <Flex flexDir="column" alignItems="center" mt="50px">
         <Heading>Your topics:</Heading>
         <Grid
           templateRows="repeat(5, 1fr)"

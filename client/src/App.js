@@ -8,7 +8,7 @@ import { Fonts } from "./theme/Fonts";
 import AddTopic from "./Components/AddTopic/AddTopic";
 import { Store, StateContext } from "./global.context/globalStore.reducer";
 import Profile from "./Components/Profile/Profile";
-import { getProfile } from "./services/ApiUserClientService";
+import { getProfile, getGithubProfile } from "./services/ApiUserClientService";
 import PageNotFound from "./Components/UI_Aids/PageNotFound";
 import SingleTopicPage from "./Components/SingleTopicPage/SingleTopicPage";
 
@@ -16,9 +16,15 @@ function App() {
   const [state, dispatch] = Store();
 
   function getUserProfile(token) {
-    return getProfile(token)
-      .then((res) => res.data)
-      .catch((error) => console.error(error));
+    if (state.isAuthWithGithub) {
+      return getGithubProfile(token)
+        .then((res) => res.data)
+        .catch((error) => console.error(error));
+    } else if (state.isAuth) {
+      return getProfile(token)
+        .then((res) => res.data)
+        .catch((error) => console.error(error));
+    }
   }
 
   useEffect(() => {

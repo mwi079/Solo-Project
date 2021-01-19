@@ -101,6 +101,8 @@ async function authGithub(ctx, next) {
       .catch((error) => console.error(error));
 
     const token = tokenResponse.slice(13, 53);
+    console.log("token", token);
+
     ctx.status = 200;
     ctx.token = token;
     await next();
@@ -123,7 +125,24 @@ async function getGitHubCredentials(ctx) {
     ctx.body = user;
   } catch (error) {
     ctx.status = 400;
-    console.error(error);
+    ctx.body = error.response.statusText;
+  }
+}
+
+async function getGitHubGists(ctx) {
+  try {
+    const token = ctx.token;
+    const gists = await axios
+      .get(`https://api.github.com/gists`, {
+        headers: { Authorization: `token ${token}` },
+      })
+      .then((res) => res.data);
+
+    ctx.status = 200;
+    ctx.body = gists;
+  } catch (error) {
+    ctx.status = 400;
+    ctx.body = error.response.statusText;
   }
 }
 
@@ -132,4 +151,5 @@ module.exports = {
   authGithub,
   getGitHubCredentials,
   registerUserGithub,
+  getGitHubGists,
 };

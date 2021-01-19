@@ -1,8 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
+import { StateContext } from "../../global.context/globalStore.reducer";
+import { validateSignupForm } from "../../utils/validation.helper";
+import GitHubLogin from "react-github-login";
+import onSuccess from "../../utils/auth.helpers";
 import {
   registerUser,
   completeAuthentication,
   getProfile,
+  getGithubProfile,
+  registerUserGithub,
+  githubSignIn,
 } from "../../services/ApiUserClientService";
 import {
   Box,
@@ -15,24 +22,14 @@ import {
   Button,
   Flex,
   ThemeProvider,
+  Text,
 } from "@chakra-ui/react";
 import ErrorMessage from "../UI_Aids/ErrorMessage/ErrorMessage";
 import customTheme from "../../theme/";
-import { StateContext } from "../../global.context/globalStore.reducer";
-import ImageUploader from "react-images-upload";
+// import ImageUploader from "react-images-upload";
+import "./Signup.css";
 
 export default function Signup() {
-  async function registerNewUser({ name, surname, email, password }) {
-    registerUser({ name, surname, email, password })
-      .then((res) => {
-        completeAuthentication(res.data);
-        getProfile(res.data)
-          .then((res) => dispatch({ type: "user", payload: res.data }))
-          .catch((error) => setError(error.response.data));
-      })
-      .catch((error) => setError(error.response.data));
-  }
-
   const [isLoading, setIsLoading] = useState(false);
   const [userDetails, setUserDetails] = useState({
     name: "",
@@ -42,7 +39,7 @@ export default function Signup() {
   });
   const [error, setError] = useState("");
   const [show, setShow] = useState(false);
-  const [image, setImage] = useState({ pictures: [] });
+  // const [image, setImage] = useState({ pictures: [] });
   const { state, dispatch } = useContext(StateContext);
 
   useEffect(() => {
@@ -50,35 +47,36 @@ export default function Signup() {
       document.querySelector(".form-wrapper").classList.remove("show");
   }, [state.isAuth]);
 
-  function submitHandle(e) {
+  async function submitHandle(e) {
     e.preventDefault();
     try {
-      registerNewUser(userDetails);
+      await registerUser(userDetails).then((res) => {
+        completeAuthentication(res.data);
+        getProfile(res.data).then((res) =>
+          dispatch({ type: "user", payload: res.data })
+        );
+      });
       setIsLoading(false);
-      if (!error) {
-        dispatch({ type: "isAuth", payload: true });
-      }
+      dispatch({ type: "isAuth", payload: true });
       setUserDetails({ name: "", email: "", surname: "", password: "" });
     } catch (error) {
       setIsLoading(false);
+      error.response.data
+        ? setError(error.response.data)
+        : console.error(error);
     }
   }
-
-  const validateForm = () => {
-    return (
-      !userDetails.email ||
-      !userDetails.password ||
-      !userDetails.name ||
-      !userDetails.surname
-    );
-  };
-
-  function onDrop(picture) {}
 
   return (
     <>
       <ThemeProvider theme={customTheme}>
-        <Flex width="full" align="center" justifyContent="center" mt={10}>
+        <Flex
+          width="full"
+          align="center"
+          justifyContent="center"
+          mt={10}
+          p="10px"
+        >
           <Box>
             {error && <ErrorMessage message={error} />}
             <form onSubmit={submitHandle}>
@@ -144,31 +142,68 @@ export default function Signup() {
                   </InputRightElement>
                 </InputGroup>
               </FormControl>
-              <ImageUploader
+              {/* <ImageUploader
                 withIcon={true}
                 buttonText="Choose images"
                 onChange={onDrop}
                 imgExtension={[".jpg", ".gif", ".png", ".gif"]}
                 maxFileSize={5242880}
-              />
-              <Button
-                width="full"
-                mt={4}
-                type="submit"
-                colorScheme="primary"
-                variant="outline"
-                boxShadow="sm"
-                disabled={validateForm()}
-                _hover={{ boxShadow: "md" }}
-                _active={{ boxShadow: "lg" }}
+              /> */}
+
+              <Flex
+                justifyContent="space-around"
+                alignItems="center"
+                mt="30px"
+                flexDir="column"
               >
-                {isLoading ? (
-                  <CircularProgress isIndeterminate size="24px" color="teal" />
-                ) : (
-                  "Register"
-                )}
-              </Button>
+                <Button
+                  mb="10px"
+                  size="sm"
+                  type="submit"
+                  colorScheme="primary"
+                  variant="outline"
+                  boxShadow="sm"
+                  disabled={validateSignupForm(
+                    userDetails.email,
+                    userDetails.password,
+                    userDetails.name,
+                    userDetails.surname
+                  )}
+                  _hover={{ boxShadow: "md" }}
+                  _active={{ boxShadow: "lg" }}
+                >
+                  {isLoading ? (
+                    <CircularProgress
+                      isIndeterminate
+                      size="24px"
+                      color="teal"
+                    />
+                  ) : (
+                    "Register"
+                  )}
+                </Button>
+                <Text mb="10px" fontWeight="bold">
+                  -OR-
+                </Text>
+              </Flex>
             </form>
+            <GitHubLogin
+              redirectUri="http://localhost:3000/"
+              clientId="1ccd653c63ee11bfbc36"
+              className="github_btn"
+              onSuccess={(response) =>
+                onSuccess(
+                  response,
+                  dispatch,
+                  githubSignIn,
+                  setError,
+                  registerUserGithub,
+                  completeAuthentication,
+                  getGithubProfile
+                )
+              }
+              onFailure={(error) => console.error(error)}
+            />
           </Box>
         </Flex>
       </ThemeProvider>

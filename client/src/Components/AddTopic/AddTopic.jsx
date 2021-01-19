@@ -20,7 +20,7 @@ import { postTopic } from "../../services/ApiTopicsClientService";
 import { StateContext } from "../../global.context/globalStore.reducer";
 
 export default function AddTopic() {
-  const { isOpen, onToggle } = useDisclosure();
+  const { isOpen, onToggle, onClose } = useDisclosure();
   const { state } = useContext(StateContext);
 
   const [topicDetails, setTopicDetails] = useState({
@@ -46,18 +46,18 @@ export default function AddTopic() {
       .catch((error) => console.error(error));
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     setChecked(false);
     e.preventDefault();
     try {
-      postOneTopic(topicDetails);
+      await postOneTopic(topicDetails);
       onToggle();
       setTopicDetails({
         title: "",
         content: "",
         tags: [],
       });
-      // onClose();
+      onClose();
     } catch (error) {
       console.error(error);
     }
@@ -187,6 +187,7 @@ export default function AddTopic() {
             <Button
               disabled={validateForm()}
               mt={10}
+              onClick={onToggle}
               type="submit"
               colorScheme="teal"
               variant="outline"

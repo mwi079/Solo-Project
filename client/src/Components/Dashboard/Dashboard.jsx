@@ -142,7 +142,7 @@ export default function Dashboard() {
                 </Button>
               </Flex>
               <Flex my="20px">
-                {state.isAuth && (
+                {(state.isAuth || state.isAuthWithGithub) && (
                   <Link to="/add_topic">
                     <Button colorScheme="primary">Add your topic +</Button>
                   </Link>
@@ -150,7 +150,7 @@ export default function Dashboard() {
               </Flex>
             </Flex>
           </Flex>
-          <TopicsGrid topics={topics} isAuth={state.isAuth} />
+          <TopicsGrid topics={topics} />
         </Flex>
       </Flex>
     </>

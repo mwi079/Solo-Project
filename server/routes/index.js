@@ -8,6 +8,7 @@ const {
   registerUserGithub,
   authGithub,
   getGitHubCredentials,
+  getGitHubGists,
 } = require("../controllers/register.controller");
 const { loginUser } = require("../controllers/login.controller");
 const {
@@ -35,6 +36,7 @@ router.get("/api/user/github_profile", authorizeUser, getGithubProfile);
 
 // github login route
 router.post("/api/user/github", authGithub, getGitHubCredentials);
+router.post("/api/user/github_gists", authGithub, getGitHubGists);
 
 // Forum topics routes
 router.get("/forum/allTopics", getAllTopics);

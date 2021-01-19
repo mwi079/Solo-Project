@@ -1,4 +1,19 @@
+// React/services
 import React, { useState, useEffect, useContext } from "react";
+import { StateContext } from "../../global.context/globalStore.reducer";
+import {
+  login,
+  completeAuthentication,
+  getProfile,
+  getGithubProfile,
+  registerUserGithub,
+  githubSignIn,
+} from "../../services/ApiUserClientService";
+import onSuccess from "../../utils/auth.helpers";
+import { validateLoginForm } from "../../utils/validation.helper";
+import GitHubLogin from "react-github-login";
+
+// UI/Components
 import {
   Box,
   CircularProgress,
@@ -10,18 +25,14 @@ import {
   Flex,
   InputGroup,
   ThemeProvider,
+  Text,
 } from "@chakra-ui/react";
 import ErrorMessage from "../UI_Aids/ErrorMessage/ErrorMessage";
 import "./Login.css";
-import {
-  login,
-  completeAuthentication,
-  getProfile,
-} from "../../services/ApiUserClientService";
 import customTheme from "../../theme/";
-import { StateContext } from "../../global.context/globalStore.reducer";
 
 export default function Login() {
+  // local states
   const { state, dispatch } = useContext(StateContext);
   const [isLoading, setIsLoading] = useState(false);
   const [userDetails, setUserDetails] = useState({ email: "", password: "" });
@@ -60,14 +71,12 @@ export default function Login() {
       }
       setUserDetails({ email: "", password: "" });
     } catch (error) {
-      setError(error);
+      error.response.data
+        ? setError(error.response.data)
+        : console.error(error);
       setIsLoading(false);
     }
   }
-
-  const validateForm = () => {
-    return !userDetails.email || !userDetails.password;
-  };
 
   return (
     <>
@@ -116,25 +125,58 @@ export default function Login() {
                   </InputRightElement>
                 </InputGroup>
               </FormControl>
-              <Button
-                disabled={validateForm()}
-                onClick={submitHandle}
-                width="full"
-                mt={4}
-                type="submit"
-                colorScheme="primary"
-                variant="outline"
-                boxShadow="sm"
-                _hover={{ boxShadow: "md" }}
-                _active={{ boxShadow: "lg" }}
+              <Flex
+                justifyContent="space-around"
+                alignItems="center"
+                mt="30px"
+                flexDir="column"
               >
-                {isLoading ? (
-                  <CircularProgress isIndeterminate size="24px" color="teal" />
-                ) : (
-                  "Sign In"
-                )}
-              </Button>
+                <Button
+                  mb="10px"
+                  size="sm"
+                  type="submit"
+                  colorScheme="primary"
+                  variant="outline"
+                  boxShadow="sm"
+                  disabled={validateLoginForm(
+                    userDetails.email,
+                    userDetails.password
+                  )}
+                  _hover={{ boxShadow: "md" }}
+                  _active={{ boxShadow: "lg" }}
+                >
+                  {isLoading ? (
+                    <CircularProgress
+                      isIndeterminate
+                      size="24px"
+                      color="teal"
+                    />
+                  ) : (
+                    "Register"
+                  )}
+                </Button>
+                <Text mb="10px" fontWeight="bold">
+                  -OR-
+                </Text>
+              </Flex>
             </form>
+            <GitHubLogin
+              redirectUri="http://localhost:3000/"
+              clientId="1ccd653c63ee11bfbc36"
+              className="github_btn"
+              onSuccess={(response) =>
+                onSuccess(
+                  response,
+                  dispatch,
+                  githubSignIn,
+                  setError,
+                  registerUserGithub,
+                  completeAuthentication,
+                  getGithubProfile
+                )
+              }
+              onFailure={(error) => console.error(error)}
+            />
           </Box>
         </Flex>
       </ThemeProvider>

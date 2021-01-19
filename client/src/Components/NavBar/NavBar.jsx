@@ -54,6 +54,7 @@ export default function NavBar() {
   const handleLogOut = () => {
     logOut();
     dispatch({ type: "isAuth", payload: false });
+    dispatch({ type: "isAuthWithGithub", payload: false });
     dispatch({ type: "user", payload: null });
     navigate(`/`);
   };
@@ -77,7 +78,7 @@ export default function NavBar() {
           </Heading>
         </Flex>
         <Spacer />
-        {state.isAuth ? (
+        {state.isAuth || state.isAuthWithGithub ? (
           <>
             <ButtonGroup spacing="4">
               <Box>
@@ -90,11 +91,20 @@ export default function NavBar() {
               <Button onClick={handleLogOut}>Logout</Button>
               <Link to="/profile" className="profile-name">
                 <Flex alignItems="center">
-                  <Box fontWeight="bold">{state.user && state.user.name}</Box>
+                  <Box fontWeight="bold">
+                    {state.user ? state.user.name : ""}
+                  </Box>
                   <Avatar
                     ml="10px"
                     name={
-                      state.user && `${state.user.name} ${state.user.surname}`
+                      state.user
+                        ? `${state.user.name} ${state.user.surname}`
+                        : ""
+                    }
+                    src={
+                      state.user && state.user.avatar_url
+                        ? state.user.avatar_url
+                        : `https://tse4.mm.bing.net/th?id=OIP.PV6MZaUPyuN_H7kCfPeSVAHaE7&pid=Api`
                     }
                   ></Avatar>
                 </Flex>

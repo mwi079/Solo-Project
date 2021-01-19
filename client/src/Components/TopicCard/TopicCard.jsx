@@ -24,16 +24,22 @@ export default function TopicCard(props) {
   const [topic, setTopic] = useState(props.topic);
 
   function clickedLike() {
-    if (!liked) {
-      likePost(topic._id)
-        .then((res) => setTopic(res.data))
-        .catch((error) => console.error(error));
+    if (state.isAuth || state.isAuthWithGithub) {
+      if (!liked) {
+        likePost(topic._id)
+          .then((res) => {
+            setTopic(res.data);
+          })
+          .catch((error) => console.error(error));
+      } else {
+        dislikePost(topic._id)
+          .then((res) => setTopic(res.data))
+          .catch((error) => console.error(error));
+      }
+      setLiked(!liked);
     } else {
-      dislikePost(topic._id)
-        .then((res) => setTopic(res.data))
-        .catch((error) => console.error(error));
+      document.querySelector(".form-wrapper").classList.add("show");
     }
-    setLiked(!liked);
   }
 
   return (
@@ -79,7 +85,7 @@ export default function TopicCard(props) {
               </Flex>
             </Flex>
             <Flex flexDir="row-reverse" alignItems="flex-end">
-              {state.isAuth && (
+              {(state.isAuth || state.isAuthWithGithub) && (
                 <Link to={`single_topic/${topic._id}`}>
                   <Button colorScheme="primary" size="sm" w="100px">
                     Reply
@@ -123,7 +129,7 @@ export default function TopicCard(props) {
           </Flex>
           <Collapse className="comment_area" in={isOpen} animateOpacity>
             <Flex my="20px" maxH="200px" w="40vw" px="10px" flexDir="column">
-              <Comments topic={topic} />
+              <Comments topic={props.topic} />
             </Flex>
           </Collapse>
         </>

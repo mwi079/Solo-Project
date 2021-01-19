@@ -24,6 +24,15 @@ label {
   margin: 5px 0;
 }
 
+.github_btn {
+  background-color: black;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
 #name_field,
 #email_field,
 #password_field {
