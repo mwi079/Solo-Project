@@ -4,12 +4,14 @@ const { Comment } = require("../models/comment.model");
 
 async function getAllTopics(ctx) {
   try {
-    const allTopics = await Topic.find({}).populate({
-      path: "comments",
-      populate: {
-        path: "author",
-      },
-    });
+    const allTopics = await Topic.find({})
+      .populate({
+        path: "comments",
+        populate: {
+          path: "author",
+        },
+      })
+      .populate("author");
     ctx.status = 200;
     ctx.body = allTopics;
   } catch (error) {
@@ -67,7 +69,7 @@ async function addComment(ctx) {
 
     const { comment } = ctx.request.body;
 
-    const newComment = new Comment({ comment, count: 1, author: _id });
+    const newComment = new Comment({ comment, author: _id });
 
     const user = await User.findOne({ _id });
 

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import {
   Button,
   Flex,
@@ -8,6 +8,7 @@ import {
   Collapse,
   useDisclosure,
   IconButton,
+  Avatar,
 } from "@chakra-ui/react";
 import moment from "moment";
 import { StateContext } from "../../global.context/globalStore.reducer";
@@ -54,84 +55,98 @@ export default function TopicCard(props) {
             py="40px"
             px="20px"
             borderRadius="lg"
+            flexDir="column"
           >
-            <Flex flex="6" flexDir="column">
-              <Box>
-                <Heading size="md">{topic.title}</Heading>
-              </Box>
-              <Flex my={3}>
-                <Box pr={3}>
-                  <code>{topic.author.name}</code>
-                </Box>
-                <Box pl={2} fontStyle="italic">
-                  {moment(topic.date).format("MMMM Do YYYY")}
-                </Box>
+            <Flex alignItems="center" justify="space-between">
+              <Flex justify="center">
+                <Heading size="lg">{topic.title}</Heading>
               </Flex>
-              <Flex mt="10px">
-                {topic.tags.map((tag) => (
-                  <Box
-                    key={tag.name}
-                    px="12px"
-                    py="4px"
-                    mx="10px"
-                    fontSize="12px"
-                    bg={tag.color}
-                    color="white"
-                    opacity="0.8"
-                    fontWeight="bold"
-                    borderRadius="lg"
-                  >
-                    {tag.language}
-                  </Box>
-                ))}
+              <Flex>
+                <Avatar
+                  mr="20px"
+                  name={
+                    topic.author
+                      ? `${topic.author.name} ${topic.author.name.surname}`
+                      : ""
+                  }
+                  src={
+                    topic.author && topic.author.avatar_url
+                      ? topic.author.avatar_url
+                      : `https://tse4.mm.bing.net/th?id=OIP.PV6MZaUPyuN_H7kCfPeSVAHaE7&pid=Api`
+                  }
+                ></Avatar>
+                <Text display="inline">{topic.author.name}</Text>
               </Flex>
             </Flex>
-            <Flex flexDir="row-reverse" alignItems="flex-end">
-              {(state.isAuth || state.isAuthWithGithub) && (
-                <Link to={`single_topic/${topic._id}`}>
-                  <Button colorScheme="primary" size="sm" w="100px">
-                    Reply
-                  </Button>
-                </Link>
-              )}
-              <Button
-                colorScheme="button"
-                size="sm"
-                w="100px"
-                onClick={onToggle}
-                mr="10px"
-              >
-                Comments
-              </Button>
-              <Flex h="2rem" mr="20px" alignItems="center">
-                {topic.likes}
-              </Flex>
-              <Box mr="5px" h="2rem">
-                {!liked ? (
-                  <IconButton
-                    icon={<FcLikePlaceholder />}
-                    ml="3px"
-                    className="like_btn"
-                    size="sm"
-                    isRound
-                    onClick={clickedLike}
-                  />
-                ) : (
-                  <IconButton
-                    icon={<FcLike />}
-                    ml="3px"
-                    className="like_btn"
-                    size="sm"
-                    isRound
-                    onClick={clickedLike}
-                  />
-                )}
+
+            <Flex mt="30px" justify="space-around">
+              <Box pl={2} fontStyle="italic">
+                {moment(topic.date).format("MMMM Do YYYY")}
               </Box>
+              <Flex alignItems="center">
+                {topic.likes}
+                <Box mr="5px" h="2rem">
+                  {!liked ? (
+                    <IconButton
+                      icon={<FcLikePlaceholder />}
+                      ml="3px"
+                      className="like_btn"
+                      size="sm"
+                      isRound
+                      onClick={clickedLike}
+                    />
+                  ) : (
+                    <IconButton
+                      icon={<FcLike />}
+                      ml="3px"
+                      className="like_btn"
+                      size="sm"
+                      isRound
+                      onClick={clickedLike}
+                    />
+                  )}
+                </Box>
+              </Flex>
+              <Flex>
+                {(state.isAuth || state.isAuthWithGithub) && (
+                  <Link to={`single_topic/${topic._id}`}>
+                    <Button colorScheme="primary" size="sm" mr="10px">
+                      Reply
+                    </Button>
+                  </Link>
+                )}
+                <Button
+                  colorScheme="button"
+                  size="sm"
+                  onClick={onToggle}
+                  mr="10px"
+                >
+                  Comments
+                </Button>
+              </Flex>
+            </Flex>
+            <Flex mt="20px">
+              {topic.tags.map((tag) => (
+                <Box
+                  key={tag.name}
+                  px="12px"
+                  py="4px"
+                  mx="10px"
+                  fontSize="12px"
+                  bg={tag.color}
+                  color="white"
+                  opacity="0.8"
+                  fontWeight="bold"
+                  borderRadius="lg"
+                >
+                  {tag.language}
+                </Box>
+              ))}
             </Flex>
           </Flex>
           <Collapse className="comment_area" in={isOpen} animateOpacity>
             <Flex my="20px" maxH="200px" w="40vw" px="10px" flexDir="column">
-              <Comments topic={topic} />
+              <Comments topic={props.topic} />
             </Flex>
           </Collapse>
         </>

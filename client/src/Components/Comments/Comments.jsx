@@ -1,4 +1,4 @@
-import { Flex, Heading, Text } from "@chakra-ui/react";
+import { Flex, Heading, Text, Avatar } from "@chakra-ui/react";
 import React from "react";
 
 export default function Comments({ topic }) {
@@ -19,11 +19,29 @@ export default function Comments({ topic }) {
                 w="100%"
                 py="30px"
                 wrap="wrap"
+                flexDir="column"
               >
-                <Text>Author: {comment.author && comment.author.name}</Text>
-                <Heading size="md">
+                <Flex alignItems="center" mb="20px">
+                  <Avatar
+                    mr="20px"
+                    name={
+                      comment.author
+                        ? `${comment.author.name} ${comment.author.name.surname}`
+                        : ""
+                    }
+                    src={
+                      comment.author && comment.author.avatar_url
+                        ? comment.author.avatar_url
+                        : `https://tse4.mm.bing.net/th?id=OIP.PV6MZaUPyuN_H7kCfPeSVAHaE7&pid=Api`
+                    }
+                  ></Avatar>
+                  <Text textDecor="underline">
+                    {comment.author && comment.author.name}
+                  </Text>
+                </Flex>
+                <Text fontSize="lg" fontWeight="500">
                   {comment.comment && comment.comment}
-                </Heading>
+                </Text>
               </Flex>
             </Flex>
           </>
