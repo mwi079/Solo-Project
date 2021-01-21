@@ -8,6 +8,8 @@ dotenv.config();
 async function authorizeUser(ctx, next) {
   const authHeaders = ctx.request.headers["authorization"];
 
+  //let authHeaders = false;
+
   if (!authHeaders) {
     ctx.status = 403; //access denied
     return (ctx.body = "Access Denied");
