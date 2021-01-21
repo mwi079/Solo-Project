@@ -1,5 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-.eslintcache
+server/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node
 # dependencies
 /node_modules
 /.pnp

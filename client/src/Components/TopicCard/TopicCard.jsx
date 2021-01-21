@@ -59,7 +59,7 @@ export default function TopicCard(props) {
           >
             <Flex alignItems="center" justify="space-between">
               <Flex justify="center">
-                <Heading size="lg">{topic.title}</Heading>
+                <Heading data-testid="title" size="lg">{topic.title}</Heading>
               </Flex>
               <Flex>
                 <Avatar
@@ -75,7 +75,11 @@ export default function TopicCard(props) {
                       : `https://tse4.mm.bing.net/th?id=OIP.PV6MZaUPyuN_H7kCfPeSVAHaE7&pid=Api`
                   }
                 ></Avatar>
-                <Text display="inline">{topic.author.name}</Text>
+                <Text 
+                  data-testid="author" 
+                  display="inline">
+                  {topic.author.name}
+                </Text>
               </Flex>
             </Flex>
 
@@ -125,24 +129,24 @@ export default function TopicCard(props) {
                 </Button>
               </Flex>
             </Flex>
-            <Flex mt="20px">
-              {topic.tags.map((tag) => (
-                <Box
-                  key={tag.name}
-                  px="12px"
-                  py="4px"
-                  mx="10px"
-                  fontSize="12px"
-                  bg={tag.color}
-                  color="white"
-                  opacity="0.8"
-                  fontWeight="bold"
-                  borderRadius="lg"
-                >
-                  {tag.language}
-                </Box>
+            {topic.tags.map((tag) => (
+                <Flex mt="20px">
+                  <Box
+                    key={tag.name}
+                    px="12px"
+                    py="4px"
+                    mx="10px"
+                    fontSize="12px"
+                    bg={tag.color}
+                    color="white"
+                    opacity="0.8"
+                    fontWeight="bold"
+                    borderRadius="lg"
+                  >
+                    {tag.language}
+                  </Box>
+                </Flex>
               ))}
-            </Flex>
           </Flex>
           <Collapse className="comment_area" in={isOpen} animateOpacity>
             <Flex my="20px" maxH="200px" w="40vw" px="10px" flexDir="column">
