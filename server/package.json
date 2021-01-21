@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "go": "nodemon ./index.js"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +20,7 @@
     "koa-bodyparser": "^4.3.0",
     "koa-combine-routers": "^4.0.2",
     "koa-router": "^10.0.0",
-    "mongoose": "^5.11.10"
+    "mongoose": "^5.11.10",
+    "nodemon": "^2.0.7"
   }
 }
