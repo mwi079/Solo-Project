@@ -1,5 +1,5 @@
 import { Flex, Heading, Text, Avatar } from "@chakra-ui/react";
-import React from "react";
+import React, { Fragment} from "react";
 
 export default function Comments({ topic }) {
   return (
@@ -8,8 +8,8 @@ export default function Comments({ topic }) {
         Comments:
       </Heading>
       {topic.comments.length !== 0 ? (
-        topic.comments.map((comment) => (
-          <>
+        topic.comments.map((comment, index) => (
+          <Fragment key={index}>
             <Flex flexDir="column" alignItems="center">
               <Flex
                 px="50px"
@@ -44,7 +44,7 @@ export default function Comments({ topic }) {
                 </Text>
               </Flex>
             </Flex>
-          </>
+          </Fragment>
         ))
       ) : (
         <>
