@@ -5,6 +5,8 @@ import { getByTestId } from '@testing-library/dom';
 
 import Comments from '../Components/Comments/Comments';
 
+import { dummyComment } from './DummyData'; 
+
 //Alternative syntax for individual tests
 // test('Renders correct default text when no comments supplied', () => {
 //     const container = document.createElement('div');
@@ -18,13 +20,7 @@ describe("Comments Component", ()=> {
 
   it('Renders a topic comment correctly', () => {
     const container = document.createElement('div');
-    const topic = {comments: [
-      { author: {
-        name: 'Dave'
-      },
-      comment: 'A test comment'
-      }
-    ]}
+    const topic = dummyComment;
     ReactDOM.render(<Comments topic= {topic}/>, container);
     const author = getByTestId(container, 'comment-author');
     expect(author.textContent).toEqual('Dave');

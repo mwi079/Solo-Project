@@ -38,7 +38,10 @@
     "transform": {
       "^.+\\.[t|j]sx?$": "babel-jest",
       ".+\\.(css|styl|less|sass|scss)$": "jest-transform-css"
-    }
+    },
+    "testPathIgnorePatterns": [
+      "<rootDir>/src/__tests__/DummyData.js"
+    ]
   },
   "eslintConfig": {
     "extends": [
