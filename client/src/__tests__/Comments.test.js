@@ -20,7 +20,7 @@ describe("Comments Component", ()=> {
     expect(container.textContent).toMatch('No comments yet.. 😕');
   }),
 
-  it('Renders a comment correctly', () => {
+  it('Renders a topic comment correctly', () => {
     const container = document.createElement('div');
     const topic = {comments: ['Comment 1', 'Comment 2','Comment 3']}
     ReactDOM.render(<Comments topic= {topic}/>, container);

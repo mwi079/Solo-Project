@@ -2,6 +2,9 @@ import { Flex, Heading, Text, Avatar } from "@chakra-ui/react";
 import React, { Fragment} from "react";
 
 export default function Comments({ topic }) {
+
+  console.log(topic);
+  
   return (
     <>
       <Heading size="md" mb="10px">
