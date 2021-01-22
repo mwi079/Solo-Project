@@ -1,4 +1,4 @@
-import { Flex, Text, Box, Icon } from "@chakra-ui/react";
+import { Flex, Text, Icon } from "@chakra-ui/react";
 import React from "react";
 import {
   AiOutlineTwitter,

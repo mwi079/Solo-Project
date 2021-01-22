@@ -59,7 +59,7 @@ export default function TopicCard(props) {
           >
             <Flex alignItems="center" justify="space-between">
               <Flex justify="center">
-                <Heading data-testid="title" size="lg">{topic.title}</Heading>
+                <Heading data-testid="topic-title" size="lg">{topic.title}</Heading>
               </Flex>
               <Flex>
                 <Avatar
@@ -76,7 +76,7 @@ export default function TopicCard(props) {
                   }
                 ></Avatar>
                 <Text 
-                  data-testid="author" 
+                  data-testid="topic-author" 
                   display="inline">
                   {topic.author.name}
                 </Text>
