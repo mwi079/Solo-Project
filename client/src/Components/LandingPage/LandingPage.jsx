@@ -5,7 +5,7 @@ import { Flex, Text } from "@chakra-ui/react";
 import Dashboard from "../Dashboard/Dashboard";
 import { useDencrypt } from "use-dencrypt-effect";
 import Subtitle from "../Subtitle";
-import Footer from "../Footer/Footer";
+//import Footer from "../Footer/Footer";
 
 const title = "Codagora,";
 

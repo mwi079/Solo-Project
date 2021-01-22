@@ -13,17 +13,8 @@ import SingleTopicPage from "./Components/SingleTopicPage/SingleTopicPage";
 import TransitionRouter from "./Components/Router/Router";
 import Footer from "./Components/Footer/Footer";
 
-function App() {
+function App () {
   const [state, dispatch] = Store();
-
-  useEffect(() => {
-    window.scroll(0, 0);
-    const token = window.localStorage.getItem("token");
-    token &&
-      getUserProfile(token).then((user) => {
-        dispatch({ type: "user", payload: user });
-      });
-  }, []);
 
   function getUserProfile(token) {
     if (state.isAuthWithGithub) {
@@ -36,6 +27,16 @@ function App() {
         .catch((error) => console.error(error));
     }
   }
+
+  useEffect(() => {
+    
+    window.scroll(0, 0);
+    const token = window.localStorage.getItem("token");
+    token &&
+      getUserProfile(token).then((user) => {
+        dispatch({ type: "user", payload: user });
+      });
+  }, []);
 
   return (
     <>

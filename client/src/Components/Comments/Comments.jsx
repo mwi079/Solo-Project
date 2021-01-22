@@ -2,6 +2,7 @@ import { Flex, Heading, Text, Avatar } from "@chakra-ui/react";
 import React, { Fragment} from "react";
 
 export default function Comments({ topic }) {
+
   return (
     <>
       <Heading size="md" mb="10px">
@@ -35,11 +36,11 @@ export default function Comments({ topic }) {
                         : `https://tse4.mm.bing.net/th?id=OIP.PV6MZaUPyuN_H7kCfPeSVAHaE7&pid=Api`
                     }
                   ></Avatar>
-                  <Text textDecor="underline">
+                  <Text data-testid="comment-author" textDecor="underline">
                     {comment.author && comment.author.name}
                   </Text>
                 </Flex>
-                <Text fontSize="lg" fontWeight="500">
+                <Text data-testid="comment-comment" fontSize="lg" fontWeight="500">
                   {comment.comment && comment.comment}
                 </Text>
               </Flex>

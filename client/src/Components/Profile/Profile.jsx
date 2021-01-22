@@ -15,7 +15,7 @@ import { getUserPosts } from "../../services/ApiTopicsClientService";
 import TopicCardProfile from "../TopicCard/TopicCardProfile";
 import { AiOutlineMenu } from "react-icons/ai";
 import "./Profile.css";
-import Footer from "../Footer/Footer";
+//import Footer from "../Footer/Footer";
 
 export default function Profile() {
   const [posts, setPosts] = useState(null);
