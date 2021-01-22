@@ -1,8 +1,8 @@
 const { authorizeTopic } = require("../middleware/authorizeTopics");
 const { authorizeUser } = require("../middleware/authorizeUser");
-const { auth } = require("./mocks");
+const { auth } = require("./mockVariables");
 
-console.log(auth);
+//console.log(auth);
 
 test('should return "Access Denied" is ctx.status is 403', () => {
   authorizeTopic(auth.ctxError, auth.next);
