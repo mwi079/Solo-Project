@@ -9,6 +9,8 @@ const { router } = require("./routes/index.js");
 
 app.use(cors()).use(bodyparser()).use(router.routes());
 
-app.listen(process.env.PORT, () =>
-  console.log(`Listening to http://localhost:${process.env.PORT} 🤓🚀`)
-);
+// app.listen(process.env.PORT, () =>
+//   console.log(`Listening to http://localhost:${process.env.PORT} 🤓🚀`)
+// );
+
+module.exports = app.listen(process.env.PORT);
