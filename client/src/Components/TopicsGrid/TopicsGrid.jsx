@@ -22,7 +22,7 @@ export default function TopicsGrid({ topics, setTopics }) {
           pb="120px"
         >
           {topics.map((topic) => (
-            <TopicCard topic={topic} setTopics={setTopics} key={topic._id} />
+            <TopicCard topic={topic} setTopics={setTopics} key={topic._id}/>
           ))}
         </Grid>
       ) : (

@@ -1,4 +1,5 @@
 const dummyTopic = {
+  _id: 1,
   title: 'Test Title',
   author: {
     name: 'Bill'
