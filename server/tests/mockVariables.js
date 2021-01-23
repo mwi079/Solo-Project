@@ -32,9 +32,15 @@ const mock = {
     next: "whatever",
   },
   topic: {
-    title: "Harry Potter learns Javascript",
-    content:
-      "Harry struggled to get a job after Hogwarts so decided to attent a codecamp",
+    correctTopic: {
+      title: "Harry Potter learns Javascript",
+      content:
+        "Harry struggled to get a job after Hogwarts so decided to attent a codecamp",
+    },
+    wrongTopic: {
+      title: "Harry Potter learns Javascript",
+      content: "",
+    },
   },
 };
 
