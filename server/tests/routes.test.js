@@ -87,6 +87,7 @@ describe("JWT Server:", () => {
         .expect(200)
         .end(() => {
           User.find((err, users) => {
+            console.log(users);
             expect(users.length).toBe(1);
             done();
           });
@@ -142,6 +143,13 @@ describe("JWT Server:", () => {
             done();
           });
         });
+    });
+  });
+
+  describe("/api/user/github", () => {
+    beforeEach(async () => {
+      const hash = await bcrypt.hash(valid.correctUserData.password, 10);
+      await User.create({ ...valid.correctUserData, password: hash });
     });
   });
 
