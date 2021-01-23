@@ -31,6 +31,11 @@ const mock = {
     ctxError: { status: 403, body: "", request: { headers: () => false } },
     next: "whatever",
   },
+  topic: {
+    title: "Harry Potter learns Javascript",
+    content:
+      "Harry struggled to get a job after Hogwarts so decided to attent a codecamp",
+  },
 };
 
 module.exports = mock;

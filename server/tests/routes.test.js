@@ -1,4 +1,4 @@
-const { valid } = require("./mockVariables");
+const { valid, topic } = require("./mockVariables");
 const app = require("../index");
 const supertest = require("supertest");
 const request = supertest(app);
@@ -36,6 +36,22 @@ describe("/api/users/register_github", () => {
       .post("/api/user/register_github")
       .set("content-type", "application/json")
       .send(valid.correctGithubUserData)
+      .expect(200)
+      .end(() => {
+        User.find((err, users) => {
+          expect(users.length).toBe(1);
+          done();
+        });
+      });
+  });
+});
+
+describe("/forum/post_topic", () => {
+  it("should post a topic", (done) => {
+    request
+      .post("/forum/post_topic")
+      .set("content-type", "application/json")
+      .send(topic)
       .expect(200)
       .end(() => {
         User.find((err, users) => {
