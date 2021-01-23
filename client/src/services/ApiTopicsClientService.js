@@ -59,7 +59,7 @@ export async function likePost(id) {
     {
       headers: { Authorization: token },
     }
-  );
+  )
 }
 
 export async function dislikePost(id) {

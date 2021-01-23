@@ -12,6 +12,7 @@ import { Link } from "@reach/router";
 import { StateContext } from "../../global.context/globalStore.reducer";
 
 export default function Dashboard() {
+
   const iconArray = [
     { lang: Js, name: "JavaScript", JS_color: "yellow" },
     { lang: Node, name: "NodeJS", Node_color: "green" },
@@ -26,7 +27,7 @@ export default function Dashboard() {
   useEffect(() => {
     getAllTopics()
       .then((res) => {
-        setTopics(res.data);
+        setTopics(res.data)
       })
       .catch((error) => console.error(error));
   }, []);
