@@ -7,7 +7,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const SUPER_SECRET_KEY = process.env.TOKEN_SECRET;
 
-describe("JWT Server:", () => {
+describe("Server:", () => {
   const User = mongoose.connection.model("User");
   const Topic = mongoose.connection.model("Topic");
   let token;
