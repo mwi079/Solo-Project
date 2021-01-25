@@ -10,7 +10,8 @@ dotenv.config();
 
 async function registerUser(ctx:Koa.Context) {
   const { name, surname, email, password } = ctx.request.body;
-  const { error } = userValidation({ name, surname, email, password });
+  let tempUser:object= {name, surname, email, password}
+  const { error } = userValidation(tempUser);
 
   if (error) {
     ctx.status = 400;

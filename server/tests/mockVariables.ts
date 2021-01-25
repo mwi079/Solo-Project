@@ -1,4 +1,4 @@
-const mock = {
+export const mock = {
   valid: {
     correctLoginData: {
       email: "Something@whatever.com",
@@ -44,4 +44,3 @@ const mock = {
   },
 };
 
-module.exports = mock;

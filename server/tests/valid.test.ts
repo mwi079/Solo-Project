@@ -1,29 +1,29 @@
-const {
-  userValidation,
-  loginValidation,
-} = require("../validation/user_validation");
-const { valid } = require("./mockVariables");
+// import {
+//   userValidation,
+//   loginValidation,
+// } from"../validation/user_validation";
+// import {mock} from "./mockVariables";
 
-test.skip("should validate", () => {
-  const { error } = loginValidation(valid.correctLoginData);
+// test.skip("should validate", () => {
+//   const { error } = loginValidation(mock.valid.correctLoginData);
 
-  expect(error).toBe(undefined);
-});
+//   expect(error).toBe(undefined);
+// });
 
-test.skip("should validate", () => {
-  const { error } = userValidation(valid.correctUserData);
+// test.skip("should validate", () => {
+//   const { error } = userValidation(mock.valid.correctUserData);
 
-  expect(error).toBe(undefined);
-});
+//   expect(error).toBe(undefined);
+// });
 
-test.skip("should not validate", () => {
-  const { error } = loginValidation(valid.wrongLoginData);
-  //console.log(error);
-  expect(error).toBeDefined();
-});
+// test.skip("should not validate", () => {
+//   const { error } = loginValidation(mock.valid.wrongLoginData);
+//   //console.log(error);
+//   expect(error).toBeDefined();
+// });
 
-test.skip("should not", () => {
-  const { error } = userValidation(valid.wrongUserData);
-  //console.log(error);
-  expect(error).toBeDefined();
-});
+// test.skip("should not", () => {
+//   const { error } = userValidation(mock.valid.wrongUserData);
+//   //console.log(error);
+//   expect(error).toBeDefined();
+// });

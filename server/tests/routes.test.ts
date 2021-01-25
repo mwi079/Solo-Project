@@ -1,4 +1,4 @@
-import  { valid, topic } from "./mockVariables";
+import  {mock} from "./mockVariables";
 import * as app from "../index";
 import supertest from "supertest"
 import mongoose from "mongoose";
@@ -8,7 +8,8 @@ const request = supertest(app);
 const SUPER_SECRET_KEY = process.env.TOKEN_SECRET;
  
 describe("Server:", () => {
-  const url:string= process.env.MONGO_TEST_URL!;
+
+  const url:string= process.env.MONGO_TEST_URL;
   beforeAll(async () => {
     await mongoose.connect(url, { useNewUrlParser: true });
   });
@@ -44,7 +45,7 @@ describe("Server:", () => {
       request
         .post("/api/user/register")
         .set("content-type", "application/json")
-        .send(valid.correctUserData)
+        .send(mock.valid.correctUserData)
         .expect(200)
         .end(() => {
           User.find((err, users) => {
@@ -57,13 +58,13 @@ describe("Server:", () => {
       request
         .post("/api/user/register")
         .set("Content-Type", "application/json")
-        .send(valid.correctUserData)
+        .send(mock.alid.correctUserData)
         .end(() => {
           User.find((err, users) => {
-            expect(users[0].password).not.toBe(valid.correctUserData);
+            expect(users[0].password).not.toBe(mock.valid.correctUserData);
             expect(
               bcrypt.compareSync(
-                valid.correctUserData.password,
+                mock.valid.correctUserData.password,
                 users[0].password
               )
             ).toBe(true);
@@ -75,7 +76,7 @@ describe("Server:", () => {
       request
         .post("/api/user/register")
         .set("Content-Type", "application/json")
-        .send(valid.wrongUserData)
+        .send(mock.valid.wrongUserData)
         .expect((res) => {
           expect(res.status).toBeGreaterThanOrEqual(400);
         })
@@ -88,7 +89,7 @@ describe("Server:", () => {
       request
         .post("/api/user/register_github")
         .set("content-type", "application/json")
-        .send(valid.correctGithubUserData)
+        .send(mock.valid.correctGithubUserData)
         .expect(200)
         .end(() => {
           User.find((err, users) => {
@@ -101,16 +102,16 @@ describe("Server:", () => {
 
   describe("/api/user/login", () => {
     beforeEach(async () => {
-      const hash = await bcrypt.hash(valid.correctUserData.password, 10);
-      await User.create({ ...valid.correctUserData, password: hash });
+      const hash = await bcrypt.hash(mock.valid.correctUserData.password, 10);
+      await User.create({ ...mock.valid.correctUserData, password: hash });
     });
     it("should accept an email & password and return the user object", (done) => {
       request
         .post("/api/user/login")
         .set("Content-Type", "application/json")
         .send({
-          email: valid.correctUserData.email,
-          password: valid.correctUserData.password,
+          email: mock.valid.correctUserData.email,
+          password: mock.valid.correctUserData.password,
         })
         .expect(200)
         .end(done);
@@ -120,8 +121,8 @@ describe("Server:", () => {
         .post("/api/user/login")
         .set("Content-Type", "application/json")
         .send({
-          email: valid.correctUserData.email,
-          password: valid.wrongUserData.password,
+          email: mock.valid.correctUserData.email,
+          password: mock.valid.wrongUserData.password,
         })
         .expect((res) => {
           expect(res.status).toBeGreaterThanOrEqual(400);
@@ -133,8 +134,8 @@ describe("Server:", () => {
         .post("/api/user/login")
         .set("Content-Type", "application/json")
         .send({
-          email: valid.correctUserData.email,
-          password: valid.correctUserData.password,
+          email: mock.valid.correctUserData.email,
+          password: mock.valid.correctUserData.password,
         })
         .expect(200)
         .expect((res) => {
@@ -143,7 +144,7 @@ describe("Server:", () => {
         .end(() => {
           User.find((err, users) => {
             const userId = String(users[0]._id);
-            expect(jwt.verify(token, SUPER_SECRET_KEY)._id).toBe(userId);
+            expect(jwt.verify(token, SUPER_SECRET_KEY!)._id).toBe(userId);
             done();
           });
         });
@@ -152,23 +153,23 @@ describe("Server:", () => {
 
   describe("/api/user/github", () => {
     beforeEach(async () => {
-      const hash = await bcrypt.hash(valid.correctUserData.password, 10);
-      await User.create({ ...valid.correctUserData, password: hash });
+      const hash = await bcrypt.hash(mock.valid.correctUserData.password, 10);
+      await User.create({ ...mock.valid.correctUserData, password: hash });
     });
   });
 
   describe("/api/user/profile", () => {
     beforeEach((done) => {
       User.create({
-        ...valid.correctUserData,
-        password: bcrypt.hashSync(valid.correctUserData.password, 10),
+        ...mock.valid.correctUserData,
+        password: bcrypt.hashSync(mock.valid.correctUserData.password, 10),
       }).then(() => {
         request
           .post("/api/user/login")
           .set("Content-Type", "application/json")
           .send({
-            email: valid.correctUserData.email,
-            password: valid.correctUserData.password,
+            email: mock.valid.correctUserData.email,
+            password: mock.valid.correctUserData.password,
           })
           .expect((res) => {
             token = res.res.text;
@@ -196,15 +197,15 @@ describe("Server:", () => {
   describe("/forum/post_topic", () => {
     beforeEach((done) => {
       User.create({
-        ...valid.correctUserData,
-        password: bcrypt.hashSync(valid.correctUserData.password, 10),
+        ...mock.valid.correctUserData,
+        password: bcrypt.hashSync(mock.valid.correctUserData.password, 10),
       }).then(() => {
         request
           .post("/api/user/login")
           .set("Content-Type", "application/json")
           .send({
-            email: valid.correctUserData.email,
-            password: valid.correctUserData.password,
+            email: mock.valid.correctUserData.email,
+            password: mock.valid.correctUserData.password,
           })
           .expect((res) => {
             token = res.res.text;
@@ -218,7 +219,7 @@ describe("Server:", () => {
         .post("/forum/post_topic")
         .set("authorization", token)
         .set("content-type", "application/json")
-        .send(topic.correctTopic)
+        .send(mock.topic.correctTopic)
         .expect(200)
         .end(() => {
           Topic.find((err, topics) => {
@@ -232,7 +233,7 @@ describe("Server:", () => {
         .post("/forum/post_topic")
         .set("authorization", token)
         .set("content-type", "application/json")
-        .send(topic.wrongTopic)
+        .send(mock.topic.wrongTopic)
         .expect((res) => {
           expect(res.status).toBeGreaterThanOrEqual(400);
         })
@@ -254,7 +255,7 @@ describe("Server:", () => {
       request
         .get(`/forum/topic/${id}`)
         .expect((res) => {
-          expect(res.body.title).toBe(topic.correctTopic.title);
+          expect(res.body.title).toBe(mock.topic.correctTopic.title);
         })
         .end(done);
     });

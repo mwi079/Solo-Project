@@ -9,7 +9,8 @@ dotenv.config();
 
 export async function loginUser(ctx:Koa.Context) {
   const { email, password } = ctx.request.body;
-  const { error } = loginValidation({ email, password });
+  let tempUser:object = {email,password}
+  const { error } = loginValidation(tempUser);
   if (error) ctx.body = error.details[0].message;
 
   try {
