@@ -15,7 +15,10 @@ import "./UserForm.css";
 import Login from "../LoginPage/Login";
 import customTheme from "../../theme/";
 
-export default function UserForm({ isAuth, setUser, setIsAuth }) {
+export default function UserForm ( props ) {
+
+  const { isAuth, setUser, setIsAuth } = props;
+
   const { colorMode } = useColorMode();
   return (
     <ThemeProvider theme={customTheme}>

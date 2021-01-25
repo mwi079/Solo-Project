@@ -33,9 +33,11 @@ function App () {
     window.scroll(0, 0);
     const token = window.localStorage.getItem("token");
     token &&
+    // eslint-disable-next-line react-hooks/exhaustive-deps
       getUserProfile(token).then((user) => {
         dispatch({ type: "user", payload: user });
       });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

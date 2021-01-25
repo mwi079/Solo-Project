@@ -87,3 +87,7 @@ button.scrolled {
   background-color: #edae49;
   transition: background-color 1s ease-in;
 }
+
+.navbar-owl {
+  background: url("../../assets/Icons/owl.svg");
+}
