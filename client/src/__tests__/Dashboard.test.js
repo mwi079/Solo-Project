@@ -23,7 +23,7 @@ describe('Dashboard', () => {
     axios.get.mockResolvedValue({data:[dummyTopic]});
     render(
       <StateContext.Provider value={{state, dispatch}}>
-      <Dashboard/>
+        <Dashboard/>
       </StateContext.Provider>
     )
     const topicsCards = await waitFor(() => screen.getByTestId("topic-cards"));

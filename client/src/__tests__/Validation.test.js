@@ -1,15 +1,12 @@
 import { validateSignupForm, validateLoginForm, validateForm } from '../utils/validation.helper';
 
-const email = 'testEmail';
-const password = 'testPassword';
-const name = 'testName';
-const surname = 'testSurname';
-const title = 'testTitle';
-const content = 'testContent';
+import { testData  } from './DummyData'
 
 /*
 Note due to Chakra UI, validation functions return 'true' for non-validation: this is to disable the form submit button... 
 */
+
+const { email, password, name, surname, title, content } = testData; 
 
 describe('Sign Up Validation', () => {
 

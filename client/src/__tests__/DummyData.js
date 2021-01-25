@@ -18,5 +18,15 @@ const dummyComment = {comments: [
   }
 ]};
 
+const testData = {
+  email : 'testEmail',
+  password : 'testPassword',
+  name : 'testName',
+  surname : 'testSurname',
+  title : 'testTitle',
+  content : 'testContent',
+}
 
-module.exports = { dummyTopic, dummyComment };
+
+
+module.exports = { dummyTopic, dummyComment, testData };
