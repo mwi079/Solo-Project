@@ -3,11 +3,12 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-mongoose.connect(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
+if (process.env.NODE_ENV !== "test") {
+  mongoose.connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+}
 mongoose.set("useFindAndModify", false);
 
 const db = mongoose.connection;
