@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // middleware function to be added to protected routes
-async function authorizeTopic(ctx:Koa.Context, next:()=>Promise<any>) {
+export async function authorizeTopic(ctx:Koa.Context, next:()=>Promise<any>) {
   const authHeaders = ctx.request.headers["authorization"];
 
   if (!authHeaders) {
@@ -23,4 +23,4 @@ async function authorizeTopic(ctx:Koa.Context, next:()=>Promise<any>) {
   }
 }
 
-module.exports = { authorizeTopic };
+

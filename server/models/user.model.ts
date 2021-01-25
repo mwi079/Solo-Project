@@ -1,7 +1,20 @@
 
-import mongoose from 'mongoose'
+import {model,Schema,Model,Document} from 'mongoose'
 
-const userSchema = new mongoose.Schema({
+interface Iuser extends Document {
+  name:string;
+  surname:string;
+  email:string;
+  password:string;
+  html_url:string;
+  gists_url:string;
+  location:string;
+  avatar_url:string;
+  posts:[string];
+  comments:[string];
+}
+
+const userSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -28,17 +41,20 @@ const userSchema = new mongoose.Schema({
   avatar_url: { type: String },
   posts: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Topic",
     },
   ],
   comments: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Comment",
     },
   ],
 });
 
-export const User = mongoose.model("User", userSchema);
+export const User:Model<Iuser> =model('User',userSchema)
+
+
+
 

@@ -1,7 +1,17 @@
 
-import {mongoose } from "./";
+import {model,Schema,Model,Document} from 'mongoose'
 
-const topicSchema = new mongoose.Schema({
+interface Itopic extends Document {
+  title:string;
+  content:string;
+  comments:[string];
+  likes:number;
+  tags:object;
+  date:string;
+  author:string;
+}
+
+const topicSchema = new Schema({
   title: {
     type: String,
     min: 10,
@@ -15,7 +25,7 @@ const topicSchema = new mongoose.Schema({
   },
   comments: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Comment",
     },
   ],
@@ -34,11 +44,11 @@ const topicSchema = new mongoose.Schema({
     default: Date.now(),
   },
   author: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "User",
   },
 });
 
-const Topic = mongoose.model("Topic", topicSchema);
+export const Topic:Model<Itopic> = model("Topic", topicSchema);
 
-module.exports = { Topic };
+
