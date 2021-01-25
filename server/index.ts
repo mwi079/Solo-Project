@@ -10,4 +10,4 @@ const { router } = require("./routes/index.ts");
 
 app.use(cors()).use(bodyparser()).use(router.routes());
 
-module.exports = app.listen(process.env.PORT);
+exports = app.listen(process.env.PORT);

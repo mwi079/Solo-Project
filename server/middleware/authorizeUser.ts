@@ -1,12 +1,13 @@
-
-const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
-const { User } = require("../models/user.model");
+import koaCors from "koa-cors";
+import Koa from 'koa'
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+import { User } from "../models/user.model";
 
 dotenv.config();
 
 // middleware function to be added to protected routes
-async function authorizeUser(ctx, next) {
+async function authorizeUser(ctx:Koa.Context, next:Koa.Middleware) {
   const authHeaders = ctx.request.headers["authorization"];
   if (!authHeaders) {
     ctx.status = 403; //access denied

@@ -1,5 +1,5 @@
 
-const { mongoose } = require("./");
+import {mongoose } from "./";
 
 const topicSchema = new mongoose.Schema({
   title: {

@@ -1,5 +1,4 @@
-
-const { mongoose } = require("./");
+import { mongoose } from "./";
 
 const commentSchema = new mongoose.Schema({
   comment: { type: String },

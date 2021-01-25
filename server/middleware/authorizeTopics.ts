@@ -1,10 +1,11 @@
-const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
+import Koa from 'koa'
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
 dotenv.config();
 
 // middleware function to be added to protected routes
-async function authorizeTopic(ctx, next) {
+async function authorizeTopic(ctx:Koa.Context, next:Koa.Middleware) {
   const authHeaders = ctx.request.headers["authorization"];
 
   if (!authHeaders) {

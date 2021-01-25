@@ -1,5 +1,5 @@
-import loginValidation from "../validation/user_validation";
-import User from "../models/user.model";
+import {loginValidation} from "../validation/user_validation";
+import {User} from "../models/user.model";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
@@ -34,7 +34,6 @@ async function loginUser(ctx:Koa.Context) {
     ctx.body = error;
   }
 
-  // ctx.set("token", token);
 }
 
 module.exports = { loginUser };

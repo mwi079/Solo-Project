@@ -1,10 +1,11 @@
+import Koa from 'koa'
+import {User} from "../models/user.model";
+import dotenv from "dotenv";
 
-const { User } = require("../models/user.model");
-const dotenv = require("dotenv");
 
 dotenv.config();
 
-async function getGithubProfile(ctx) {
+async function getGithubProfile(ctx:Koa.Context) {
   try {
     // extract user info from the request
     const {
@@ -36,7 +37,7 @@ async function getGithubProfile(ctx) {
   }
 }
 
-async function getProfile(ctx) {
+async function getProfile(ctx:Koa.Context) {
   try {
     // extract user info from the request
     const { _id, name, surname, email } = ctx.user;
@@ -52,7 +53,7 @@ async function getProfile(ctx) {
   }
 }
 
-async function getUserPosts(ctx) {
+async function getUserPosts(ctx:Koa.Context) {
   const _id = ctx.user;
   try {
     const user = await User.findOne({ _id }).populate("posts");
@@ -62,7 +63,7 @@ async function getUserPosts(ctx) {
   }
 }
 
-async function getUserById(ctx) {
+async function getUserById(ctx:Koa.Context) {
   try {
     const { _id } = ctx.request.body;
     const user = User.findOne({ _id });

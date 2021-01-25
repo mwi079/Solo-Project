@@ -1,23 +1,22 @@
-const { valid, topic } = require("./mockVariables");
-const app = require("../index");
-const supertest = require("supertest");
+import  { valid, topic } from "./mockVariables";
+import * as app from "../index";
+import supertest from "supertest";
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import  jwt from "jsonwebtoken";
 const request = supertest(app);
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const SUPER_SECRET_KEY = process.env.TOKEN_SECRET;
-
+ 
 describe("Server:", () => {
-  const url = process.env.MONGO_TEST_URL;
-  console.log(url);
+  const url:string = process.env.MONGO_TEST_URL;
   beforeAll(async () => {
     await mongoose.connect(url, { useNewUrlParser: true });
   });
 
   const User = mongoose.connection.model("User");
   const Topic = mongoose.connection.model("Topic");
-  let token;
-  let id;
+  let token:string;
+  let id:string;
 
   afterEach(async () => {
     try {

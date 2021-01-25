@@ -1,15 +1,14 @@
-
-
-const { User } = require("../models/user.model");
-const { userValidation } = require("../validation/user_validation");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
-const axios = require("axios");
+import Koa from 'koa'
+import { User } from "../models/user.model";
+import { userValidation } from "../validation/user_validation";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+import axios from "axios";
 
 dotenv.config();
 
-async function registerUser(ctx) {
+async function registerUser(ctx:Koa.Context) {
   const { name, surname, email, password } = ctx.request.body;
   const { error } = userValidation({ name, surname, email, password });
 
@@ -43,7 +42,7 @@ async function registerUser(ctx) {
   }
 }
 
-async function registerUserGithub(ctx) {
+async function registerUserGithub(ctx:Koa.Context) {
   const {
     name,
     surname,
@@ -91,7 +90,7 @@ async function registerUserGithub(ctx) {
 }
 
 // github auth
-async function authGithub(ctx, next) {
+async function authGithub(ctx:Koa.Context, next:Koa.Middleware) {
   try {
     const { code } = ctx.request.body;
 
@@ -113,7 +112,7 @@ async function authGithub(ctx, next) {
   }
 }
 
-async function getGitHubCredentials(ctx) {
+async function getGitHubCredentials(ctx:Koa.Context) {
   try {
     const token = ctx.token;
     const user = await axios
@@ -130,7 +129,7 @@ async function getGitHubCredentials(ctx) {
   }
 }
 
-async function getGitHubGists(ctx) {
+async function getGitHubGists(ctx:Koa.Context) {
   try {
     const token = ctx.token;
     const gists = await axios

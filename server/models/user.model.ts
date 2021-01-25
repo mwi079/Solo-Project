@@ -1,5 +1,5 @@
 
-const { mongoose } = require("./");
+import { mongoose } from "./";
 
 const userSchema = new mongoose.Schema({
   name: {

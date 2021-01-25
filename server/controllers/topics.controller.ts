@@ -1,9 +1,9 @@
+import Koa from 'koa'
+import {Topic} from "../models/topic.model";
+import {User} from "../models/user.model";
+import { Comment } from "../models/comment.model";
 
-const { Topic } = require("../models/topic.model");
-const { User } = require("../models/user.model");
-const { Comment } = require("../models/comment.model");
-
-async function getAllTopics(ctx) {
+async function getAllTopics(ctx:Koa.Context) {
   try {
     const allTopics = await Topic.find({})
       .populate({
@@ -21,7 +21,7 @@ async function getAllTopics(ctx) {
   }
 }
 
-async function getTopicById(ctx) {
+async function getTopicById(ctx:Koa.Context) {
   try {
     const { id } = ctx.request.params;
     const foundTopic = await Topic.findOne({ _id: id }).populate("author");
@@ -33,7 +33,7 @@ async function getTopicById(ctx) {
   }
 }
 
-async function postOneTopic(ctx) {
+async function postOneTopic(ctx:Koa.Context) {
   try {
     const { title, content, tags } = ctx.request.body;
     const _id = ctx.user;
@@ -51,7 +51,7 @@ async function postOneTopic(ctx) {
   }
 }
 
-async function deleteOneTopic(ctx) {
+async function deleteOneTopic(ctx:Koa.Context) {
   try {
     const { _id } = ctx.request.body;
     await Topic.findByIdAndDelete({ _id });
@@ -63,7 +63,7 @@ async function deleteOneTopic(ctx) {
   }
 }
 
-async function addComment(ctx) {
+async function addComment(ctx:Koa.Context) {
   try {
     const { id } = ctx.request.params;
     const _id = ctx.user;
@@ -87,7 +87,7 @@ async function addComment(ctx) {
   }
 }
 
-async function getTopicDetails(ctx) {
+async function getTopicDetails(ctx:Koa.Context) {
   try {
     const { id } = ctx.request.params;
     const topic = await Topic.findOne({ _id: id }).populate({
@@ -106,7 +106,7 @@ async function getTopicDetails(ctx) {
   }
 }
 
-async function likeTopic(ctx) {
+async function likeTopic(ctx:Koa.Context) {
   try {
     const { id } = ctx.request.body;
     const topicToLike = await Topic.findOne({ _id: id });
@@ -120,7 +120,7 @@ async function likeTopic(ctx) {
   }
 }
 
-async function dislikeTopic(ctx) {
+async function dislikeTopic(ctx:Koa.Context) {
   try {
     const { id } = ctx.request.body;
     const topicToLike = await Topic.findOne({ _id: id });
