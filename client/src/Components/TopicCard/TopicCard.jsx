@@ -44,7 +44,6 @@ export default function TopicCard({topic, setTopics}) {
       document.querySelector(".form-wrapper").classList.add("show");
     }
   }
-  console.log(topic);
   return (
     <>
       {topic ? (

@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Grid, Flex, Text } from "@chakra-ui/react";
 import TopicCard from "../TopicCard/TopicCard";
 
 export default function TopicsGrid({ topics, setTopics }) {
 
-  console.log('topics', topics);
   // console.log('setTopics', setTopics);
 
   //useEffect(() => {}, [topics, setTopics]);

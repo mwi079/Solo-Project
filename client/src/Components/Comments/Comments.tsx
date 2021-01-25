@@ -1,22 +1,25 @@
 import { Flex, Heading, Text, Avatar } from "@chakra-ui/react";
 import React, { Fragment} from "react";
 
-type Props = {
-  topic: {
-    comments: [Comment]
-  }
-}
+import { Topic } from '../../interfaces/topic';
 
-type Comment = {
-  author: {
-    name: string,
-    surname: string,
-    avatar_url: string
-  },
-  comment: string
-}
+//Alternative syntax
+// type Props = {
+//   topic: {
+//     comments: [Comment]
+//   }
+// }
 
-export default function Comments({ topic } : Props ) {
+// type Comment = {
+//   author: {
+//     name: string,
+//     surname: string,
+//     avatar_url: string
+//   },
+//   comment: string
+// }
+
+export default function Comments({ topic } : Topic ) {
   
   return (
     <>
