@@ -1,14 +1,14 @@
 import  { valid, topic } from "./mockVariables";
 import * as app from "../index";
-import supertest from "supertest";
+import supertest from "supertest"
 import mongoose from "mongoose";
-import bcrypt from "bcrypt";
+import bcrypt from "bcrypt"
 import  jwt from "jsonwebtoken";
 const request = supertest(app);
-const SUPER_SECRET_KEY = process.env.TOKEN_SECRET;
+const SUPER_SECRET_KEY = process.env.TOKEN_SECRET!;
  
 describe("Server:", () => {
-  const url:string = process.env.MONGO_TEST_URL;
+  const url:string= process.env.MONGO_TEST_URL!;
   beforeAll(async () => {
     await mongoose.connect(url, { useNewUrlParser: true });
   });

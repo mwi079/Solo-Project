@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // middleware function to be added to protected routes
-async function authorizeTopic(ctx:Koa.Context, next:Koa.Middleware) {
+async function authorizeTopic(ctx:Koa.Context, next:()=>Promise<any>) {
   const authHeaders = ctx.request.headers["authorization"];
 
   if (!authHeaders) {
@@ -13,7 +13,7 @@ async function authorizeTopic(ctx:Koa.Context, next:Koa.Middleware) {
     return (ctx.body = "Access Denied");
   }
   try {
-    const { _id } = jwt.verify(authHeaders, process.env.TOKEN_SECRET);
+    const _id= jwt.verify(authHeaders, process.env.TOKEN_SECRET!);
     ctx.user = _id;
     await next();
   } catch (error) {

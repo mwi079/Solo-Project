@@ -7,7 +7,7 @@ import Koa from 'koa'
 
 dotenv.config();
 
-async function loginUser(ctx:Koa.Context) {
+export async function loginUser(ctx:Koa.Context) {
   const { email, password } = ctx.request.body;
   const { error } = loginValidation({ email, password });
   if (error) ctx.body = error.details[0].message;
@@ -25,7 +25,7 @@ async function loginUser(ctx:Koa.Context) {
       ctx.status = 400;
       ctx.body = "Invalid password";
     }
-    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, {
+    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET!, {
       expiresIn: "24h",
     });
     ctx.body = token;
@@ -36,4 +36,3 @@ async function loginUser(ctx:Koa.Context) {
 
 }
 
-module.exports = { loginUser };

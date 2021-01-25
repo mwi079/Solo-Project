@@ -1,6 +1,6 @@
 import Joi from "@hapi/joi";
 
-const userValidation = (user) => {
+export const userValidation = (user:Object) => {
   const schema = Joi.object({
     name: Joi.string().required(),
     surname: Joi.string(),
@@ -11,7 +11,7 @@ const userValidation = (user) => {
   return schema.validate(user);
 };
 
-const loginValidation = (data) => {
+ export const loginValidation = (data:Object) => {
   const schema = Joi.object({
     email: Joi.string().min(6).required().email(),
     password: Joi.string().min(6).required(),
@@ -20,4 +20,3 @@ const loginValidation = (data) => {
   return schema.validate(data);
 };
 
-module.exports = { userValidation, loginValidation };
