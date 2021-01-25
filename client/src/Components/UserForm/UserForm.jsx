@@ -13,7 +13,13 @@ import React from "react";
 import Signup from "../Signup/Signup";
 import "./UserForm.css";
 import Login from "../LoginPage/Login";
-import customTheme from "../../theme/";
+import customTheme from "../../theme";
+
+// type Props = {
+//   isAuth: boolean,
+//   setUser: any,
+//   setIsAuth: boolean
+// }
 
 export default function UserForm ( props ) {
 

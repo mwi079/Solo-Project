@@ -4,6 +4,7 @@ import { useDencrypt } from "use-dencrypt-effect";
 const subtitle = "where code is debated.";
 
 export default function Subtitle() {
+  
   const { result, dencrypt } = useDencrypt();
 
   useEffect(() => {

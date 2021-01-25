@@ -2,7 +2,7 @@ import { Comment } from './comment'
 import { Author } from './author'
 
 export interface Topic {
-  topic: {
+  //topic: {
     _id: number,
     title: string,
     author: Author,
@@ -11,17 +11,7 @@ export interface Topic {
     comments: [Comment],
     likes: number,
     date: Date
-  }
+  //}
 }
 
-// interface Comment {
-//   author: Author,
-//   comment: string
-// }
-
-// interface Author {
-//   name: string,
-//   surname: string,
-//   avatar_url: string
-// }
 

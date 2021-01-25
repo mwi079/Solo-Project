@@ -3,23 +3,11 @@ import React, { Fragment} from "react";
 
 import { Topic } from '../../interfaces/topic';
 
-//Alternative syntax
-// type Props = {
-//   topic: {
-//     comments: [Comment]
-//   }
-// }
+type Props = {
+  topic: Topic;
+}
 
-// type Comment = {
-//   author: {
-//     name: string,
-//     surname: string,
-//     avatar_url: string
-//   },
-//   comment: string
-// }
-
-export default function Comments({ topic } : Topic ) {
+export default function Comments({ topic } : Props ) {
   
   return (
     <>

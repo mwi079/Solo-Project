@@ -2,7 +2,16 @@ import React from "react";
 import { Grid, Flex, Text } from "@chakra-ui/react";
 import TopicCard from "../TopicCard/TopicCard";
 
-export default function TopicsGrid({ topics, setTopics }) {
+import { Topic } from '../../interfaces/topic';
+
+type Props = {
+  topics: [Topic],
+  setTopics: Function
+}
+
+export default function TopicsGrid({ topics, setTopics } : Props) {
+
+
 
   // console.log('setTopics', setTopics);
 

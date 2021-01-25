@@ -2,6 +2,7 @@ import { useDisclosure, Button, ScaleFade, Box } from "@chakra-ui/react";
 import React from "react";
 
 export default function SuccessMessage() {
+  
   const { isOpen, onToggle } = useDisclosure();
   return (
     <>
