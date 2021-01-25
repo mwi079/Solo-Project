@@ -87,7 +87,6 @@ describe("Server:", () => {
         .expect(200)
         .end(() => {
           User.find((err, users) => {
-            console.log(users);
             expect(users.length).toBe(1);
             done();
           });
