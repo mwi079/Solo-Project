@@ -1,4 +1,5 @@
-const Router = require("koa-router");
+//const Router = require("koa-router");
+import Router from "koa-router"
 const router = new Router();
 const { authorizeUser } = require("../middleware/authorizeUser");
 const { authorizeTopic } = require("../middleware/authorizeTopics");

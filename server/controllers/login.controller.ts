@@ -1,12 +1,13 @@
-const { loginValidation } = require("../validation/user_validation");
-const { User } = require("../models/user.model");
-const bcrypt = require("bcrypt");
-const dotenv = require("dotenv");
-const jwt = require("jsonwebtoken");
+import loginValidation from "../validation/user_validation";
+import User from "../models/user.model";
+import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
+import Koa from 'koa'
 
 dotenv.config();
 
-async function loginUser(ctx) {
+async function loginUser(ctx:Koa.Context) {
   const { email, password } = ctx.request.body;
   const { error } = loginValidation({ email, password });
   if (error) ctx.body = error.details[0].message;

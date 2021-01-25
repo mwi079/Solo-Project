@@ -1,16 +1,13 @@
-const Koa = require("koa");
-import * as dotenv from "dotenv"
-const cors = require("@koa/cors");
-const bodyparser = require("koa-bodyparser");
+import Koa from "koa";
+import dotenv from "dotenv"
+import cors from "@koa/cors"
+import bodyparser from "koa-bodyparser"
+
 
 dotenv.config();
 const app = new Koa();
 const { router } = require("./routes/index.ts");
 
 app.use(cors()).use(bodyparser()).use(router.routes());
-
-//  app.listen(process.env.PORT, () =>
-//    console.log(`Listening to http://localhost:${process.env.PORT} 🤓🚀`)
-//  );
 
 module.exports = app.listen(process.env.PORT);
