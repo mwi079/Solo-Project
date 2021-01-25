@@ -8,6 +8,12 @@ const jwt = require("jsonwebtoken");
 const SUPER_SECRET_KEY = process.env.TOKEN_SECRET;
 
 describe("Server:", () => {
+  const url = process.env.MONGO_TEST_URL;
+  console.log(url);
+  beforeAll(async () => {
+    await mongoose.connect(url, { useNewUrlParser: true });
+  });
+
   const User = mongoose.connection.model("User");
   const Topic = mongoose.connection.model("Topic");
   let token;
@@ -87,7 +93,6 @@ describe("Server:", () => {
         .expect(200)
         .end(() => {
           User.find((err, users) => {
-            console.log(users);
             expect(users.length).toBe(1);
             done();
           });
