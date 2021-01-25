@@ -1,11 +1,13 @@
 const dummyTopic = {
-  _id: 1,
+  _id: 154123132165461321,
   title: 'Test Title',
   author: {
     name: 'Bill'
   },
-  tags: ['Test1', 'Test2', 'Test3'],
-  comments: ['Wow so interest']
+  tags: [{language: 'JavaScript', color: 'FFD700'}],
+  comments: ['Wow so interest'],
+  likes: 2,
+  date: "2021-01-21T14:20:46.129Z"
 };
 
 const dummyComment = {comments: [

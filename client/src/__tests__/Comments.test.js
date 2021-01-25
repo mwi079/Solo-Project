@@ -25,7 +25,6 @@ describe("Comments Component", ()=> {
     const author = getByTestId(container, 'comment-author');
     expect(author.textContent).toEqual('Dave');
     const comment = getByTestId(container, 'comment-comment');
-    console.log('Test', comment.textContent);
     expect(comment.textContent).toEqual('A test comment');
   }),
 

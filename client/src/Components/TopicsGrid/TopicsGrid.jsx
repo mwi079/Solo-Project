@@ -4,11 +4,11 @@ import TopicCard from "../TopicCard/TopicCard";
 
 export default function TopicsGrid({ topics, setTopics }) {
 
-  // console.log('topics', topics);
+  console.log('topics', topics);
   // console.log('setTopics', setTopics);
 
-  useEffect(() => {}, [topics, setTopics]);
-  
+  //useEffect(() => {}, [topics, setTopics]);
+
   return (
     <>
       {topics ? (
@@ -21,8 +21,8 @@ export default function TopicsGrid({ topics, setTopics }) {
           alignItems="center"
           pb="120px"
         >
-          {topics.map((topic) => (
-            <TopicCard topic={topic} setTopics={setTopics} key={topic._id}/>
+          {topics.map((topic, index) => (
+            <TopicCard key={index} topic={topic} setTopics={setTopics}/>
           ))}
         </Grid>
       ) : (

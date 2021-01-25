@@ -5,6 +5,9 @@ import { App } from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ChakraProvider } from "@chakra-ui/react";
 
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+
 ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider>

@@ -11,7 +11,7 @@ import TopicCard from '../Components/TopicCard/TopicCard';
 
 //Context provider is expecting a value of state.isAuth and a function for dispatch
 const dispatch = () => {};
-const state = {isAuth: true }
+const state = {isAuth: true };
 
 //Topic Card Component
 describe('Topics Component', () => {

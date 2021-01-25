@@ -18,25 +18,25 @@ import Comments from "../Comments/Comments";
 import { likePost, dislikePost } from "../../services/ApiTopicsClientService";
 import "./TopicCard.css";
 
-export default function TopicCard(props) {
+export default function TopicCard({topic, setTopics}) {
   // useEffect(() => {}, [props.topics, props.setTopics]);
 
   const { state } = useContext(StateContext);
   const { isOpen, onToggle } = useDisclosure();
   const [liked, setLiked] = useState(false);
-  const [topic, setTopic] = useState(props.topic);
+  //const [topic, setTopic] = useState(props.topic);
 
   function clickedLike() {
     if (state.isAuth || state.isAuthWithGithub) {
       if (!liked) {
         likePost(topic._id)
           .then((res) => {
-            setTopic(res.data);
+            setTopics(res.data);
           })
           .catch((error) => console.error(error));
       } else {
         dislikePost(topic._id)
-          .then((res) => setTopic(res.data))
+          .then((res) => setTopics(res.data))
           .catch((error) => console.error(error));
       }
       setLiked(!liked);
@@ -44,11 +44,12 @@ export default function TopicCard(props) {
       document.querySelector(".form-wrapper").classList.add("show");
     }
   }
-
+  console.log(topic);
   return (
     <>
       {topic ? (
-        <>
+        <div 
+          data-testid="topic-cards" className="topic-card">
           <Flex
             w="40vw"
             boxShadow="0 0 10px #3333"
@@ -129,10 +130,9 @@ export default function TopicCard(props) {
                 </Button>
               </Flex>
             </Flex>
-            {topic.tags.map((tag) => (
-                <Flex mt="20px">
+            {topic.tags.map((tag, index) => (
+                <Flex mt="20px" key={index}>
                   <Box
-                    key={tag.name}
                     px="12px"
                     py="4px"
                     mx="10px"
@@ -150,10 +150,10 @@ export default function TopicCard(props) {
           </Flex>
           <Collapse className="comment_area" in={isOpen} animateOpacity>
             <Flex my="20px" maxH="200px" w="40vw" px="10px" flexDir="column">
-              <Comments topic={props.topic} />
+              <Comments topic={topic} />
             </Flex>
           </Collapse>
-        </>
+        </div>
       ) : (
         <Flex
           w="40vw"
