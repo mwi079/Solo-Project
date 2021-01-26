@@ -1,13 +1,12 @@
 
-
 // NOTE: extending existing interface
 export interface Context {
   request:{
-    params:string
+    params:{id:string}
     body:any
 
   }
   user:any
-  status:any
+  status:number
   body:any
 }

@@ -25,7 +25,8 @@ async function getAllTopics(ctx:Context) {
 
 async function getTopicById(ctx:Context) {
   try {
-    const id  = ctx.request.params;
+    const {id}  = ctx.request.params;
+    console.log(id)
     const foundTopic = await Topic.findOne({ _id: id }).populate("author");
     ctx.status = 200;
     ctx.body = foundTopic;
@@ -38,7 +39,7 @@ async function getTopicById(ctx:Context) {
 async function postOneTopic(ctx:Context) {
   try {
     const { title, content, tags } = ctx.request.body;
-    const _id = ctx.user;
+    const {_id} = ctx.user;
     const user = await User.findOne({ _id });
     const topicToPost = new Topic({ title, author: _id, content, tags });
     user.posts.push(topicToPost._id);
@@ -68,7 +69,7 @@ async function deleteOneTopic(ctx:Context) {
 async function addComment(ctx:Context) {
   try {
     const  id  = ctx.request.params;
-    const _id = ctx.user;
+    const {_id} = ctx.user;
 
     const { comment } = ctx.request.body;
 

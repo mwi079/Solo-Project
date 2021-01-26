@@ -60,7 +60,7 @@ describe("Server:", () => {
         .set("Content-Type", "application/json")
         .send(mock.valid.correctUserData)
         .end(() => {
-          User.find((err, users) => {
+          User.find((err, users:any) => {
             expect(users[0].password).not.toBe(mock.valid.correctUserData);
             expect(
               bcrypt.compareSync(
@@ -138,11 +138,11 @@ describe("Server:", () => {
           password: mock.valid.correctUserData.password,
         })
         .expect(200)
-        .expect((res) => {
+        .expect((res:any) => {
           token = res.res.text;
         })
         .end(() => {
-          User.find((err, users) => {
+          User.find((err, users:any) => {
             const userId = String(users[0]._id);
             expect(jwt.verify(token, SUPER_SECRET_KEY!)._id).toBe(userId);
             done();
@@ -171,7 +171,7 @@ describe("Server:", () => {
             email: mock.valid.correctUserData.email,
             password: mock.valid.correctUserData.password,
           })
-          .expect((res) => {
+          .expect((res:any) => {
             token = res.res.text;
           })
           .end(done);
@@ -207,7 +207,7 @@ describe("Server:", () => {
             email: mock.valid.correctUserData.email,
             password: mock.valid.correctUserData.password,
           })
-          .expect((res) => {
+          .expect((res:any) => {
             token = res.res.text;
           })
           .end(done);
@@ -246,6 +246,7 @@ describe("Server:", () => {
         .end(() => {
           Topic.find((err, topics) => {
             id = topics[0]._id;
+            console.log(id)
             expect(topics.length).toBe(1);
             done();
           });
@@ -255,6 +256,7 @@ describe("Server:", () => {
       request
         .get(`/forum/topic/${id}`)
         .expect((res) => {
+          console.log(res.body)
           expect(res.body.title).toBe(mock.topic.correctTopic.title);
         })
         .end(done);
