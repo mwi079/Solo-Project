@@ -1,7 +1,7 @@
 
 import {model,Schema,Model,Document} from 'mongoose'
 
-interface Itopic extends Document {
+export interface Itopic extends Document {
   title:string;
   content:string;
   comments:any[];

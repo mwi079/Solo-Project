@@ -18,12 +18,10 @@ test.skip("should validate", () => {
 
 test.skip("should not validate", () => {
   const { error } = loginValidation(mock.valid.wrongLoginData);
-  //console.log(error);
   expect(error).toBeDefined();
 });
 
 test.skip("should not", () => {
   const { error } = userValidation(mock.valid.wrongUserData);
-  //console.log(error);
   expect(error).toBeDefined();
 });

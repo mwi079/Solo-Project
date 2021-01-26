@@ -4,6 +4,8 @@ import supertest from "supertest"
 import mongoose from "mongoose";
 import bcrypt from "bcrypt"
 import  jwt from "jsonwebtoken";
+import {Iuser} from '../models/user.model'
+import {Itopic} from '../models/topic.model'
 const request = supertest(app);
 const SUPER_SECRET_KEY = process.env.TOKEN_SECRET;
  
@@ -48,7 +50,7 @@ describe("Server:", () => {
         .send(mock.valid.correctUserData)
         .expect(200)
         .end(() => {
-          User.find((err, users) => {
+          User.find((err, users:Iuser[]) => {
             expect(users.length).toBe(1);
             done();
           });
@@ -60,7 +62,7 @@ describe("Server:", () => {
         .set("Content-Type", "application/json")
         .send(mock.valid.correctUserData)
         .end(() => {
-          User.find((err, users:any) => {
+          User.find((err, users:Iuser[]) => {
             expect(users[0].password).not.toBe(mock.valid.correctUserData);
             expect(
               bcrypt.compareSync(
@@ -92,7 +94,7 @@ describe("Server:", () => {
         .send(mock.valid.correctGithubUserData)
         .expect(200)
         .end(() => {
-          User.find((err, users) => {
+          User.find((err, users:Iuser[]) => {
             expect(users.length).toBe(1);
             done();
           });
@@ -142,8 +144,8 @@ describe("Server:", () => {
           token = res.res.text;
         })
         .end(() => {
-          User.find((err, users:any) => {
-            const userId = String(users[0]._id);
+          User.find((err, users:Iuser[]) => {
+            const userId =(users[0]._id);
             expect(jwt.verify(token, SUPER_SECRET_KEY!)._id).toBe(userId);
             done();
           });
@@ -222,7 +224,7 @@ describe("Server:", () => {
         .send(mock.topic.correctTopic)
         .expect(200)
         .end(() => {
-          Topic.find((err, topics) => {
+          Topic.find((err, topics:Itopic[]) => {
             expect(topics.length).toBe(1);
             done();
           });
@@ -244,9 +246,8 @@ describe("Server:", () => {
         .get("/forum/allTopics")
         .expect(200)
         .end(() => {
-          Topic.find((err, topics) => {
+          Topic.find((err, topics:Itopic[]) => {
             id = topics[0]._id;
-            console.log(id)
             expect(topics.length).toBe(1);
             done();
           });
@@ -256,7 +257,6 @@ describe("Server:", () => {
       request
         .get(`/forum/topic/${id}`)
         .expect((res) => {
-          console.log(res.body)
           expect(res.body.title).toBe(mock.topic.correctTopic.title);
         })
         .end(done);

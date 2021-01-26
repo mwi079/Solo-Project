@@ -26,7 +26,6 @@ async function getAllTopics(ctx:Context) {
 async function getTopicById(ctx:Context) {
   try {
     const {id}  = ctx.request.params;
-    console.log(id)
     const foundTopic = await Topic.findOne({ _id: id }).populate("author");
     ctx.status = 200;
     ctx.body = foundTopic;

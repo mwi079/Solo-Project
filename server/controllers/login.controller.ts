@@ -1,20 +1,18 @@
 import {loginValidation} from "../validation/user_validation";
 import {User} from "../models/user.model";
 import bcrypt from "bcrypt";
-import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import Koa from 'koa'
+import {Iuser} from '../models/user.model'
 
-dotenv.config();
 
 export async function loginUser(ctx:Koa.Context) {
   const { email, password } = ctx.request.body;
-  let tempUser:object = {email,password}
-  const { error } = loginValidation(tempUser);
+  const { error } = loginValidation({email,password});
   if (error) ctx.body = error.details[0].message;
 
   try {
-    const user = await User.findOne({ email });
+    const user:Iuser = await User.findOne({ email });
     if (!user) {
       ctx.status = 400;
       return (ctx.body = "Email or password is wrong");
