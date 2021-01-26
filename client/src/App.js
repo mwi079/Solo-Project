@@ -14,6 +14,7 @@ import TransitionRouter from "./Components/Router/Router";
 import Footer from "./Components/Footer/Footer";
 
 function App () {
+  
   const [state, dispatch] = Store();
 
   function getUserProfile(token) {

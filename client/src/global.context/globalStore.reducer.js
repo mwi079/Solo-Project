@@ -39,4 +39,5 @@ const Store = () => {
 };
 
 const StateContext = createContext();
+
 export { Store, StateContext };
