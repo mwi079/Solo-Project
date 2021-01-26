@@ -47,7 +47,7 @@ describe("Server:", () => {
       request
         .post("/api/user/register")
         .set("content-type", "application/json")
-        .send(mock.valid.correctUserData)
+        .send({...mock.valid.correctUserData})
         .expect(200)
         .end(() => {
           User.find((err, users:Iuser[]) => {
@@ -60,7 +60,7 @@ describe("Server:", () => {
       request
         .post("/api/user/register")
         .set("Content-Type", "application/json")
-        .send(mock.valid.correctUserData)
+        .send({...mock.valid.correctUserData})
         .end(() => {
           User.find((err, users:Iuser[]) => {
             expect(users[0].password).not.toBe(mock.valid.correctUserData);
@@ -78,7 +78,7 @@ describe("Server:", () => {
       request
         .post("/api/user/register")
         .set("Content-Type", "application/json")
-        .send(mock.valid.wrongUserData)
+        .send({...mock.valid.wrongUserData})
         .expect((res) => {
           expect(res.status).toBeGreaterThanOrEqual(400);
         })
@@ -91,7 +91,7 @@ describe("Server:", () => {
       request
         .post("/api/user/register_github")
         .set("content-type", "application/json")
-        .send(mock.valid.correctGithubUserData)
+        .send({...mock.valid.correctGithubUserData})
         .expect(200)
         .end(() => {
           User.find((err, users:Iuser[]) => {
@@ -145,8 +145,7 @@ describe("Server:", () => {
         })
         .end(() => {
           User.find((err, users:Iuser[]) => {
-            const userId =(users[0]._id);
-            expect(jwt.verify(token, SUPER_SECRET_KEY!)._id).toBe(userId);
+            expect((jwt.verify(token, SUPER_SECRET_KEY))._id).toBe(String(users[0]._id));
             done();
           });
         });
@@ -221,7 +220,7 @@ describe("Server:", () => {
         .post("/forum/post_topic")
         .set("authorization", token)
         .set("content-type", "application/json")
-        .send(mock.topic.correctTopic)
+        .send({...mock.topic.correctTopic})
         .expect(200)
         .end(() => {
           Topic.find((err, topics:Itopic[]) => {
@@ -235,7 +234,7 @@ describe("Server:", () => {
         .post("/forum/post_topic")
         .set("authorization", token)
         .set("content-type", "application/json")
-        .send(mock.topic.wrongTopic)
+        .send({...mock.topic.wrongTopic})
         .expect((res) => {
           expect(res.status).toBeGreaterThanOrEqual(400);
         })
