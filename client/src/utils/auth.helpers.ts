@@ -1,11 +1,11 @@
 const onSuccess = async (
-  response,
-  dispatch,
-  githubSignIn,
-  setError,
-  registerUserGithub,
-  completeAuthentication,
-  getGithubProfile
+  response: any,
+  dispatch: any,
+  githubSignIn: any,
+  setError: any,
+  registerUserGithub: any,
+  completeAuthentication: any,
+  getGithubProfile: any
 ) => {
   try {
     const {
@@ -16,8 +16,8 @@ const onSuccess = async (
       location,
       name,
     } = await githubSignIn(response.code)
-      .then((res) => res)
-      .catch((error) => setError(error));
+      .then((res: any) => res)
+      .catch((error: any) => setError(error));
 
     registerUserGithub({
       avatar_url,
@@ -26,14 +26,14 @@ const onSuccess = async (
       html_url,
       location,
       name,
-    }).then((res) => {
+    }).then((res: any) => {
       completeAuthentication(res.data);
-      getGithubProfile(res.data).then((res) => {
+      getGithubProfile(res.data).then((res: any) => {
         dispatch({ type: "user", payload: res.data });
       });
       dispatch({ type: "isAuthWithGithub", payload: true });
     });
-  } catch (error) {
+  } catch (error: any) {
     setError(error);
   }
 };

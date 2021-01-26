@@ -5,17 +5,26 @@ import moment from "moment";
 import { StateContext } from "../../global.context/globalStore.reducer";
 import { deleteTopic } from "../../services/ApiTopicsClientService";
 import "./TopicCardProfile.css";
+import { Topic } from '../../interfaces/topic';
+import { Post } from '../../interfaces/post'
 
-export default function TopicCard({ topic, setPosts, posts }) {
+type Props = {
+  topic: Topic,
+  setPosts: Function,
+  posts: [Post]
+}
+
+export default function TopicCard({ topic, setPosts, posts } : Props ) {
   const { state } = useContext(StateContext);
 
-  function handleClick(e) {
+  //function handleClick(event:any) {
+  function handleClick() {
     const id = topic._id;
     deleteTopic(id)
       .then((res) => res.data)
       .catch((error) => console.error(error));
 
-    const filteredPosts = posts.filter((post) => post._id !== id);
+    const filteredPosts = posts.filter((post : Post) => post._id !== id);
     setPosts(filteredPosts);
   }
 
@@ -41,7 +50,7 @@ export default function TopicCard({ topic, setPosts, posts }) {
                 <code>{topic.author.name}</code>
               </Box>
               <Flex mr="5px" h="2rem" alignItems="center">
-                <Icon as={FcLike} ml="3px" size="sm" isRound mr="5px" />
+                <Icon as={FcLike} ml="3px" size="sm" mr="5px" />
                 <Text display="inline" alignSelf="center">
                   {topic.likes}
                 </Text>
@@ -57,7 +66,8 @@ export default function TopicCard({ topic, setPosts, posts }) {
                 colorScheme="primary"
                 size="sm"
                 w="100px"
-                onClick={(e) => handleClick(e)}
+                //onClick={(event: any) => handleClick(event)}
+                onClick={() => handleClick()}
               >
                 Delete
               </Button>

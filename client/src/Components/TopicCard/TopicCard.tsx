@@ -16,9 +16,15 @@ import { Link } from "@reach/router";
 import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 import Comments from "../Comments/Comments";
 import { likePost, dislikePost } from "../../services/ApiTopicsClientService";
+import { Topic } from '../../interfaces/topic';
 import "./TopicCard.css";
 
-export default function TopicCard({topic, setTopics}) {
+type Props = {
+  topic: Topic,
+  setTopics: Function
+}
+
+export default function TopicCard({topic, setTopics} : Props) {
   // useEffect(() => {}, [props.topics, props.setTopics]);
 
   const { state } = useContext(StateContext);
@@ -41,7 +47,7 @@ export default function TopicCard({topic, setTopics}) {
       }
       setLiked(!liked);
     } else {
-      document.querySelector(".form-wrapper").classList.add("show");
+      const elem = document.querySelector(".form-wrapper")!;elem.classList.add("show");
     }
   }
   return (
@@ -66,7 +72,7 @@ export default function TopicCard({topic, setTopics}) {
                   mr="20px"
                   name={
                     topic.author
-                      ? `${topic.author.name} ${topic.author.name.surname}`
+                      ? `${topic.author.name} ${topic.author.surname}`
                       : ""
                   }
                   src={
@@ -92,6 +98,7 @@ export default function TopicCard({topic, setTopics}) {
                 <Box mr="5px" h="2rem">
                   {!liked ? (
                     <IconButton
+                      aria-label="aria-label"
                       icon={<FcLikePlaceholder />}
                       ml="3px"
                       className="like_btn"
@@ -101,6 +108,7 @@ export default function TopicCard({topic, setTopics}) {
                     />
                   ) : (
                     <IconButton
+                      aria-label="aria-label"
                       icon={<FcLike />}
                       ml="3px"
                       className="like_btn"
@@ -130,21 +138,23 @@ export default function TopicCard({topic, setTopics}) {
               </Flex>
             </Flex>
             {topic.tags.map((tag, index) => (
-                <Flex mt="20px" key={index}>
-                  <Box
-                    px="12px"
-                    py="4px"
-                    mx="10px"
-                    fontSize="12px"
-                    bg={tag.color}
-                    color="white"
-                    opacity="0.8"
-                    fontWeight="bold"
-                    borderRadius="lg"
-                  >
-                    {tag.language}
-                  </Box>
-                </Flex>
+              <div key={index}>
+                <Flex mt="20px">
+                    <Box
+                      px="12px"
+                      py="4px"
+                      mx="10px"
+                      fontSize="12px"
+                      bg={tag.color}
+                      color="white"
+                      opacity="0.8"
+                      fontWeight="bold"
+                      borderRadius="lg"
+                    >
+                      {tag.language}
+                    </Box>
+                  </Flex>
+                </div>
               ))}
           </Flex>
           <Collapse className="comment_area" in={isOpen} animateOpacity>

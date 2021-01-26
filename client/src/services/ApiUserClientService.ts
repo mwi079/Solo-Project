@@ -1,12 +1,22 @@
 import axios from "axios";
+
+import { gitUser } from '../interfaces/gitUser';
+
 const apiUrl = "http://localhost:3500";
 
+type User = {
+  name: string,
+  surname: string,
+  email: string,
+  password: string
+}
+
 // authentication api
-export async function login({ email, password }) {
+export async function login({ email, password } : User) {
   return axios.post(`${apiUrl}/api/user/login`, { email, password });
 }
 
-export async function registerUser({ name, surname, email, password }) {
+export async function registerUser({ name, surname, email, password }: User) {
   return axios.post(`${apiUrl}/api/user/register`, {
     name,
     surname,
@@ -23,7 +33,7 @@ export async function registerUserGithub({
   gists_url,
   html_url,
   location,
-}) {
+}: gitUser) {
   return axios.post(`${apiUrl}/api/user/register_github`, {
     name,
     surname,
@@ -35,19 +45,19 @@ export async function registerUserGithub({
   });
 }
 
-export async function getProfile(accessToken) {
+export async function getProfile(accessToken:string) {
   return axios.get(`${apiUrl}/api/user/profile`, {
     headers: { Authorization: accessToken },
   });
 }
 
-export async function getGithubProfile(accessToken) {
+export async function getGithubProfile(accessToken:string) {
   return axios.get(`${apiUrl}/api/user/github_profile`, {
     headers: { Authorization: accessToken },
   });
 }
 
-export async function completeAuthentication(token) {
+export async function completeAuthentication(token:string) {
   localStorage.setItem("token", token);
 }
 
@@ -56,7 +66,7 @@ export async function logOut() {
 }
 
 // github auth
-export async function githubSignIn(code) {
+export async function githubSignIn(code:string) {
   return axios
     .post(`${apiUrl}/api/user/github`, { code })
     .then((res) => res.data)

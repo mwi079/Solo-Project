@@ -1,14 +1,20 @@
 import { Flex, Heading, Text, Avatar } from "@chakra-ui/react";
 import React, { Fragment} from "react";
 
-export default function Comments({ topic }) {
+import { Topic } from '../../interfaces/topic';
 
+type Props = {
+  topic: Topic;
+}
+
+export default function Comments({ topic } : Props ) {
+  
   return (
     <>
       <Heading size="md" mb="10px">
         Comments:
       </Heading>
-      {topic.comments.length !== 0 ? (
+      {topic.comments.length ? (
         topic.comments.map((comment, index) => (
           <Fragment key={index}>
             <Flex flexDir="column" alignItems="center">
@@ -27,7 +33,7 @@ export default function Comments({ topic }) {
                     mr="20px"
                     name={
                       comment.author
-                        ? `${comment.author.name} ${comment.author.name.surname}`
+                        ? `${comment.author.name} ${comment.author.surname}`
                         : ""
                     }
                     src={

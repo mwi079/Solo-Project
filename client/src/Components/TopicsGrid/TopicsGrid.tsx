@@ -2,8 +2,24 @@ import React from "react";
 import { Grid, Flex, Text } from "@chakra-ui/react";
 import TopicCard from "../TopicCard/TopicCard";
 
-export default function TopicsGrid({ topics, setTopics }) {
+import { Topic } from '../../interfaces/topic';
 
+type Props = {
+  topics: [Topic],
+  setTopics: Function
+}
+
+export default function TopicsGrid({ topics, setTopics } : Props) {
+
+
+
+<<<<<<< HEAD:client/src/Components/TopicsGrid/TopicsGrid.jsx
+=======
+  // console.log('setTopics', setTopics);
+
+  //useEffect(() => {}, [topics, setTopics]);
+
+>>>>>>> d69c9cbc464f3cfac498dd59528a70478ca81385:client/src/Components/TopicsGrid/TopicsGrid.tsx
   return (
     <>
       {topics ? (
