@@ -1,8 +1,11 @@
+import { Post } from '../interfaces/post';
+import { Comment } from '../interfaces/comment';
+
 import axios from "axios";
 const apiUrl = "http://localhost:3500";
 
 // topics api
-export async function postTopic({ title, content, tags }) {
+export async function postTopic({ title, content, tags } : Post) {
   const token = localStorage.getItem("token");
   return axios.post(
     `${apiUrl}/forum/post_topic`,
@@ -24,7 +27,7 @@ export async function getUserPosts() {
   });
 }
 
-export async function deleteTopic(_id) {
+export async function deleteTopic(_id : number) {
   const token = localStorage.getItem("token");
   const config = {
     data: { _id },
@@ -33,14 +36,14 @@ export async function deleteTopic(_id) {
   return axios.delete(`${apiUrl}/forum/delete`, config);
 }
 
-export async function getSingleTopic(id) {
+export async function getSingleTopic(id : number) {
   const token = localStorage.getItem("token");
   return axios.get(`${apiUrl}/forum/topic_comments/${id}`, {
     headers: { Authorization: token },
   });
 }
 
-export async function postComment(id, comment) {
+export async function postComment(id : number, comment : Comment) {
   const token = localStorage.getItem("token");
   return axios.put(
     `${apiUrl}/forum/comment/${id}`,
@@ -51,7 +54,7 @@ export async function postComment(id, comment) {
   );
 }
 
-export async function likePost(id) {
+export async function likePost(id : number) {
   const token = localStorage.getItem("token");
   return axios.post(
     `${apiUrl}/forum/like_topic`,
@@ -62,7 +65,7 @@ export async function likePost(id) {
   )
 }
 
-export async function dislikePost(id) {
+export async function dislikePost(id : number) {
   const token = localStorage.getItem("token");
   return axios.post(
     `${apiUrl}/forum/dislike_topic`,
