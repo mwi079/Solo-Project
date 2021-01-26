@@ -1,5 +1,5 @@
 import  {mock} from "./mockVariables";
-import * as app from "../index";
+import app from "../index";
 import supertest from "supertest"
 import mongoose from "mongoose";
 import bcrypt from "bcrypt"
@@ -9,7 +9,7 @@ const SUPER_SECRET_KEY = process.env.TOKEN_SECRET;
  
 describe("Server:", () => {
 
-  const url:string= process.env.MONGO_TEST_URL;
+  const url= process.env.MONGO_TEST_URL;
   beforeAll(async () => {
     await mongoose.connect(url, { useNewUrlParser: true });
   });
@@ -58,7 +58,7 @@ describe("Server:", () => {
       request
         .post("/api/user/register")
         .set("Content-Type", "application/json")
-        .send(mock.alid.correctUserData)
+        .send(mock.valid.correctUserData)
         .end(() => {
           User.find((err, users) => {
             expect(users[0].password).not.toBe(mock.valid.correctUserData);
