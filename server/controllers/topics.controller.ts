@@ -1,11 +1,9 @@
-import {Context,Request} from 'koa'
+import { Context} from '../interfaces/interfaces'
 import {Topic} from "../models/topic.model";
 import {User} from "../models/user.model";
 import { Comment } from "../models/comment.model";
 
-interface iparams extends Request{
-  params:string
-}
+
 
 async function getAllTopics(ctx:Context) {
   try {
