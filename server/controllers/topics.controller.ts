@@ -1,9 +1,13 @@
-import Koa from 'koa'
+import {Context,Request} from 'koa'
 import {Topic} from "../models/topic.model";
 import {User} from "../models/user.model";
 import { Comment } from "../models/comment.model";
 
-async function getAllTopics(ctx:Koa.Context) {
+interface iparams extends Request{
+  params:string
+}
+
+async function getAllTopics(ctx:Context) {
   try {
     const allTopics = await Topic.find({})
       .populate({
@@ -21,9 +25,9 @@ async function getAllTopics(ctx:Koa.Context) {
   }
 }
 
-async function getTopicById(ctx:Koa.Context) {
+async function getTopicById(ctx:Context) {
   try {
-    const { id } = ctx.request.params;
+    const id  = ctx.request.params;
     const foundTopic = await Topic.findOne({ _id: id }).populate("author");
     ctx.status = 200;
     ctx.body = foundTopic;
@@ -33,7 +37,7 @@ async function getTopicById(ctx:Koa.Context) {
   }
 }
 
-async function postOneTopic(ctx:Koa.Context) {
+async function postOneTopic(ctx:Context) {
   try {
     const { title, content, tags } = ctx.request.body;
     const _id = ctx.user;
@@ -51,7 +55,7 @@ async function postOneTopic(ctx:Koa.Context) {
   }
 }
 
-async function deleteOneTopic(ctx:Koa.Context) {
+async function deleteOneTopic(ctx:Context) {
   try {
     const { _id } = ctx.request.body;
     await Topic.findByIdAndDelete({ _id });
@@ -63,9 +67,9 @@ async function deleteOneTopic(ctx:Koa.Context) {
   }
 }
 
-async function addComment(ctx:Koa.Context) {
+async function addComment(ctx:Context) {
   try {
-    const { id } = ctx.request.params;
+    const  id  = ctx.request.params;
     const _id = ctx.user;
 
     const { comment } = ctx.request.body;
@@ -87,9 +91,9 @@ async function addComment(ctx:Koa.Context) {
   }
 }
 
-async function getTopicDetails(ctx:Koa.Context) {
+async function getTopicDetails(ctx:Context) {
   try {
-    const { id } = ctx.request.params;
+    const  id  = ctx.request.params;
     const topic = await Topic.findOne({ _id: id }).populate({
       path: "comments",
       populate: {
@@ -106,7 +110,7 @@ async function getTopicDetails(ctx:Koa.Context) {
   }
 }
 
-async function likeTopic(ctx:Koa.Context) {
+async function likeTopic(ctx:Context) {
   try {
     const { id } = ctx.request.body;
     const topicToLike = await Topic.findOne({ _id: id });
@@ -120,7 +124,7 @@ async function likeTopic(ctx:Koa.Context) {
   }
 }
 
-async function dislikeTopic(ctx:Koa.Context) {
+async function dislikeTopic(ctx:Context) {
   try {
     const { id } = ctx.request.body;
     const topicToLike = await Topic.findOne({ _id: id });

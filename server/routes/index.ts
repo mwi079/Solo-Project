@@ -1,7 +1,7 @@
 import Router from "koa-router"
 const router = new Router();
-const { authorizeUser } = require("../middleware/authorizeUser");
-const { authorizeTopic } = require("../middleware/authorizeTopics");
+import { authorizeUser } from "../middleware/authorizeUser";
+import { authorizeTopic } from "../middleware/authorizeTopics";
 
 const {
   registerUser,

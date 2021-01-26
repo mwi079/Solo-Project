@@ -13,7 +13,7 @@ export async function authorizeTopic(ctx:Koa.Context, next:()=>Promise<any>) {
     return (ctx.body = "Access Denied");
   }
   try {
-    const _id= jwt.verify(authHeaders, process.env.TOKEN_SECRET!);
+    const _id= jwt.verify(authHeaders, process.env.TOKEN_SECRET);
     ctx.user = _id;
     await next();
   } catch (error) {

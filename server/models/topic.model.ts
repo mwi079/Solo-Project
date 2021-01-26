@@ -4,7 +4,7 @@ import {model,Schema,Model,Document} from 'mongoose'
 interface Itopic extends Document {
   title:string;
   content:string;
-  comments:[string];
+  comments:any[];
   likes:number;
   tags:object;
   date:string;

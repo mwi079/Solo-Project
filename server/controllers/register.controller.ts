@@ -34,7 +34,7 @@ async function registerUser(ctx:Koa.Context) {
 
   try {
     const { _id } = await user.save();
-    const accessToken = jwt.sign({ _id }, process.env.TOKEN_SECRET);
+    const accessToken = jwt.sign({ _id }, process.env.TOKEN_SECRET!);
     ctx.status = 200;
     ctx.body = accessToken;
   } catch (error) {
@@ -81,7 +81,7 @@ async function registerUserGithub(ctx:Koa.Context) {
 
   try {
     const { _id } = await user.save();
-    const accessToken = jwt.sign({ _id }, process.env.TOKEN_SECRET);
+    const accessToken = jwt.sign({ _id }, process.env.TOKEN_SECRET!);
     ctx.status = 200;
     ctx.body = accessToken;
   } catch (error) {
@@ -91,7 +91,7 @@ async function registerUserGithub(ctx:Koa.Context) {
 }
 
 // github auth
-async function authGithub(ctx:Koa.Context, next:Koa.Middleware) {
+async function authGithub(ctx:Koa.Context, next:()=>Promise<any>) {
   try {
     const { code } = ctx.request.body;
 
