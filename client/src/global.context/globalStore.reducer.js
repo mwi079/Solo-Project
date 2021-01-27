@@ -31,7 +31,7 @@ function reducer(state, action) {
   }
 }
 
-// useReducer cannot be used outside of component so I create one
+// useReducer cannot be used outside of component / function so I create one
 // that return state and dispatch
 const Store = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
