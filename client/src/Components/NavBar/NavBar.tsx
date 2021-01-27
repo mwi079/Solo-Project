@@ -84,7 +84,7 @@ export default function NavBar() {
       >
         <Flex justifyContent="center" className="app_title" alignItems="center">
         <figure className="navbar-owl"></figure>
-          <Heading as="h2" size="md">
+          <Heading as="h2" size="md" data-testid="heading">
             Codagora
           </Heading>
         </Flex>
