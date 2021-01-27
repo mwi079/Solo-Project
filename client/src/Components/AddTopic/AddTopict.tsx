@@ -20,12 +20,19 @@ import "./AddTopic.css";
 import { postTopic } from "../../services/ApiTopicsClientService";
 import { validateForm } from "../../utils/validation.helper";
 import { StateContext } from "../../global.context/globalStore.reducer";
+import {Post} from '../../interfaces/post'
+import {Tag} from '../../interfaces/tag'
+
+type event={
+  preventDefault:any
+  target:{value:string}
+}
 
 export default function AddTopic() {
   const { isOpen, onToggle } = useDisclosure();
   const { state } = useContext(StateContext);
-  const [isTagChecked, setChecked] = useState(false);
-  const [topicDetails, setTopicDetails] = useState({
+  const [isTagChecked, setChecked] = useState<boolean>(false);
+  const [topicDetails, setTopicDetails] = useState<Post>({
     title: "",
     content: "",
     tags: [],
@@ -39,15 +46,15 @@ export default function AddTopic() {
     { name: "CSS", color: "#6A5ACD" },
   ];
 
-  function postOneTopic(topic) {
-    const { title, author, content, tags } = topic;
-    postTopic({ title, author, content, tags })
+  function postOneTopic(topic:Post) {
+    const { title, content, tags } = topic;
+    postTopic({ title, content, tags })
       .then((res) => res.data)
       .catch((error) => console.error(error));
   }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  async function handleSubmit(event:any) {
+    event.preventDefault();
     try {
       await postOneTopic(topicDetails);
       setChecked(false);
@@ -55,26 +62,26 @@ export default function AddTopic() {
       setTopicDetails({
         title: "",
         content: "",
-        tags: [],
+        tags:[],
       });
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
   }
 
-  function handleAddTag(e) {
-    const tagsArray = topicDetails.tags;
-    const { color } = langs.find((lang) => lang.name === e.target.value);
-    const newTag = { color, language: e.target.value };
-    !tagsArray.some((tag) => tag.language === e.target.value) &&
+  function handleAddTag(event:event) {
+    const tagsArray:Tag[] = topicDetails.tags;
+    const temp:any  = langs.find((lang) => lang.name === event.target.value);
+    const newTag:Tag = { color:temp.color, language: event.target.value };
+    !tagsArray.some((tag:Tag) => tag.language === event.target.value) &&
       tagsArray.push(newTag);
     setTopicDetails({ ...topicDetails, tags: tagsArray });
   }
 
-  function handleRemoveTag(e) {
+  function handleRemoveTag(event:event) {
     const tagsArray = topicDetails.tags;
     const filteredArray = tagsArray.filter(
-      (el) => el.language !== e.target.value
+      (el:Tag) => el.language !== event.target.value
     );
     setTopicDetails({ ...topicDetails, tags: filteredArray });
   }
@@ -128,7 +135,7 @@ export default function AddTopic() {
                 You can add some categories to your question:
               </Text>
               <Box mt="20px">
-                <CheckboxGroup colorScheme="green" isChecked={isTagChecked}>
+                <CheckboxGroup colorScheme="green" >
                   <HStack spacing={5}>
                     <Checkbox
                       isChecked={isTagChecked}

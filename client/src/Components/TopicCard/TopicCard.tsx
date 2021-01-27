@@ -21,7 +21,7 @@ import "./TopicCard.css";
 
 type Props = {
   topic: Topic,
-  setTopics: Function
+  setTopics: any
 }
 
 export default function TopicCard({topic, setTopics} : Props) {

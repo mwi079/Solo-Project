@@ -13,13 +13,10 @@ export default function TopicsGrid({ topics, setTopics } : Props) {
 
 
 
-<<<<<<< HEAD:client/src/Components/TopicsGrid/TopicsGrid.jsx
-=======
   // console.log('setTopics', setTopics);
 
   //useEffect(() => {}, [topics, setTopics]);
 
->>>>>>> d69c9cbc464f3cfac498dd59528a70478ca81385:client/src/Components/TopicsGrid/TopicsGrid.tsx
   return (
     <>
       {topics ? (

@@ -4,7 +4,7 @@ import customTheme from "./theme/";
 import NavBar from "./Components/NavBar/NavBar";
 import LandingPage from "./Components/LandingPage/LandingPage";
 import { Fonts } from "./theme/Fonts";
-import AddTopic from "./Components/AddTopic/AddTopic";
+import AddTopic from "./Components/AddTopic/AddTopict";
 import { Store, StateContext } from "./global.context/globalStore.reducer";
 import Profile from "./Components/Profile/Profile";
 import { getProfile, getGithubProfile } from "./services/ApiUserClientService";
@@ -13,8 +13,7 @@ import SingleTopicPage from "./Components/SingleTopicPage/SingleTopicPage";
 import TransitionRouter from "./Components/Router/Router";
 import Footer from "./Components/Footer/Footer";
 
-function App () {
-  
+function App() {
   const [state, dispatch] = Store();
 
   function getUserProfile(token) {
@@ -30,15 +29,14 @@ function App () {
   }
 
   useEffect(() => {
-    
     window.scroll(0, 0);
     const token = window.localStorage.getItem("token");
     token &&
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       getUserProfile(token).then((user) => {
         dispatch({ type: "user", payload: user });
       });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -1,11 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-import { getByTestId } from '@testing-library/dom';
+import { getByTestId } from "@testing-library/react";
 
-import Comments from '../Components/Comments/Comments';
+import Comments from "../Components/Comments/Comments";
 
-import { dummyComment } from './DummyData'; 
+import { dummyComment } from "./DummyData";
 
 //Alternative syntax for individual tests
 // test('Renders correct default text when no comments supplied', () => {
@@ -16,26 +16,21 @@ import { dummyComment } from './DummyData';
 //   }
 // );
 
-describe("Comments Component", ()=> {
-
-  it('Renders a topic comment correctly', () => {
-    const container = document.createElement('div');
+describe("Comments Component", () => {
+  // eslint-disable-next-line no-unused-expressions
+  it("Renders a topic comment correctly", () => {
+    const container = document.createElement("div");
     const topic = dummyComment;
-    ReactDOM.render(<Comments topic= {topic}/>, container);
-    const author = getByTestId(container, 'comment-author');
-    expect(author.textContent).toEqual('Dave');
-    const comment = getByTestId(container, 'comment-comment');
-    expect(comment.textContent).toEqual('A test comment');
+    ReactDOM.render(<Comments topic={topic} />, container);
+    const author = getByTestId(container, "comment-author");
+    expect(author.textContent).toEqual("Dave");
+    const comment = getByTestId(container, "comment-comment");
+    expect(comment.textContent).toEqual("A test comment");
   }),
-
-  it('Renders correct default text when no comments supplied', () => {
-    const container = document.createElement('div');
-    const topic = {comments: []}
-    ReactDOM.render(<Comments topic= {topic}/>, container);
-    expect(container.textContent).toMatch('No comments yet.. 😕');
-  })
-
+    it("Renders correct default text when no comments supplied", () => {
+      const container = document.createElement("div");
+      const topic = { comments: [] };
+      ReactDOM.render(<Comments topic={topic} />, container);
+      expect(container.textContent).toMatch("No comments yet.. 😕");
+    });
 });
- 
-
-
