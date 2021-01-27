@@ -31,7 +31,7 @@ type event={
 export default function AddTopic() {
   const { isOpen, onToggle } = useDisclosure();
   const { state } = useContext(StateContext);
-  const [isTagChecked, setChecked] = useState(false);
+  const [isTagChecked, setChecked] = useState<boolean>(false);
   const [topicDetails, setTopicDetails] = useState<Post>({
     title: "",
     content: "",
@@ -71,8 +71,8 @@ export default function AddTopic() {
 
   function handleAddTag(event:event) {
     const tagsArray:Tag[] = topicDetails.tags;
-    const {color}  = langs.find((lang) => lang.name === event.target.value);
-    const newTag:Tag = { color, language: event.target.value };
+    const temp:any  = langs.find((lang) => lang.name === event.target.value);
+    const newTag:Tag = { color:temp.color, language: event.target.value };
     !tagsArray.some((tag:Tag) => tag.language === event.target.value) &&
       tagsArray.push(newTag);
     setTopicDetails({ ...topicDetails, tags: tagsArray });
@@ -135,7 +135,7 @@ export default function AddTopic() {
                 You can add some categories to your question:
               </Text>
               <Box mt="20px">
-                <CheckboxGroup colorScheme="green" isChecked={isTagChecked}>
+                <CheckboxGroup colorScheme="green" >
                   <HStack spacing={5}>
                     <Checkbox
                       isChecked={isTagChecked}
