@@ -1,5 +1,6 @@
 import { Comment } from './comment'
 import { Author } from './author'
+import {Tag} from './tag'
 
 export interface Topic {
   //topic: {
@@ -7,7 +8,7 @@ export interface Topic {
     title: string,
     author: Author,
     content: string,
-    tags: [{ language: string, color: string }],
+    tags: Tag[],
     comments: [Comment],
     likes: number,
     date: Date
