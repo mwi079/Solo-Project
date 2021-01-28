@@ -12,6 +12,6 @@ app.use(cors()).use(bodyparser()).use(router.routes());
 
 
 
-export default app.listen(process.env.PORT);
+export default app.listen(process.env.PORT,()=>{console.log(`running on port ${process.env.PORT}`)});
 
 
